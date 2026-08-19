@@ -1,0 +1,68 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/intersight-*-openapi.json, https://www.cisco.com/.well-known/security.txt (HTTP 200), https://www.cisco.com/c/en/us/about/trust-center.html
+  (HTTP 200)
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: 'All eleven harvested documents declare openapi: 3.0.2 and parse.'
+- id: oauth2
+  conforms: true
+  evidence: components.securitySchemes.oAuth2 declares authorizationCode (/iam/app-authorize, /iam/token) and clientCredentials
+    flows with 3,317 scopes.
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect security scheme and no /.well-known/openid-configuration on intersight.com (HTTP 404).
+- id: http-message-signatures
+  conforms: partial
+  evidence: 'components.securitySchemes.http_signature declares scheme: signature per draft-cavage-http-signatures
+    — the pre-standard draft, not the published RFC 9421.'
+- id: odata
+  conforms: partial
+  evidence: $filter, $orderby, $top, $skip, $select, $expand, $apply, $count and $inlinecount are implemented with
+    OData semantics, but no $metadata document or OData service root is served.
+- id: rfc9457
+  conforms: false
+  evidence: Errors use a vendor {code,messageId,message} envelope on application/json; no application/problem+json
+    anywhere in the contract.
+- id: rfc7240
+  conforms: true
+  evidence: components.parameters.Prefer declares respond-async and cites RFC 7240; 4 operations return 202.
+- id: rfc9110-conditional-requests
+  conforms: true
+  evidence: If-Match on 1,272 operations and If-None-Match on 344, with 412 Precondition Failed documented on both.
+- id: rfc9116
+  conforms: true
+  evidence: PGP-signed security.txt served at https://www.cisco.com/.well-known/security.txt (parent domain) with
+    Contact, Encryption, Policy, CSAF and Expires fields.
+- id: csaf
+  conforms: true
+  evidence: security.txt advertises a CSAF provider-metadata.json at https://www.cisco.com/.well-known/csaf/provider-metadata.json
+    — Cisco publishes machine-readable security advisories.
+- id: pagination
+  conforms: true
+  evidence: Offset pagination via $top/$skip with $count/$inlinecount, declared on 1,199 operations.
+- id: idempotency
+  conforms: partial
+  evidence: Conditional requests only — no Idempotency-Key header. See conventions/intersight-conventions.yml.
+- id: scim
+  conforms: false
+  evidence: Identity is modelled as iam.* resources; no /scim/v2 surface in the contract.
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare API.
+- id: psd2
+  conforms: false
+  evidence: Not a financial API.
+- id: fapi
+  conforms: false
+  evidence: Not a financial API.
+- id: json:api
+  conforms: false
+  evidence: Responses use an Intersight {Count,Results,ObjectType} envelope, not the JSON:API media type.
+compliance:
+  published: true
+  source: https://www.cisco.com/c/en/us/about/trust-center.html
+  note: Certifications are published by Cisco corporate for the Intersight service rather than on a product-level
+    trust page. Intersight itself does not serve a per-product certification list at a machine-readable URL, so
+    no individual certificate is asserted here — only that Cisco publishes a trust centre that covers it.

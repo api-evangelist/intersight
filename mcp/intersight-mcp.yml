@@ -1,0 +1,87 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/intersight-*-openapi.json; searched for a first-party server on 2026-08-19 and found none
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+search_findings:
+  first_party_server: false
+  searched:
+  - github.com/CiscoDevNet (all 26 intersight repos)
+  - npm registry
+  - PyPI
+  - the Intersight API docs downloads and code-repo pages
+  - web search
+  note: Cisco ships no MCP server for Intersight. Three community servers exist — the most complete is github.com/jim-coyne/Intersight_MCP
+    (local stdio, 66 read-only tools in core mode, 199+ with writes) — but none is published by Cisco and none is
+    recorded as a provider surface here. Note that Cisco DOES run first-party MCP elsewhere in its portfolio (DevNet
+    foundation-search and Webex messaging), so the absence here is a product gap rather than a company-wide position.
+  community_servers:
+  - name: Intersight_MCP
+    url: https://github.com/jim-coyne/Intersight_MCP
+    official: false
+    mode: local-stdio
+candidate_tools:
+- name: list_servers
+  rest:
+  - GetComputePhysicalSummaryList
+  description: Inventory blades and rack units, with OData filter/select/paging.
+- name: get_server
+  rest:
+  - GetComputePhysicalSummaryByMoid
+  description: Read one physical server by Moid.
+- name: list_server_profiles
+  rest:
+  - GetServerProfileList
+  description: List UCS server profiles and their config state.
+- name: deploy_server_profile
+  rest:
+  - UpdateServerProfile
+  description: 'Deploy or act on a server profile (Action: Deploy).'
+- name: list_alarms
+  rest:
+  - GetCondAlarmList
+  description: List active alarms, filterable by severity.
+- name: list_firmware_distributables
+  rest:
+  - GetFirmwareDistributableList
+  description: List available firmware bundles.
+- name: check_firmware_impact
+  rest:
+  - CreateFirmwareUpgradeImpact
+  description: Evaluate the impact of a firmware upgrade before running it.
+- name: run_firmware_upgrade
+  rest:
+  - CreateFirmwareUpgrade
+  description: Start a firmware upgrade.
+- name: list_workflows
+  rest:
+  - GetWorkflowWorkflowDefinitionList
+  description: List orchestrator workflow definitions.
+- name: run_workflow
+  rest:
+  - CreateWorkflowWorkflowInfo
+  description: Start a workflow run from a definition.
+- name: get_workflow_run
+  rest:
+  - GetWorkflowWorkflowInfoByMoid
+  description: Read the status and wait reason of a workflow run.
+- name: list_hcl_status
+  rest:
+  - GetCondHclStatusList
+  description: Read hardware compatibility (HCL) status across the fleet.
+- name: list_organizations
+  rest:
+  - GetOrganizationOrganizationList
+  description: List organizations (the tenancy boundary).
+candidate_note: Derived from the harvested contract as a sketch of what a first-party server would expose; each
+  tool names a real operationId whose parameters and requestBody are the tool inputSchema. Nobody ships this — mode
+  is none and no endpoint is asserted.
+coverage:
+  operations_in_contract: 3963
+  candidate_tools: 13

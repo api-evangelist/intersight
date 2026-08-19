@@ -1,0 +1,119 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/intersight-*-openapi.json (components.parameters, components.headers, components.responses) cross-read
+  against https://intersight.com/apidocs/introduction/overview/
+auth:
+  styles:
+  - http-signature
+  - oauth2-authorization-code
+  - oauth2-client-credentials
+  - cookie
+  primary: HTTP Signature (draft-cavage-http-signatures) with an API key id and secret
+  detail: authentication/intersight-authentication.yml
+idempotency:
+  supported: true
+  mechanism: conditional-requests
+  idempotency_key_header: null
+  headers:
+  - If-Match
+  - If-None-Match
+  failure_status: 412
+  concurrency_token: the resource ModTime property, echoed as the entity tag
+  scope:
+    if_match_operations: 1272
+    if_none_match_operations: 344
+  note: 'Intersight does NOT ship an Idempotency-Key header. It ships the RFC 9110 conditional-request form instead,
+    and it is declared in the contract rather than only in prose. If-None-Match: * makes a create safe to retry
+    — a duplicate create is refused with 412 Precondition Failed instead of producing a second resource. If-Match:
+    <ModTime> makes an update safe to retry by refusing a write that would clobber a change made since the client
+    last read. An agent can therefore retry both creates and updates without a dedup key, but it must read the resource
+    first to obtain the token, and it gets a 412 rather than a replayed original response.'
+pagination:
+  style: odata-offset
+  params:
+  - name: $top
+    in: query
+    type: integer
+    default: 100
+    description: Maximum number of resources to return.
+  - name: $skip
+    in: query
+    type: integer
+    default: 0
+    description: Number of resources to skip.
+  - name: $count
+    in: query
+    type: boolean
+    description: Return the count of matching resources instead of the resources.
+  - name: $inlinecount
+    in: query
+    type: string
+    enum:
+    - allpages
+    - none
+    default: allpages
+    description: Include an inline count of matching resources alongside the returned page.
+  response_fields:
+  - Count
+  - Results
+  operations_supporting: 1199
+  note: Offset pagination, not cursor — deep pagination over a large fleet is $skip-bound. Default page size is
+    100.
+filtering:
+  style: odata
+  params:
+  - $filter
+  - $orderby
+  - $select
+  - $expand
+  - $apply
+  - at
+  - tags
+  examples:
+  - $filter=CreateTime gt now() sub PT2H
+  - $top=20&$skip=100
+  - $count=true
+  note: $apply carries OData aggregation (groupby/aggregate), which is unusual in a REST management API and lets
+    an agent aggregate server-side rather than paging the whole fleet down. "at" is an Intersight extension that
+    filters on versioning metadata rather than resource properties.
+field_selection:
+  sparse_fieldsets: $select
+  expansion: $expand
+  operations_supporting: 2398
+async:
+  mechanism: 'RFC 7240 Prefer: respond-async'
+  header: Prefer
+  value: respond-async
+  response_status: 202
+  operations: 4
+  note: Long-running work is otherwise modelled as first-class resources (workflow.WorkflowInfo, bulk.Request) that
+    the client polls.
+tracing:
+  response_header: x-starship-traceid
+  also_in_error_body: traceId
+  note: Every declared error response carries the trace header, so a failed call is always correlatable with support.
+content_negotiation:
+  request:
+  - application/json
+  response:
+  - application/json
+  - text/csv
+  - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+  note: 2,398 list operations can return CSV or XLSX directly — an export surface most management APIs do not declare.
+localization:
+  header: Accept-Language
+  note: Error messages are localized; messageId stays language-independent.
+naming:
+  path_prefix: /api/v1
+  resource_case: PascalCase collections (for example /api/v1/compute/Blades)
+  identifier: Moid — a 24-character MongoDB-style object id used as the single path parameter on 2,412 operations
+  operation_ids:
+    total: 3963
+    unique: 3963
+    with_spaces: 0
+    note: 100% unique, zero containing whitespace. Worth contrasting with Cisco Webex, where 41.6% of operationIds
+      contain spaces — inside one vendor portfolio, Intersight is the well-behaved end.
+rate_limits: rate-limits/intersight-rate-limits.yml
+errors: errors/intersight-problem-types.yml
+lifecycle: lifecycle/intersight-lifecycle.yml
+authentication: authentication/intersight-authentication.yml

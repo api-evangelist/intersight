@@ -1,0 +1,33 @@
+generated: '2026-08-19'
+method: searched
+source: https://intersight.com/apidocs/apirefs/ (the built-in REST client in the API reference), https://www.cisco.com/c/en/us/products/collateral/computing/hybrid-cloud-operations/intersight-licensing-aag.html
+has_sandbox: true
+type: in-docs console + time-limited production trial
+test_mode:
+  separate_test_keys: false
+  key_prefixes: []
+  note: There is no test/live key split. Intersight issues one API key per user per account; whether a call is "test"
+    depends on which account and organization it targets, not on the credential type.
+surfaces:
+- name: API reference REST client
+  url: https://intersight.com/apidocs/apirefs/
+  description: The API reference ships an authenticated in-browser REST client (the ucs-apidocs-restclient component)
+    that builds and issues live calls against the signed-in account for any operation in the specification. It executes
+    against real infrastructure — there is no simulated backend.
+  requires_login: true
+- name: Advantage free trial
+  url: https://www.cisco.com/go/intersightfreetrial
+  description: 90-day free trial of the Advantage tier on a new Intersight account, giving full API access including
+    workflow orchestration.
+  requires_login: true
+- name: Cisco DevNet Sandbox
+  url: https://devnetsandbox.cisco.com/
+  description: Cisco operates reservable DevNet sandboxes covering data-centre products. The catalogue is a JavaScript
+    application that returns an identical 5,554-byte shell for every path, so the presence of a specific Intersight
+    sandbox could not be confirmed anonymously and is not asserted here.
+  requires_login: true
+  verified: false
+test_data:
+  published: false
+  note: Cisco publishes no fixture values, magic identifiers or simulated devices for Intersight — nothing to record,
+    and nothing invented.

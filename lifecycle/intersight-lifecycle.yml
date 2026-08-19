@@ -1,0 +1,41 @@
+generated: '2026-08-19'
+method: searched
+source: https://status.intersight.com/api/v2/summary.json (HTTP 200), https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/changelog-2026.json
+  (HTTP 200), and the harvested OpenAPI documents in openapi/
+versioning:
+  scheme: build-stamped single version, no URL version negotiation
+  current_version: 1.0.11-20260807064027971
+  format: <product>.<major>.<minor>-<UTC build timestamp>
+  url_versioning: /api/v1/ path prefix — unchanged since launch; the moving part is the build stamp, not the path
+  note: 'Intersight is SaaS-only: there is exactly one live version and clients are expected to track it. The spec
+    version string is also the version stamped on every generated SDK, so an SDK release and an API release are
+    the same event.'
+deprecation:
+  policy_published: true
+  mechanism: in-spec + changelog
+  headers: []
+  note: 'Cisco does not publish an RFC 8594 Sunset/Deprecation header policy for Intersight. Deprecation is signalled
+    two ways instead: the machine-readable changelog flags every change with a boolean "breaking" and a change id
+    (for example api-removed-without-deprecation, response-property-enum-value-removed), and the API docs surface
+    a dedicated breaking-changes section at /apidocs/introduction/changelog/#breaking-changes.'
+  breaking_changes_url: https://intersight.com/apidocs/introduction/changelog/#breaking-changes
+status_page:
+  url: https://status.intersight.com/
+  provider: Atlassian Statuspage
+  api: https://status.intersight.com/api/v2/summary.json
+  components:
+  - UCS Management Services
+  - Intersight Infrastructure Services (IIS)
+  - HyperFlex Management Services
+  - Intersight Workload Optimizer (IWO)
+  - Cloud Orchestrator
+  - Intersight API Services
+  - Virtual Appliance Services
+  - Intersight Portal
+  note: '"Intersight API Services" is broken out as its own component, so API availability is separately reportable.'
+sla:
+  published: false
+  note: No public SLA document; Intersight availability commitments sit inside the Cisco subscription agreement.
+deprecated_operations:
+  count: 0
+  note: 'No operation in the 3,963 harvested operations carries deprecated: true.'

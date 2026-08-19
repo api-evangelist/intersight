@@ -1,0 +1,46 @@
+generated: '2026-08-19'
+method: generated
+source: openapi/intersight-*-openapi.json — every operationId below was verified present in the harvested specification
+  before the skill was written
+skills:
+- name: intersight-server-profile-deploy
+  file: skills/intersight-server-profile-deploy.md
+  title: Deploy a server profile from a template
+  description: Attach a UCS server profile to a physical server from an existing template and deploy it, then poll
+    until the deployment settles.
+  api: intersight:server
+  operations: 6
+- name: intersight-firmware-upgrade
+  file: skills/intersight-firmware-upgrade.md
+  title: Run a firmware upgrade with an impact check first
+  description: Check the impact of a firmware upgrade before running it, then execute it and follow the resulting
+    workflow.
+  api: intersight:server
+  operations: 6
+- name: intersight-fleet-inventory
+  file: skills/intersight-fleet-inventory.md
+  title: Inventory the fleet without paging it all down
+  description: Query the server estate efficiently using OData filtering, selection and server-side aggregation
+    instead of walking every page.
+  api: intersight:server
+  operations: 4
+- name: intersight-alarm-triage
+  file: skills/intersight-alarm-triage.md
+  title: Triage active alarms
+  description: Read active alarms across the account, group them, and suppress noise deliberately rather than by
+    ignoring it.
+  api: intersight:system
+  operations: 5
+- name: intersight-workflow-execute
+  file: skills/intersight-workflow-execute.md
+  title: Execute an orchestration workflow and follow it to completion
+  description: Start an Intersight Orchestrator workflow from its definition, follow the task tree, and interpret
+    the wait reasons.
+  api: intersight:workflows
+  operations: 5
+- name: intersight-api-key-and-signing
+  file: skills/intersight-api-key-and-signing.md
+  title: Authenticate to the Intersight API
+  description: Create an API key and sign requests with the HTTP Signature scheme Intersight declares in its contract.
+  api: intersight:system
+  operations: 5

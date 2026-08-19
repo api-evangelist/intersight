@@ -1,0 +1,26 @@
+generated: '2026-08-19'
+method: searched
+source: https://intersight.com/apidocs/introduction/overview/, the apidocs application bundle at https://cdn.intersight.com/components/ucs-apidocs/1.0.11-20260729101001107/build/base-bundle.js,
+  and the harvested OpenAPI documents in openapi/
+limit_count: 0
+documented: false
+response_headers: []
+exhaustion_status: null
+note: 'Cisco publishes no HTTP rate limit for the Intersight API. Searched three ways and all three came back empty:
+  (1) the 3,963 harvested operations declare 200, 202, 400, 401, 403, 404 and default — there is no 429 response
+  anywhere in the contract; (2) the contract contains no Retry-After, X-RateLimit-* or RateLimit-* header definition,
+  so there is no runtime signal an agent could read; (3) the API overview documentation states no request budget.
+  The only two "RateLimit" strings in the whole specification are unrelated: a vnic RateLimit property (interface
+  bandwidth in Mbps) and a workflow wait reason.'
+related_throttling:
+- scope: workflow-execution
+  mechanism: workflow.WorkflowInfo.WaitReason = "RateLimit"
+  window: null
+  limit: null
+  description: 'The orchestration engine does throttle workflow execution at account and instance level. When a
+    submitted workflow exceeds the threshold it is queued rather than rejected: WaitReason is set to RateLimit and
+    the workflow sits in a waiting state. The threshold value itself is not published.'
+  source: openapi/intersight-workflows-openapi.json (workflow.WorkflowInfo.WaitReason enum)
+guidance_for_agents: Because no budget and no runtime header are published, a client cannot compute its own headroom.
+  Treat 503/ServiceUnavailable as the backpressure signal, use $top/$skip with the default page size of 100, and
+  prefer server-side $apply aggregation over paging a whole fleet down.

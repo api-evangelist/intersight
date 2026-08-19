@@ -1,0 +1,438 @@
+generated: '2026-08-19'
+method: searched
+source: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/changelog-2025.json and
+  changelog-2026.json (both HTTP 200, anonymous) — the machine-readable feed the https://intersight.com/apidocs/introduction/changelog/
+  page renders.
+docs: https://intersight.com/apidocs/introduction/changelog/
+breaking_changes_docs: https://intersight.com/apidocs/introduction/changelog/#breaking-changes
+scheme: per-release OpenAPI diff, machine-readable JSON, one file per calendar year
+current_version: 1.0.11-20260807064027971
+summary:
+  releases_recorded: 17
+  window:
+    from: '2025-11-25'
+    to: '2026-08-06'
+  total_changes: 1584
+  breaking_changes: 1
+  note: 'This is a genuine API diff feed, not release-note prose: every entry names the path, the operationId, the
+    change class and a boolean breaking flag, so a consumer can compute their own blast radius. 1 of 1584 recorded
+    changes are flagged breaking. The feed starts at 2025 — the fetcher in the docs bundle iterates years from 2025
+    to the current year, so nothing earlier is published.'
+entries:
+- version: 1.0.11-20260807064027971
+  previous_version: 1.0.11-20260727202255541
+  date: '2026-08-06'
+  paths_changed: 41
+  operations_changed: 64
+  changes: 67
+  breaking: 0
+  top_change_kinds:
+  - id: response-property-enum-value-added
+    count: 26
+  - id: property-enum-value-added
+    count: 21
+  - id: response-optional-property-added
+    count: 9
+  - id: endpoint-deprecated-with-sunset
+    count: 4
+  top_areas:
+  - tag: equipment
+    operations: 22
+  - tag: storage
+    operations: 6
+  - tag: catalystsdwan
+    operations: 5
+  - tag: pci
+    operations: 5
+  - tag: adapter
+    operations: 4
+- version: 1.0.11-20260727202255541
+  previous_version: 1.0.11-20260710170246337
+  date: '2026-07-23'
+  paths_changed: 102
+  operations_changed: 167
+  changes: 257
+  breaking: 1
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 90
+  - id: response-property-enum-value-added
+    count: 47
+  - id: property-enum-value-added
+    count: 37
+  - id: optional-property-added
+    count: 30
+  top_areas:
+  - tag: equipment
+    operations: 26
+  - tag: fabric
+    operations: 13
+  - tag: firmware
+    operations: 11
+  - tag: dnac
+    operations: 10
+  - tag: hci
+    operations: 10
+- version: 1.0.11-20260710170246337
+  previous_version: 1.0.11-20260612201420365
+  date: '2026-07-09'
+  paths_changed: 85
+  operations_changed: 163
+  changes: 184
+  breaking: 0
+  top_change_kinds:
+  - id: response-property-enum-value-added
+    count: 69
+  - id: property-enum-value-added
+    count: 65
+  - id: endpoint-added
+    count: 20
+  - id: response-optional-property-added
+    count: 16
+  top_areas:
+  - tag: equipment
+    operations: 28
+  - tag: compute
+    operations: 13
+  - tag: storage
+    operations: 13
+  - tag: iwotenant
+    operations: 9
+  - tag: fabric
+    operations: 8
+- version: 1.0.11-20260612201420365
+  previous_version: 1.0.11-20260609104316218
+  date: '2026-06-11'
+  paths_changed: 4
+  operations_changed: 8
+  changes: 12
+  breaking: 0
+  top_change_kinds:
+  - id: endpoint-added
+    count: 4
+  - id: response-optional-property-added
+    count: 4
+  - id: property-enum-value-added
+    count: 3
+  - id: response-property-enum-value-added
+    count: 1
+  top_areas:
+  - tag: asset
+    operations: 6
+  - tag: iam
+    operations: 2
+- version: 1.0.11-20260609104316218
+  previous_version: 1.0.11-20260518170638082
+  date: '2026-05-28'
+  paths_changed: 14
+  operations_changed: 24
+  changes: 39
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 34
+  - id: optional-property-added
+    count: 5
+  top_areas:
+  - tag: iam
+    operations: 13
+  - tag: niatelemetry
+    operations: 6
+  - tag: mgmt
+    operations: 5
+- version: 1.0.11-20260518170638082
+  previous_version: 1.0.11-20260429210745722
+  date: '2026-05-14'
+  paths_changed: 13
+  operations_changed: 17
+  changes: 17
+  breaking: 0
+  top_change_kinds:
+  - id: endpoint-added
+    count: 8
+  - id: response-property-enum-value-added
+    count: 5
+  - id: property-enum-value-added
+    count: 4
+  top_areas:
+  - tag: niatelemetry
+    operations: 8
+  - tag: firmware
+    operations: 4
+  - tag: server
+    operations: 3
+  - tag: compute
+    operations: 1
+  - tag: softwarerepository
+    operations: 1
+- version: 1.0.11-20260429210745722
+  previous_version: 1.0.11-20260418163143967
+  date: '2026-04-30'
+  paths_changed: 48
+  operations_changed: 90
+  changes: 183
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 74
+  - id: optional-property-added
+    count: 72
+  - id: endpoint-added
+    count: 31
+  - id: property-pattern-changed
+    count: 2
+  top_areas:
+  - tag: mgmt
+    operations: 20
+  - tag: iam
+    operations: 8
+  - tag: resourcepool
+    operations: 8
+  - tag: server
+    operations: 7
+  - tag: fabric
+    operations: 6
+- version: 1.0.11-20260418163143967
+  previous_version: 1.0.11-20260402085822330
+  date: '2026-04-16'
+  paths_changed: 19
+  operations_changed: 45
+  changes: 51
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 38
+  - id: optional-property-added
+    count: 9
+  - id: endpoint-added
+    count: 3
+  - id: response-property-enum-value-added
+    count: 1
+  top_areas:
+  - tag: server
+    operations: 8
+  - tag: chassis
+    operations: 7
+  - tag: fabric
+    operations: 6
+  - tag: hyperflex
+    operations: 6
+  - tag: compute
+    operations: 5
+- version: 1.0.11-20260402085822330
+  previous_version: 1.0.11-20260320211357036
+  date: '2026-04-02'
+  paths_changed: 4
+  operations_changed: 10
+  changes: 19
+  breaking: 0
+  top_change_kinds:
+  - id: optional-property-added
+    count: 6
+  - id: property-pattern-changed
+    count: 4
+  - id: response-optional-property-added
+    count: 3
+  - id: response-property-enum-value-added
+    count: 2
+  top_areas:
+  - tag: cond
+    operations: 4
+  - tag: bios
+    operations: 3
+  - tag: fabric
+    operations: 3
+- version: 1.0.11-20260320211357036
+  previous_version: 1.0.11-20260305075232376
+  date: '2026-03-19'
+  paths_changed: 32
+  operations_changed: 69
+  changes: 97
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 39
+  - id: endpoint-added
+    count: 22
+  - id: optional-property-added
+    count: 14
+  - id: response-property-enum-value-added
+    count: 4
+  top_areas:
+  - tag: vnic
+    operations: 21
+  - tag: fabric
+    operations: 19
+  - tag: asset
+    operations: 8
+  - tag: workload
+    operations: 7
+  - tag: network
+    operations: 3
+- version: 1.0.11-20260305075232376
+  previous_version: 1.0.11-20260220062446536
+  date: '2026-03-05'
+  paths_changed: 3
+  operations_changed: 9
+  changes: 12
+  breaking: 0
+  top_change_kinds:
+  - id: endpoint-added
+    count: 8
+  - id: response-optional-property-added
+    count: 4
+  top_areas:
+  - tag: cond
+    operations: 9
+- version: 1.0.11-20260220062446536
+  previous_version: 1.0.11-20260211050949220
+  date: '2026-02-19'
+  paths_changed: 5
+  operations_changed: 7
+  changes: 26
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 25
+  - id: optional-property-added
+    count: 1
+  top_areas:
+  - tag: niatelemetry
+    operations: 4
+  - tag: network
+    operations: 3
+- version: 1.0.11-20260211050949220
+  previous_version: 1.0.11-20260114070309674
+  date: '2026-02-05'
+  paths_changed: 45
+  operations_changed: 108
+  changes: 189
+  breaking: 0
+  top_change_kinds:
+  - id: property-enum-value-added
+    count: 82
+  - id: response-property-enum-value-added
+    count: 48
+  - id: response-optional-property-added
+    count: 20
+  - id: optional-property-added
+    count: 18
+  top_areas:
+  - tag: software
+    operations: 30
+  - tag: workflow
+    operations: 24
+  - tag: cond
+    operations: 14
+  - tag: firmware
+    operations: 9
+  - tag: iam
+    operations: 8
+- version: 1.0.11-20260114070309674
+  previous_version: 1.0.11-20251212060818735
+  date: '2026-01-08'
+  paths_changed: 39
+  operations_changed: 66
+  changes: 85
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 29
+  - id: response-property-enum-value-added
+    count: 27
+  - id: property-enum-value-added
+    count: 22
+  - id: endpoint-added
+    count: 4
+  top_areas:
+  - tag: equipment
+    operations: 24
+  - tag: storage
+    operations: 15
+  - tag: pci
+    operations: 5
+  - tag: adapter
+    operations: 4
+  - tag: memory
+    operations: 4
+- version: 1.0.11-20251212060818735
+  previous_version: 1.0.11-20251207171943641
+  date: '2025-12-11'
+  paths_changed: 50
+  operations_changed: 93
+  changes: 114
+  breaking: 0
+  top_change_kinds:
+  - id: response-property-enum-value-added
+    count: 39
+  - id: property-enum-value-added
+    count: 32
+  - id: response-optional-property-added
+    count: 18
+  - id: endpoint-added
+    count: 14
+  top_areas:
+  - tag: equipment
+    operations: 31
+  - tag: compute
+    operations: 11
+  - tag: server
+    operations: 11
+  - tag: storage
+    operations: 6
+  - tag: ippool
+    operations: 5
+- version: 1.0.11-20251207171943641
+  previous_version: 1.0.11-20251201063037863
+  date: '2025-12-02'
+  paths_changed: 31
+  operations_changed: 69
+  changes: 104
+  breaking: 0
+  top_change_kinds:
+  - id: response-optional-property-added
+    count: 47
+  - id: optional-property-added
+    count: 38
+  - id: endpoint-added
+    count: 7
+  - id: property-enum-value-added
+    count: 5
+  top_areas:
+  - tag: workload
+    operations: 16
+  - tag: chassis
+    operations: 7
+  - tag: firmware
+    operations: 7
+  - tag: server
+    operations: 7
+  - tag: fabric
+    operations: 6
+- version: 1.0.11-20251201063037863
+  previous_version: 1.0.11-20251130190825537
+  date: '2025-11-25'
+  paths_changed: 47
+  operations_changed: 113
+  changes: 128
+  breaking: 0
+  top_change_kinds:
+  - id: property-enum-value-added
+    count: 51
+  - id: response-property-enum-value-added
+    count: 30
+  - id: response-optional-property-added
+    count: 19
+  - id: optional-property-added
+    count: 18
+  top_areas:
+  - tag: software
+    operations: 27
+  - tag: fabric
+    operations: 23
+  - tag: firmware
+    operations: 11
+  - tag: compute
+    operations: 8
+  - tag: equipment
+    operations: 6

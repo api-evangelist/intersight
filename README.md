@@ -42,7 +42,9 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Cisco Intersight is Cisco's SaaS operations platform for UCS servers, HyperFlex, Nexus fabrics and third-party infrastructure, covering provisioning, firmware lifecycle, workload optimization and Kubernetes service delivery. Its REST API is large and OpenAPI-generated — Cisco ships generated Python, Go, PowerShell and Terraform clients from it — but the source document is not served anonymously. intersight.com answers HTTP 200 with an identical 3,784-byte single-page-application shell for every path, including invented control paths, so no spec URL on that host can be confirmed by a machine.
+Cisco Intersight is Cisco's SaaS operations platform for UCS servers, HyperFlex clusters, Nexus fabrics, third-party
+storage and virtualization, covering provisioning, firmware lifecycle, workload optimization, telemetry and Kubernetes
+service delivery.
 
 ## Ownership
 
@@ -50,16 +52,61 @@ Part of the Cisco family.
 
 ## Contract status
 
-The vendor's developer host is a soft-404 farm: every path returns HTTP 200 with an identical SPA shell, including invented control paths. No contract can be confirmed by a machine. API Evangelist has not authored a substitute.
+**Published, and harvested in full.** Cisco serves the complete Intersight OpenAPI 3.0.2 contract anonymously:
+
+- **3,963 operations** across **2,448 paths** and **5,612 schemas**, spec version `1.0.11-20260807064027971`.
+- **100% of operations** carry a summary and a tag, and **all 3,963 operationIds are unique with zero containing
+  whitespace** — worth contrasting with Cisco Webex, where 41.6% of operationIds contain spaces.
+- Published as twelve per-service documents plus one combined document. The **eleven** non-SDK service documents
+  harvested into `openapi/` together cover **all 2,448 paths with nothing left over**.
+
+### Correcting the previous entry
+
+An earlier pass on 2026-08-19 recorded this provider as a **soft-404 farm with no confirmable contract**. That was
+wrong, and the correction is recorded here rather than quietly overwritten.
+
+The earlier pass probed page paths under `intersight.com`, where the `/apidocs` single-page application answers HTTP 200
+with an identical 3,784-byte shell. But `intersight.com` returns a **real HTTP 404** on a nonsense control path
+(`/zzz-control-nonsense-xyz789`, 1,193 bytes) — so it was never a soft-404 farm, only an SPA. The contract was never on
+that host at all: the docs bundle fetches it from the CDN.
+
+```
+https://cdn.intersight.com/components/an-apidocs/<build>/model/intersight-openapi-v3-<build>.json
+```
+
+That URL returns **HTTP 200, 27.5 MB, `application/json`**, anonymously. The per-service split documents are indexed at
+`model/api-ref-services.json` on the same host, and the API changelog is machine-readable at `model/changelog-<year>.json`.
+
+Ownership was checked before anything was saved: `info.title` is "Cisco Intersight", `info.contact` is
+`intersight@cisco.com`, and `servers[]` is `https://{server}` with `intersight.com` as the default.
+
+## What Cisco publishes
+
+| Surface | Status |
+|---|---|
+| OpenAPI 3.0.2 | 3,963 operations, refreshed every release |
+| Changelog | Machine-readable per-release OpenAPI diff with a boolean `breaking` flag — 17 releases, 1,584 changes, **1 breaking** |
+| OAuth 2.0 scopes | **3,317** scopes — 54 `ROLE.*` for authorization code, fine-grained `CREATE./READ./UPDATE./DELETE.*` for client credentials |
+| Authentication | HTTP Signature (draft-cavage), OAuth 2.0, cookie SSO |
+| SDKs | Python, PowerShell, Go, Terraform, Ansible — all first-party, all published within three weeks of this profile |
+| Status page | `status.intersight.com`, with "Intersight API Services" as its own component |
+| Security disclosure | Cisco PSIRT `security.txt` with CSAF machine-readable advisories (parent domain) |
+| Pricing | Two tiers, Essentials and Advantage — capabilities published in detail, **no public price** |
+| Rate limits | **None published.** No `429` and no `Retry-After` anywhere in 3,963 operations |
+| MCP server | **None.** Community servers exist; Cisco ships none for Intersight |
+| A2A agent card | **None.** Real 404 on both well-known paths |
+| AsyncAPI / webhooks | **None** documented |
 
 ## Verified links
 
 - [Portal](https://intersight.com/apidocs/introduction/overview/)
-- [Documentation](https://intersight.com/apidocs/introduction/overview/)
-- [APIReference](https://intersight.com/apidocs/apirefs/)
+- [API Reference](https://intersight.com/apidocs/apirefs/)
+- [Changelog](https://intersight.com/apidocs/introduction/changelog/)
+- [Status](https://status.intersight.com/)
+- [Getting started](https://developer.cisco.com/learning/tracks/intersight-infra/intersight-rest-api/)
+- [Licensing](https://www.cisco.com/site/us/en/products/computing/hybrid-cloud-operations/intersight-platform/licensing.html)
+- [GitHub organization](https://github.com/CiscoDevNet)
+- [Postman collection](https://github.com/CiscoDevNet/intersight-postman)
 - [ParentCompany](https://apis.io/providers/cisco/)
-- [SDKs](https://github.com/CiscoDevNet/intersight-python)
-- [Terraform](https://github.com/CiscoDevNet/terraform-provider-intersight)
-- [GitHubOrganization](https://github.com/CiscoDevNet)
 
 All URLs above returned HTTP 200 when probed on 2026-08-19.

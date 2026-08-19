@@ -1,0 +1,89 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/intersight-fabric-openapi.json, openapi/intersight-hyperflex-openapi.json, openapi/intersight-kubernetes-openapi.json,
+  openapi/intersight-nexus-insight-advisor-openapi.json, openapi/intersight-orchestrator-openapi.json,
+  openapi/intersight-server-openapi.json, openapi/intersight-storage-openapi.json, openapi/intersight-system-openapi.json,
+  openapi/intersight-telemetry-openapi.json, openapi/intersight-virtualization-openapi.json,
+  openapi/intersight-workflows-openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - cookie
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+schemes:
+- name: cookieAuth
+  type: apiKey
+  in: cookie
+  parameter: X-Starship-Token
+  description: The authentication cookie obtained from a Single-Sign-On SAML assertion.
+  sources:
+  - openapi/intersight-fabric-openapi.json
+  - openapi/intersight-hyperflex-openapi.json
+  - openapi/intersight-kubernetes-openapi.json
+  - openapi/intersight-nexus-insight-advisor-openapi.json
+  - openapi/intersight-orchestrator-openapi.json
+  - openapi/intersight-server-openapi.json
+  - openapi/intersight-storage-openapi.json
+  - openapi/intersight-system-openapi.json
+  - openapi/intersight-telemetry-openapi.json
+  - openapi/intersight-virtualization-openapi.json
+  - openapi/intersight-workflows-openapi.json
+- name: http_signature
+  type: http
+  scheme: signature
+  description: |-
+    The 'HTTP signature' security scheme. Each HTTP request is cryptographically signed
+    as specified in https://datatracker.ietf.org/doc/draft-cavage-http-signatures/.
+    See [Intersight API and SDK documentation](https://intersight.com/apidocs) for details
+    about how to configure the HTTP signature scheme.
+    You must include the following fields in the signed headers.
+      1. '(request-target)'
+      1. '(created
+  sources:
+  - openapi/intersight-fabric-openapi.json
+  - openapi/intersight-hyperflex-openapi.json
+  - openapi/intersight-kubernetes-openapi.json
+  - openapi/intersight-nexus-insight-advisor-openapi.json
+  - openapi/intersight-orchestrator-openapi.json
+  - openapi/intersight-server-openapi.json
+  - openapi/intersight-storage-openapi.json
+  - openapi/intersight-system-openapi.json
+  - openapi/intersight-telemetry-openapi.json
+  - openapi/intersight-virtualization-openapi.json
+  - openapi/intersight-workflows-openapi.json
+- name: oAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: /iam/app-authorize
+    tokenUrl: /iam/token
+    scopes: 54
+  - flow: clientCredentials
+    tokenUrl: /iam/token
+    scopes: 3315
+  description: |-
+    The client uses the OAuth2 security scheme. To use OAuth2, a client application
+    must be registered by creating a iam.AppRegistration resource.
+    The user who creates the iam.AppRegistration resource can specify a list of OAuth2
+    scopes. These iam.AppRegistration scopes restricts which subset of scopes
+    a registered client can obtain.
+    Supported OAuth2 flows are:
+    **Authorization Code**
+    In the authorizat
+  sources:
+  - openapi/intersight-fabric-openapi.json
+  - openapi/intersight-hyperflex-openapi.json
+  - openapi/intersight-kubernetes-openapi.json
+  - openapi/intersight-nexus-insight-advisor-openapi.json
+  - openapi/intersight-orchestrator-openapi.json
+  - openapi/intersight-server-openapi.json
+  - openapi/intersight-storage-openapi.json
+  - openapi/intersight-system-openapi.json
+  - openapi/intersight-telemetry-openapi.json
+  - openapi/intersight-virtualization-openapi.json
+  - openapi/intersight-workflows-openapi.json

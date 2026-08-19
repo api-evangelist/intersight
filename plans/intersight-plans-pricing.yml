@@ -1,0 +1,54 @@
+generated: '2026-08-19'
+method: searched
+source: https://www.cisco.com/c/en/us/products/collateral/computing/hybrid-cloud-operations/intersight-licensing-aag.html
+  (HTTP 200, document updated 2026-06-02)
+pricing_url: https://www.cisco.com/site/us/en/products/computing/hybrid-cloud-operations/intersight-platform/licensing.html
+plan_count: 2
+currency: null
+public_pricing: false
+model: per-server subscription licence, applied individually so tiers can be mixed within one account
+billing_periods:
+- 1 year
+- 3 years
+- 5 years
+free_trial:
+  available: true
+  length: 90 days
+  tier: Advantage
+  note: Every new Intersight account includes a 90-day free trial of the Advantage tier.
+  url: https://www.cisco.com/go/intersightfreetrial
+api_access: Not metered or tiered separately — the REST API is the same surface at every tier; what differs is which
+  product capabilities exist behind it.
+plans:
+- name: Essentials
+  price: null
+  currency: null
+  period: annual subscription per server
+  summary: Foundation tier for global visibility and health.
+  included:
+  - Unified monitoring across data centre, colocation and edge
+  - Proactive support — Cisco Connected TAC and proactive RMA
+  - Policy-driven configuration via server profiles
+  - Energy consumption insights and power-policy management
+  - Automated firmware and BIOS lifecycle
+  limits: null
+- name: Advantage
+  price: null
+  currency: null
+  period: annual subscription per server
+  summary: Adds full-stack automation and third-party ecosystem orchestration.
+  included:
+  - Everything in Essentials
+  - Ecosystem integration — ServiceNow, Splunk, Red Hat Ansible, Terraform
+  - Advanced orchestration via the Workflow Designer across storage (NetApp, Pure Storage) and virtualization (VMware,
+    Red Hat)
+  - Fleet management for Cisco Unified Edge with zero-touch provisioning
+  - Enhanced visibility — enriched topology, advanced metrics, two years of historical data
+  - Automated OS installation and storage provisioning
+  limits: null
+note: Cisco publishes the tier structure and the capability split in detail but no price at any tier — purchase
+  runs through a Cisco account representative or partner. Historically there were three tiers (Essentials, Advantage,
+  Premier); the licensing-simplification collateral dated 2026-06-02 records the reduction to two. A Base entitlement
+  is bundled at no cost with Cisco UCS, HyperFlex and UCS Director. The licensing landing page returns HTTP 403
+  to non-browser clients (Akamai bot control), so the tier detail here is read from the At-a-Glance document on
+  the same domain, which serves 200.

@@ -1,0 +1,59 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Cisco Intersight hyperflex
+  version: 1.0.0
+extends: openapi/intersight-hyperflex-openapi.json
+x-generated: '2026-08-19'
+x-method: generated
+x-source: derived from the harvested contract plus the probed artifacts in this repository
+x-note: Additive annotations only. Nothing here changes an operation, a schema or a server. The upstream document
+  is Cisco's and is stored verbatim.
+actions:
+- target: $.info
+  description: Cross-link the artifacts API Evangelist derived from this contract.
+  update:
+    x-apievangelist:
+      profile: https://apis.io/providers/intersight/
+      harvested_from: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-hyperflex-v3-1.0.11-20260807064027971.json
+      harvested_on: '2026-08-19'
+      artifacts:
+        authentication: authentication/intersight-authentication.yml
+        scopes: scopes/intersight-scopes.yml
+        conventions: conventions/intersight-conventions.yml
+        errors: errors/intersight-problem-types.yml
+        data_model: data-model/intersight-data-model.yml
+        lifecycle: lifecycle/intersight-lifecycle.yml
+        changelog: changelog/intersight-changelog.yml
+        rate_limits: rate-limits/intersight-rate-limits.yml
+        skills: skills/_index.yml
+- target: $.info
+  description: Record the runtime semantics an agent needs that the contract states only indirectly.
+  update:
+    x-runtime-semantics:
+      idempotency:
+        mechanism: conditional-requests
+        headers:
+        - If-Match
+        - If-None-Match
+        failure_status: 412
+        idempotency_key_header: null
+        token: the resource ModTime property
+      pagination:
+        style: odata-offset
+        params:
+        - $top
+        - $skip
+        - $count
+        - $inlinecount
+        default_page_size: 100
+      rate_limits:
+        published: false
+        status_code: null
+        headers: []
+        note: No 429 and no Retry-After is declared anywhere in this document.
+      tracing:
+        response_header: x-starship-traceid
+      async:
+        header: Prefer
+        value: respond-async
+        status: 202

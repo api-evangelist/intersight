@@ -1,0 +1,114 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/intersight-*-openapi.json (components.responses + components.schemas.Error)
+format: vendor-json
+rfc9457: false
+envelope:
+  media_type: application/json
+  schema: '#/components/schemas/Error'
+  required:
+  - code
+  - message
+  fields:
+  - name: code
+    type: string
+    description: Closed enum naming the nature of the error.
+  - name: messageId
+    type: string
+    description: Language-independent identifier of the specific error message.
+  - name: message
+    type: string
+    description: Human-readable description, localized via the Accept-Language request header.
+  - name: messageParams
+    type: object
+    description: Substitution parameters for the localized message template.
+  - name: traceId
+    type: string
+    description: Request trace identifier, mirrored in the x-starship-traceid response header.
+  trace_header: x-starship-traceid
+  note: 'Not RFC 9457 — there is no application/problem+json media type and no type/title/status/detail/instance
+    members. The envelope is nonetheless machine-actionable: code is a closed enum and messageId is a stable, translation-independent
+    key.'
+coverage:
+  operations: 3963
+  with_400: 3955
+  with_401: 3955
+  with_403: 3955
+  with_404: 3955
+  with_default: 3963
+  note: 8 telemetry operations return telemetry.DruidError on default instead of the shared Error schema.
+status_codes:
+- status: 400
+  response: http_status_400
+  description: Malformed syntax or failed validation. The client SHOULD NOT repeat the request without modification.
+- status: 401
+  response: http_status_401
+  description: Authentication required or refused for the supplied credentials.
+- status: 403
+  response: http_status_403
+  description: Authenticated but refused — typically insufficient role privileges.
+- status: 404
+  response: http_status_404
+  description: The specified resource was not found.
+- status: 412
+  response: null
+  description: Precondition Failed — returned when an If-Match or If-None-Match conditional request does not hold.
+    Documented on the If-Match/If-None-Match parameters rather than as a declared response.
+- status: default
+  response: default
+  description: An unexpected error occurred.
+problem_types:
+- code: InternalServerError
+  title: An internal error occurred.
+  retryable: true
+  remediation: Retry with backoff; capture x-starship-traceid and open a case with Intersight support if it persists.
+- code: InvalidMethod
+  title: The HTTP method is invalid for this API path.
+  retryable: false
+  remediation: Check the operation in the OpenAPI document — the path exists but does not support this verb.
+- code: InvalidUrl
+  title: The HTTP request contains an invalid URL.
+  retryable: false
+  remediation: Verify the /api/v1 path and the Moid path parameter.
+- code: InvalidRequest
+  title: The HTTP request contains an invalid or malformed message body.
+  retryable: false
+  remediation: Validate the body against the operation requestBody schema before retrying.
+- code: NotFound
+  title: The specified resource was not found.
+  retryable: false
+  remediation: Confirm the Moid, and that the resource lives in an organization the credential can see.
+- code: NotSupported
+  title: The request is not supported for the specified REST resource.
+  retryable: false
+  remediation: null
+- code: NotImplemented
+  title: The requested functionality is not implemented.
+  retryable: false
+  remediation: null
+- code: AuthenticationFailure
+  title: Authentication failed.
+  retryable: false
+  remediation: Re-sign the request (HTTP signature) or refresh the OAuth2 token at /iam/token. A stale X-Starship-Token
+    cookie returns messageId iam_cookie_invalid.
+- code: UnauthorizedOperation
+  title: The caller is not authorized to perform this operation.
+  retryable: false
+  remediation: The credential lacks the required ROLE.* scope — see scopes/intersight-scopes.yml.
+- code: ValidationConflict
+  title: The request conflicts with the current state of the resource.
+  retryable: false
+  remediation: Re-read the resource, take its ModTime, and retry with a fresh If-Match.
+- code: ServiceUnavailable
+  title: The service is temporarily unavailable.
+  retryable: true
+  remediation: Retry with backoff; check https://status.intersight.com/ for the Intersight API Services component.
+observed_example:
+  url: https://intersight.com/api/v1/openapi.json
+  http_status: 401
+  probed: '2026-08-19'
+  body:
+    code: AuthenticationFailure
+    messageId: iam_cookie_invalid
+    message: Cannot process the request. The cookie 'X-Starship-Token' is invalid.
+  note: Captured anonymously — the live envelope matches the declared schema exactly, including a traceId.

@@ -1,0 +1,87 @@
+generated: '2026-08-19'
+method: searched
+source: PyPI, PowerShell Gallery, proxy.golang.org, registry.terraform.io, galaxy.ansible.com, rubygems.org and
+  the CiscoDevNet GitHub organization, cross-checked against the SDK list the Intersight API docs bundle itself
+  queries (github.com/search?q=intersight+org:CiscoDevNet).
+summary:
+  total: 7
+  official: 6
+  third_party: 1
+  note: Every first-party client is generated from the same OpenAPI document harvested in openapi/ and carries the
+    same version string as the spec (1.0.11.2026072720). All six official packages published within the last three
+    weeks of this probe — there is no SDK decay signal here.
+packages:
+- language: python
+  name: intersight
+  registry: pypi
+  url: https://pypi.org/project/intersight/
+  repo: https://github.com/CiscoDevNet/intersight-python
+  official: true
+  version: 1.0.11.2026072720
+  published: '2026-08-04'
+  license: Apache-2.0
+  install: pip install intersight
+  note: Generated from the Intersight OpenAPI 3.x specification; version string tracks the spec build.
+- language: powershell
+  name: Intersight.PowerShell
+  registry: powershell-gallery
+  url: https://www.powershellgallery.com/packages/Intersight.PowerShell
+  repo: https://github.com/CiscoDevNet/intersight-powershell
+  official: true
+  version: 1.0.11.2026072720
+  published: '2026-08-06'
+  license: Apache-2.0
+  install: Install-Module -Name Intersight.PowerShell
+  note: Authored by Cisco Systems; OpenAPI-generated.
+- language: go
+  name: github.com/CiscoDevNet/intersight-go
+  registry: go-proxy
+  url: https://pkg.go.dev/github.com/CiscoDevNet/intersight-go
+  repo: https://github.com/CiscoDevNet/intersight-go
+  official: true
+  version: v0.0.0-20260805061909-31c7695c4670
+  published: '2026-08-05'
+  license: Apache-2.0
+  install: go get github.com/CiscoDevNet/intersight-go
+  note: Pseudo-version only — the module is consumed at a commit; Cisco publishes no semver tags on this repo.
+- language: hcl
+  name: CiscoDevNet/intersight
+  registry: terraform-registry
+  url: https://registry.terraform.io/providers/CiscoDevNet/intersight/latest
+  repo: https://github.com/CiscoDevNet/terraform-provider-intersight
+  official: true
+  version: 1.0.79
+  published: '2026-08-05'
+  license: Apache-2.0
+  install: terraform { required_providers { intersight = { source = "CiscoDevNet/intersight" } } }
+- language: python
+  name: cisco.intersight
+  registry: ansible-galaxy
+  url: https://galaxy.ansible.com/ui/repo/published/cisco/intersight/
+  repo: https://github.com/CiscoDevNet/intersight-ansible
+  official: true
+  version: 2.21.0
+  published: '2026-07-28'
+  license: GPL-3.0
+  install: ansible-galaxy collection install cisco.intersight
+- language: json
+  name: Intersight-Examples.postman_collection.json
+  registry: github
+  official: true
+  url: https://github.com/CiscoDevNet/intersight-postman
+  repo: https://github.com/CiscoDevNet/intersight-postman
+  version: null
+  published: '2022-04-12'
+  note: First-party Postman collection (387 KB) plus an environment file, distributed only as files in a GitHub
+    repo — there is no versioned registry entry to query, so version is null. Last commit 2022-04-12, four years
+    behind the SDKs that are regenerated on every release.
+- language: ruby
+  name: intersight_client
+  registry: rubygems
+  url: https://rubygems.org/gems/intersight_client
+  official: false
+  version: 0.1.5
+  published: '2022-07-25'
+  license: Apache-2.0
+  note: Third-party — authored by XLAB, not Cisco. CiscoDevNet/intersight-ruby exists but was last pushed 2020-08-20
+    and publishes no gem. Ruby is the one language where Intersight has no maintained first-party client.
