@@ -1,0 +1,52 @@
+aid: intersight
+name: Cisco Intersight
+description: Cisco Intersight is Cisco's SaaS operations platform for UCS servers, HyperFlex, Nexus fabrics and
+  third-party infrastructure, covering provisioning, firmware lifecycle, workload optimization and Kubernetes service
+  delivery. Its REST API is large and OpenAPI-generated — Cisco ships generated Python, Go, PowerShell and Terraform
+  clients from it — but the source document is not served anonymously. intersight.com answers HTTP 200 with an identical
+  3,784-byte single-page-application shell for every path, including invented control paths, so no spec URL on that
+  host can be confirmed by a machine.
+url: https://raw.githubusercontent.com/api-evangelist/intersight/refs/heads/main/apis.yml
+type: Index
+access: 3rd-Party
+position: Consumer
+x-type: company
+x-source: cisco-family-buildout:2026-08-19
+x-parent: cisco
+x-relationship: product
+x-contract-status: soft404
+x-contract-note: 'The vendor''s developer host is a soft-404 farm: every path returns HTTP 200 with an identical
+  SPA shell, including invented control paths. No contract can be confirmed by a machine. API Evangelist has not
+  authored a substitute.'
+specificationVersion: '0.23'
+created: '2026-08-19'
+modified: '2026-08-19'
+tags:
+- Infrastructure
+- Cloud Operations
+- Data Center
+- Compute
+- Networking
+- Enterprise
+apis: []
+common:
+- type: Portal
+  url: https://intersight.com/apidocs/introduction/overview/
+- type: Documentation
+  url: https://intersight.com/apidocs/introduction/overview/
+- type: APIReference
+  url: https://intersight.com/apidocs/apirefs/
+- type: ParentCompany
+  url: https://apis.io/providers/cisco/
+  name: Cisco
+- type: SDKs
+  url: https://github.com/CiscoDevNet/intersight-python
+- type: Terraform
+  url: https://github.com/CiscoDevNet/terraform-provider-intersight
+- type: GitHubOrganization
+  url: https://github.com/CiscoDevNet
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
