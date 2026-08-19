@@ -1,13 +1,13 @@
 aid: intersight
 name: Cisco Intersight
-description: 'Cisco Intersight is Cisco''s SaaS operations platform for UCS servers, HyperFlex clusters, Nexus fabrics, third-party
-  storage and virtualization, covering provisioning, firmware lifecycle, workload optimization, telemetry and Kubernetes service
-  delivery. Cisco publishes the full OpenAPI 3.0.2 contract for the platform anonymously — 3,963 operations across 2,448 paths
-  and 5,612 schemas, split into twelve per-service documents plus a combined document, served from cdn.intersight.com and
-  refreshed on every production release. Every operation carries a summary, a tag and a unique operationId. The API uses OData-style
-  query semantics ($filter, $top, $skip, $select, $expand, $apply), HTTP-signature or OAuth2 authorization-code authentication
-  with 54 role scopes, RFC 7240 Prefer: respond-async for long-running work, and conditional requests (If-Match / If-None-Match)
-  for lost-update protection.'
+description: 'Cisco Intersight is Cisco''s SaaS operations platform for UCS servers, HyperFlex clusters, Nexus fabrics,
+  third-party storage and virtualization, covering provisioning, firmware lifecycle, workload optimization, telemetry
+  and Kubernetes service delivery. Cisco publishes the full OpenAPI 3.0.2 contract for the platform anonymously
+  — 3,963 operations across 2,448 paths and 5,612 schemas, split into twelve per-service documents plus a combined
+  document, served from cdn.intersight.com and refreshed on every production release. Every operation carries a
+  summary, a tag and a unique operationId. The API uses OData-style query semantics ($filter, $top, $skip, $select,
+  $expand, $apply), HTTP-signature or OAuth2 authorization-code authentication with 54 role scopes, RFC 7240 Prefer:
+  respond-async for long-running work, and conditional requests (If-Match / If-None-Match) for lost-update protection.'
 url: https://raw.githubusercontent.com/api-evangelist/intersight/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
@@ -16,12 +16,11 @@ x-type: company
 x-source: cisco-family-buildout:2026-08-19
 x-parent: cisco
 x-relationship: product
-x-contract-status: published
-x-contract-note: 'Corrected 2026-08-19. The 2026-08-19 first pass recorded a soft-404 because it probed only intersight.com
-  page paths, where the /apidocs SPA answers 200 with a 3,784-byte shell. The real contract is served anonymously from cdn.intersight.com:
-  the apidocs bundle fetches https://cdn.intersight.com/components/an-apidocs/<build>/model/intersight-openapi-v3-<build>.json
-  (HTTP 200, 27.5 MB, application/json) and the per-service split documents listed in model/api-ref-services.json. intersight.com
-  itself returns a real 404 on a nonsense control path, so it is not a soft-404 farm.'
+x-contract-status: real
+x-contract-note: Cisco publishes the full Intersight OpenAPI 3.0.2 anonymously from cdn.intersight.com — a 27.5MB
+  master document, 3,963 operations / 2,448 paths / 5,612 schemas, plus 11 per-service documents covering 100% of
+  its paths. SHA-256 reconfirmed 2026-08-19. Note intersight.com itself remains a soft-404 farm; the contract lives
+  on the CDN, not the app host.
 specificationVersion: '0.23'
 created: '2026-08-19'
 modified: '2026-08-19'
@@ -41,9 +40,9 @@ tags:
 apis:
 - aid: intersight:fabric
   name: Cisco Intersight Fabric API
-  description: Fabric interconnect, Ethernet and Fibre Channel port, VLAN/VSAN, link aggregation and network policy operations
-    for Cisco UCS domains managed by Intersight. 629 operations across 369 paths and 8 resource tag(s), from Cisco's own OpenAPI
-    3.0.2 document.
+  description: Fabric interconnect, Ethernet and Fibre Channel port, VLAN/VSAN, link aggregation and network policy
+    operations for Cisco UCS domains managed by Intersight. 629 operations across 369 paths and 8 resource tag(s),
+    from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -114,8 +113,8 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:kubernetes
   name: Cisco Intersight Kubernetes API
-  description: Custom resource definition operations for Intersight Kubernetes Service (IKS) cluster and add-on management.
-    6 operations across 2 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  description: Custom resource definition operations for Intersight Kubernetes Service (IKS) cluster and add-on
+    management. 6 operations across 2 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -146,8 +145,8 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:nexus-insight-advisor
   name: Cisco Intersight Nexus Insight Advisor API
-  description: Nexus Dashboard Insights advisories, telemetry, hardware/software compliance and field-notice operations for
-    Nexus fabrics. 238 operations across 238 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  description: Nexus Dashboard Insights advisories, telemetry, hardware/software compliance and field-notice operations
+    for Nexus fabrics. 238 operations across 238 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -179,8 +178,8 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:orchestrator
   name: Cisco Intersight Orchestrator API
-  description: Workflow designer, connector pack, converged-infrastructure and Infrastructure-as-a-Service orchestration operations.
-    183 operations across 98 paths and 5 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  description: Workflow designer, connector pack, converged-infrastructure and Infrastructure-as-a-Service orchestration
+    operations. 183 operations across 98 paths and 5 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -215,9 +214,9 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:server
   name: Cisco Intersight Server API
-  description: Server profiles, BIOS/boot/adapter/storage policies, firmware upgrade, chassis and equipment inventory, and
-    physical compute lifecycle operations for Cisco UCS. 1499 operations across 984 paths and 46 resource tag(s), from Cisco's
-    own OpenAPI 3.0.2 document.
+  description: Server profiles, BIOS/boot/adapter/storage policies, firmware upgrade, chassis and equipment inventory,
+    and physical compute lifecycle operations for Cisco UCS. 1499 operations across 984 paths and 46 resource tag(s),
+    from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -254,8 +253,8 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:storage
   name: Cisco Intersight Storage API
-  description: Third-party and Cisco storage array, controller, volume and disk-group inventory and policy operations. 212
-    operations across 204 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  description: Third-party and Cisco storage array, controller, volume and disk-group inventory and policy operations.
+    212 operations across 204 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -285,9 +284,9 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:system
   name: Cisco Intersight System API
-  description: Account, IAM, appliance, licensing, audit, bulk request, notification, search and platform administration operations
-    for the Intersight tenant itself. 1192 operations across 671 paths and 44 resource tag(s), from Cisco's own OpenAPI 3.0.2
-    document.
+  description: Account, IAM, appliance, licensing, audit, bulk request, notification, search and platform administration
+    operations for the Intersight tenant itself. 1192 operations across 671 paths and 44 resource tag(s), from Cisco's
+    own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -324,8 +323,8 @@ apis:
     url: rate-limits/intersight-rate-limits.yml
 - aid: intersight:telemetry
   name: Cisco Intersight Telemetry API
-  description: Time-series telemetry query operations returning aggregated infrastructure metrics via the Druid query interface.
-    8 operations across 8 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  description: Time-series telemetry query operations returning aggregated infrastructure metrics via the Druid
+    query interface. 8 operations across 8 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -357,7 +356,8 @@ apis:
 - aid: intersight:virtualization
   name: Cisco Intersight Virtualization API
   description: Hypervisor, virtual machine, datastore and virtual-console operations for VMware, Hyper-V and Intersight-managed
-    virtualization targets. 96 operations across 50 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+    virtualization targets. 96 operations across 50 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2
+    document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
@@ -389,8 +389,8 @@ apis:
 - aid: intersight:workflows
   name: Cisco Intersight Workflows API
   description: Workflow definitions, task definitions, batch API executors, service items, catalog items and cross-domain
-    automation operations, including Meraki, DNAC, FMC and Catalyst SD-WAN connectors. 732 operations across 409 paths and
-    25 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+    automation operations, including Meraki, DNAC, FMC and Catalyst SD-WAN connectors. 732 operations across 409
+    paths and 25 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
