@@ -1,11 +1,13 @@
 aid: intersight
 name: Cisco Intersight
-description: Cisco Intersight is Cisco's SaaS operations platform for UCS servers, HyperFlex, Nexus fabrics and
-  third-party infrastructure, covering provisioning, firmware lifecycle, workload optimization and Kubernetes service
-  delivery. Its REST API is large and OpenAPI-generated — Cisco ships generated Python, Go, PowerShell and Terraform
-  clients from it — but the source document is not served anonymously. intersight.com answers HTTP 200 with an identical
-  3,784-byte single-page-application shell for every path, including invented control paths, so no spec URL on that
-  host can be confirmed by a machine.
+description: 'Cisco Intersight is Cisco''s SaaS operations platform for UCS servers, HyperFlex clusters, Nexus fabrics, third-party
+  storage and virtualization, covering provisioning, firmware lifecycle, workload optimization, telemetry and Kubernetes service
+  delivery. Cisco publishes the full OpenAPI 3.0.2 contract for the platform anonymously — 3,963 operations across 2,448 paths
+  and 5,612 schemas, split into twelve per-service documents plus a combined document, served from cdn.intersight.com and
+  refreshed on every production release. Every operation carries a summary, a tag and a unique operationId. The API uses OData-style
+  query semantics ($filter, $top, $skip, $select, $expand, $apply), HTTP-signature or OAuth2 authorization-code authentication
+  with 54 role scopes, RFC 7240 Prefer: respond-async for long-running work, and conditional requests (If-Match / If-None-Match)
+  for lost-update protection.'
 url: https://raw.githubusercontent.com/api-evangelist/intersight/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
@@ -14,10 +16,12 @@ x-type: company
 x-source: cisco-family-buildout:2026-08-19
 x-parent: cisco
 x-relationship: product
-x-contract-status: soft404
-x-contract-note: 'The vendor''s developer host is a soft-404 farm: every path returns HTTP 200 with an identical
-  SPA shell, including invented control paths. No contract can be confirmed by a machine. API Evangelist has not
-  authored a substitute.'
+x-contract-status: published
+x-contract-note: 'Corrected 2026-08-19. The 2026-08-19 first pass recorded a soft-404 because it probed only intersight.com
+  page paths, where the /apidocs SPA answers 200 with a 3,784-byte shell. The real contract is served anonymously from cdn.intersight.com:
+  the apidocs bundle fetches https://cdn.intersight.com/components/an-apidocs/<build>/model/intersight-openapi-v3-<build>.json
+  (HTTP 200, 27.5 MB, application/json) and the per-service split documents listed in model/api-ref-services.json. intersight.com
+  itself returns a real 404 on a nonsense control path, so it is not a soft-404 farm.'
 specificationVersion: '0.23'
 created: '2026-08-19'
 modified: '2026-08-19'
@@ -28,25 +32,484 @@ tags:
 - Compute
 - Networking
 - Enterprise
-apis: []
+- Storage
+- Virtualization
+- Kubernetes
+- Orchestration
+- Telemetry
+- Firmware Management
+apis:
+- aid: intersight:fabric
+  name: Cisco Intersight Fabric API
+  description: Fabric interconnect, Ethernet and Fibre Channel port, VLAN/VSAN, link aggregation and network policy operations
+    for Cisco UCS domains managed by Intersight. 629 operations across 369 paths and 8 resource tag(s), from Cisco's own OpenAPI
+    3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Networking
+  - Fabric
+  - Data Center
+  - capability
+  - console
+  - equipment
+  - ether
+  - fabric
+  - fc
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-fabric-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-fabric-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-fabric-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:hyperflex
+  name: Cisco Intersight HyperFlex API
+  description: HyperFlex hyperconverged cluster profiles, node configuration, capacity forecasting and cluster recommendation
+    operations. 296 operations across 162 paths and 4 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Hyperconverged
+  - Storage
+  - Compute
+  - comm
+  - forecast
+  - hyperflex
+  - recommendation
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-hyperflex-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-hyperflex-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-hyperflex-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:kubernetes
+  name: Cisco Intersight Kubernetes API
+  description: Custom resource definition operations for Intersight Kubernetes Service (IKS) cluster and add-on management.
+    6 operations across 2 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Kubernetes
+  - Containers
+  - Orchestration
+  - crd
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-kubernetes-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-kubernetes-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-kubernetes-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:nexus-insight-advisor
+  name: Cisco Intersight Nexus Insight Advisor API
+  description: Nexus Dashboard Insights advisories, telemetry, hardware/software compliance and field-notice operations for
+    Nexus fabrics. 238 operations across 238 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Networking
+  - Observability
+  - Analytics
+  - niaapi
+  - niatelemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-nexus-insight-advisor-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-nexus-insight-advisor-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-nexus-insight-advisor-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:orchestrator
+  name: Cisco Intersight Orchestrator API
+  description: Workflow designer, connector pack, converged-infrastructure and Infrastructure-as-a-Service orchestration operations.
+    183 operations across 98 paths and 5 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Orchestration
+  - Automation
+  - Workflows
+  - connectorpack
+  - convergedinfra
+  - iaas
+  - ucsd
+  - workflow
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-orchestrator-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-orchestrator-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-orchestrator-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:server
+  name: Cisco Intersight Server API
+  description: Server profiles, BIOS/boot/adapter/storage policies, firmware upgrade, chassis and equipment inventory, and
+    physical compute lifecycle operations for Cisco UCS. 1499 operations across 984 paths and 46 resource tag(s), from Cisco's
+    own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Compute
+  - Servers
+  - Firmware
+  - Data Center
+  - access
+  - adapter
+  - bios
+  - boot
+  - capability
+  - certificatemanagement
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-server-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-server-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-server-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:storage
+  name: Cisco Intersight Storage API
+  description: Third-party and Cisco storage array, controller, volume and disk-group inventory and policy operations. 212
+    operations across 204 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Storage
+  - Data Center
+  - storage
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-storage-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-storage-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-storage-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:system
+  name: Cisco Intersight System API
+  description: Account, IAM, appliance, licensing, audit, bulk request, notification, search and platform administration operations
+    for the Intersight tenant itself. 1192 operations across 671 paths and 44 resource tag(s), from Cisco's own OpenAPI 3.0.2
+    document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Identity
+  - Administration
+  - Licensing
+  - Audit
+  - aaa
+  - apiproxy
+  - appliance
+  - asset
+  - auditd
+  - bulk
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-system-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-system-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-system-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:telemetry
+  name: Cisco Intersight Telemetry API
+  description: Time-series telemetry query operations returning aggregated infrastructure metrics via the Druid query interface.
+    8 operations across 8 paths and 1 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Telemetry
+  - Metrics
+  - Observability
+  - telemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-telemetry-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-telemetry-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-telemetry-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:virtualization
+  name: Cisco Intersight Virtualization API
+  description: Hypervisor, virtual machine, datastore and virtual-console operations for VMware, Hyper-V and Intersight-managed
+    virtualization targets. 96 operations across 50 paths and 2 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Virtualization
+  - Compute
+  - virtualization
+  - vmrc
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-virtualization-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-virtualization-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-virtualization-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
+- aid: intersight:workflows
+  name: Cisco Intersight Workflows API
+  description: Workflow definitions, task definitions, batch API executors, service items, catalog items and cross-domain
+    automation operations, including Meraki, DNAC, FMC and Catalyst SD-WAN connectors. 732 operations across 409 paths and
+    25 resource tag(s), from Cisco's own OpenAPI 3.0.2 document.
+  humanURL: https://intersight.com/apidocs/apirefs/
+  baseURL: https://intersight.com
+  tags:
+  - Workflows
+  - Automation
+  - Orchestration
+  - aaa
+  - asset
+  - catalystsdwan
+  - connectorpack
+  - convergedinfra
+  - dnac
+  properties:
+  - type: OpenAPI
+    url: openapi/intersight-workflows-openapi.json
+  - type: OpenAPI Source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-workflows-v3-1.0.11-20260807064027971.json
+  - type: Documentation
+    url: https://intersight.com/apidocs/introduction/overview/
+  - type: APIReference
+    url: https://intersight.com/apidocs/apirefs/
+  - type: Authentication
+    url: authentication/intersight-authentication.yml
+  - type: Overlay
+    url: overlays/intersight-workflows-overlay.yaml
+  - type: Conventions
+    url: conventions/intersight-conventions.yml
+  - type: ErrorCatalog
+    url: errors/intersight-problem-types.yml
+  - type: OAuthScopes
+    url: scopes/intersight-scopes.yml
+  - type: RateLimits
+    url: rate-limits/intersight-rate-limits.yml
 common:
+- type: DomainSecurity
+  url: security/intersight-domain-security.yml
+- type: OAuthScopes
+  url: scopes/intersight-scopes.yml
+- type: ParentCompany
+  url: https://apis.io/providers/cisco/
+  name: Cisco
+  x-relationship: product
+  x-generated-by: cisco-family:2026-08-19
 - type: Portal
   url: https://intersight.com/apidocs/introduction/overview/
 - type: Documentation
   url: https://intersight.com/apidocs/introduction/overview/
 - type: APIReference
   url: https://intersight.com/apidocs/apirefs/
-- type: ParentCompany
-  url: https://apis.io/providers/cisco/
-  name: Cisco
 - type: SDKs
   url: https://github.com/CiscoDevNet/intersight-python
 - type: Terraform
   url: https://github.com/CiscoDevNet/terraform-provider-intersight
 - type: GitHubOrganization
   url: https://github.com/CiscoDevNet
+- type: Packages
+  url: packages/intersight-packages.yml
+- type: SDKs
+  url: packages/intersight-packages.yml
+- type: Postman
+  url: https://github.com/CiscoDevNet/intersight-postman
+- type: SecurityTxt
+  url: well-known/intersight-security.txt
+- type: LLMsTxt
+  url: llms/intersight-llms.txt
+- type: Conformance
+  url: conformance/intersight-conformance.yml
+- type: TrustCenter
+  url: security/intersight-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/intersight-vulnerability-disclosure.yml
+- type: Security
+  url: security/intersight-vulnerability-disclosure.yml
+- type: ErrorCatalog
+  url: errors/intersight-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/intersight-lifecycle.yml
+- type: StatusPage
+  url: https://status.intersight.com/
+- type: Deprecation
+  url: lifecycle/intersight-lifecycle.yml
+- type: Conventions
+  url: conventions/intersight-conventions.yml
+- type: Idempotency
+  url: conventions/intersight-conventions.yml
+- type: ChangeLog
+  url: changelog/intersight-changelog.yml
+- type: DataModel
+  url: data-model/intersight-data-model.yml
+- type: Plans
+  url: plans/intersight-plans-pricing.yml
+- type: Pricing
+  url: https://www.cisco.com/site/us/en/products/computing/hybrid-cloud-operations/intersight-platform/licensing.html
+- type: RateLimits
+  url: rate-limits/intersight-rate-limits.yml
+- type: Sandbox
+  url: sandbox/intersight-sandbox.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/intersight-authentication.yml
+- type: GettingStarted
+  url: https://developer.cisco.com/learning/tracks/intersight-infra/intersight-rest-api/
+- type: Support
+  url: https://intersight.com/help
+- type: SignUp
+  url: https://www.cisco.com/go/intersightfreetrial
+- type: TermsOfService
+  url: https://www.cisco.com/c/en/us/about/legal/cloud-and-software/end_user_license_agreement.html
+- type: PrivacyPolicy
+  url: https://www.cisco.com/c/en/us/about/legal/privacy-full.html
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+image: https://cdn.intersight.com/components/ucs-an-common/1.0.11-20260717085249663/images/social/socialMediaPreviewImage1024.png
+x-enrichment:
+  date: '2026-08-19'
+  status: enriched
+  artifacts_added: 49
+  pass: local-v1
