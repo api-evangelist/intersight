@@ -27,6 +27,19 @@ modified: '2026-08-19'
 tags:
 - Infrastructure
 - Cloud Operations
+- Data-Center
+- Compute
+- Networking
+- Enterprise
+- Storage
+- Virtualization
+- Kubernetes
+- Orchestration
+- Telemetry
+- Firmware Management
+tags_raw:
+- Infrastructure
+- Cloud Operations
 - Data Center
 - Compute
 - Networking
@@ -46,6 +59,15 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Networking
+  - Fabric
+  - Data-Center
+  - Capabilities
+  - Console
+  - Equipment
+  - ether
+  - fc
+  tags_raw:
   - Networking
   - Fabric
   - Data Center
@@ -83,6 +105,14 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Hyper-Converged
+  - Storage
+  - Compute
+  - comm
+  - Forecast
+  - hyperflex
+  - Recommendation
+  tags_raw:
   - Hyperconverged
   - Storage
   - Compute
@@ -118,6 +148,11 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Kubernetes
+  - Containers
+  - Orchestration
+  - CRD
+  tags_raw:
   - Kubernetes
   - Containers
   - Orchestration
@@ -188,6 +223,14 @@ apis:
   - Workflows
   - connectorpack
   - convergedinfra
+  - Infrastructure-as-a-Service
+  - ucsd
+  tags_raw:
+  - Orchestration
+  - Automation
+  - Workflows
+  - connectorpack
+  - convergedinfra
   - iaas
   - ucsd
   - workflow
@@ -220,6 +263,17 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Compute
+  - Servers
+  - Firmware
+  - Data-Center
+  - Access
+  - Adapter
+  - bios
+  - Boot
+  - Capabilities
+  - Certificate Management
+  tags_raw:
   - Compute
   - Servers
   - Firmware
@@ -259,6 +313,9 @@ apis:
   baseURL: https://intersight.com
   tags:
   - Storage
+  - Data-Center
+  tags_raw:
+  - Storage
   - Data Center
   - storage
   properties:
@@ -290,6 +347,17 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Identity
+  - Administration
+  - Licensing
+  - Audit
+  - aaa
+  - API Proxy
+  - Appliance
+  - Asset
+  - auditd
+  - Bulk
+  tags_raw:
   - Identity
   - Administration
   - Licensing
@@ -331,6 +399,10 @@ apis:
   - Telemetry
   - Metrics
   - Observability
+  tags_raw:
+  - Telemetry
+  - Metrics
+  - Observability
   - telemetry
   properties:
   - type: OpenAPI
@@ -361,6 +433,10 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Virtualization
+  - Compute
+  - vmrc
+  tags_raw:
   - Virtualization
   - Compute
   - virtualization
@@ -394,6 +470,16 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Workflows
+  - Automation
+  - Orchestration
+  - aaa
+  - Asset
+  - catalystsdwan
+  - connectorpack
+  - convergedinfra
+  - dnac
+  tags_raw:
   - Workflows
   - Automation
   - Orchestration
