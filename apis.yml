@@ -11,6 +11,18 @@ description: 'Cisco Intersight is Cisco''s SaaS operations platform for UCS serv
 url: https://raw.githubusercontent.com/api-evangelist/intersight/refs/heads/main/apis.yml
 type: Index
 access: 3rd-Party
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 position: Consumer
 x-type: company
 x-source: cisco-family-buildout:2026-08-19
@@ -6725,6 +6737,9 @@ apis:
     url: >-
       https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-workflows-v3-1.0.11-20260807064027971.json
 common:
+- type: CapabilityMap
+  url: capabilities/intersight-capability-edges.yml
+  name: Cisco Intersight Business Capability Map
 - type: Overlay
   url: overlays/intersight-fabric-overlay.yaml
 - type: Overlay
