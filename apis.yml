@@ -126,6 +126,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Access
+  tags_raw:
   - access
   properties:
   - type: OpenAPI
@@ -183,6 +185,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Adapter
+  tags_raw:
   - adapter
   properties:
   - type: OpenAPI
@@ -240,6 +244,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - API Proxy
+  tags_raw:
   - apiproxy
   properties:
   - type: OpenAPI
@@ -297,6 +303,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Appliance
+  tags_raw:
   - appliance
   properties:
   - type: OpenAPI
@@ -354,6 +362,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Asset
+  tags_raw:
   - asset
   properties:
   - type: OpenAPI
@@ -525,6 +535,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Boot
+  tags_raw:
   - boot
   properties:
   - type: OpenAPI
@@ -582,6 +594,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Bulk
+  tags_raw:
   - bulk
   properties:
   - type: OpenAPI
@@ -639,6 +653,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Capabilities
+  tags_raw:
   - capability
   properties:
   - type: OpenAPI
@@ -754,6 +770,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Certificate Management
+  tags_raw:
   - certificatemanagement
   properties:
   - type: OpenAPI
@@ -811,6 +829,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Chassis
+  tags_raw:
   - chassis
   properties:
   - type: OpenAPI
@@ -868,6 +888,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - CLI
+  tags_raw:
   - cli
   properties:
   - type: OpenAPI
@@ -925,6 +947,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Cloud
+  tags_raw:
   - cloud
   properties:
   - type: OpenAPI
@@ -1039,6 +1063,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Compute
+  tags_raw:
   - compute
   properties:
   - type: OpenAPI
@@ -1210,6 +1236,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Console
+  tags_raw:
   - console
   properties:
   - type: OpenAPI
@@ -1381,6 +1409,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - CRD
+  tags_raw:
   - crd
   properties:
   - type: OpenAPI
@@ -1552,6 +1582,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Energy
+  tags_raw:
   - energy
   properties:
   - type: OpenAPI
@@ -1609,6 +1641,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Equipment
+  tags_raw:
   - equipment
   properties:
   - type: OpenAPI
@@ -1780,6 +1814,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Fabric
+  tags_raw:
   - fabric
   properties:
   - type: OpenAPI
@@ -2008,6 +2044,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Feedback
+  tags_raw:
   - feedback
   properties:
   - type: OpenAPI
@@ -2065,6 +2103,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Firmware
+  tags_raw:
   - firmware
   properties:
   - type: OpenAPI
@@ -2179,6 +2219,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Forecast
+  tags_raw:
   - forecast
   properties:
   - type: OpenAPI
@@ -2236,6 +2278,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Graphics
+  tags_raw:
   - graphics
   properties:
   - type: OpenAPI
@@ -2293,6 +2337,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - HCI
+  tags_raw:
   - hci
   properties:
   - type: OpenAPI
@@ -2350,6 +2396,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - HCL
+  tags_raw:
   - hcl
   properties:
   - type: OpenAPI
@@ -2464,6 +2512,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Infrastructure-as-a-Service
+  tags_raw:
   - iaas
   properties:
   - type: OpenAPI
@@ -2521,6 +2571,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - IAM
+  tags_raw:
   - iam
   properties:
   - type: OpenAPI
@@ -2578,6 +2630,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Inventory
+  tags_raw:
   - inventory
   properties:
   - type: OpenAPI
@@ -2692,6 +2746,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - IP Pool
+  tags_raw:
   - ippool
   properties:
   - type: OpenAPI
@@ -2863,6 +2919,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - KVM
+  tags_raw:
   - kvm
   properties:
   - type: OpenAPI
@@ -2920,6 +2978,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - License
+  tags_raw:
   - license
   properties:
   - type: OpenAPI
@@ -2977,6 +3037,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Ls
+  tags_raw:
   - ls
   properties:
   - type: OpenAPI
@@ -3091,6 +3153,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Management
+  tags_raw:
   - management
   properties:
   - type: OpenAPI
@@ -3148,6 +3212,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Memory
+  tags_raw:
   - memory
   properties:
   - type: OpenAPI
@@ -3205,6 +3271,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Meraki
+  tags_raw:
   - meraki
   properties:
   - type: OpenAPI
@@ -3262,6 +3330,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Meta
+  tags_raw:
   - meta
   properties:
   - type: OpenAPI
@@ -3319,6 +3389,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Metrics
+  tags_raw:
   - metrics
   properties:
   - type: OpenAPI
@@ -3376,6 +3448,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Mgmt
+  tags_raw:
   - mgmt
   properties:
   - type: OpenAPI
@@ -3433,6 +3507,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Monitoring
+  tags_raw:
   - monitoring
   properties:
   - type: OpenAPI
@@ -3490,6 +3566,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Network
+  tags_raw:
   - network
   properties:
   - type: OpenAPI
@@ -3718,6 +3796,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Notification
+  tags_raw:
   - notification
   properties:
   - type: OpenAPI
@@ -3775,6 +3855,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - NTP
+  tags_raw:
   - ntp
   properties:
   - type: OpenAPI
@@ -3832,6 +3914,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -3889,6 +3973,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - On-Prem
+  tags_raw:
   - onprem
   properties:
   - type: OpenAPI
@@ -3946,6 +4032,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - OpenAPI
+  tags_raw:
   - openapi
   properties:
   - type: OpenAPI
@@ -4060,6 +4148,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Organization
+  tags_raw:
   - organization
   properties:
   - type: OpenAPI
@@ -4117,6 +4207,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Os
+  tags_raw:
   - os
   properties:
   - type: OpenAPI
@@ -4175,6 +4267,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Partner Integration
+  tags_raw:
   - partnerintegration
   properties:
   - type: OpenAPI
@@ -4232,6 +4326,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - PCI
+  tags_raw:
   - pci
   properties:
   - type: OpenAPI
@@ -4289,6 +4385,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Pool
+  tags_raw:
   - pool
   properties:
   - type: OpenAPI
@@ -4346,6 +4444,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Port
+  tags_raw:
   - port
   properties:
   - type: OpenAPI
@@ -4403,6 +4503,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Power
+  tags_raw:
   - power
   properties:
   - type: OpenAPI
@@ -4460,6 +4562,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Processor
+  tags_raw:
   - processor
   properties:
   - type: OpenAPI
@@ -4517,6 +4621,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Rack
+  tags_raw:
   - rack
   properties:
   - type: OpenAPI
@@ -4574,6 +4680,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Recommendation
+  tags_raw:
   - recommendation
   properties:
   - type: OpenAPI
@@ -4631,6 +4739,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Recovery
+  tags_raw:
   - recovery
   properties:
   - type: OpenAPI
@@ -4688,6 +4798,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Resource
+  tags_raw:
   - resource
   properties:
   - type: OpenAPI
@@ -4745,6 +4857,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Resource - Pool
+  tags_raw:
   - resourcepool
   properties:
   - type: OpenAPI
@@ -4859,6 +4973,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Scheduler
+  tags_raw:
   - scheduler
   properties:
   - type: OpenAPI
@@ -5030,6 +5146,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Search
+  tags_raw:
   - search
   properties:
   - type: OpenAPI
@@ -5087,6 +5205,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Security
+  tags_raw:
   - security
   properties:
   - type: OpenAPI
@@ -5144,6 +5264,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Server
+  tags_raw:
   - server
   properties:
   - type: OpenAPI
@@ -5201,6 +5323,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - ServiceNow
+  tags_raw:
   - servicenow
   properties:
   - type: OpenAPI
@@ -5258,6 +5382,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - SMTP
+  tags_raw:
   - smtp
   properties:
   - type: OpenAPI
@@ -5315,6 +5441,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - SNMP
+  tags_raw:
   - snmp
   properties:
   - type: OpenAPI
@@ -5372,6 +5500,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Software
+  tags_raw:
   - software
   properties:
   - type: OpenAPI
@@ -5487,6 +5617,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Sol
+  tags_raw:
   - sol
   properties:
   - type: OpenAPI
@@ -5544,6 +5676,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - SSH
+  tags_raw:
   - ssh
   properties:
   - type: OpenAPI
@@ -5601,6 +5735,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Storage
+  tags_raw:
   - storage
   properties:
   - type: OpenAPI
@@ -5658,6 +5794,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Syslog
+  tags_raw:
   - syslog
   properties:
   - type: OpenAPI
@@ -5772,6 +5910,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Task
+  tags_raw:
   - task
   properties:
   - type: OpenAPI
@@ -5887,6 +6027,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Telemetry
+  tags_raw:
   - telemetry
   properties:
   - type: OpenAPI
@@ -5944,6 +6086,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Terminal
+  tags_raw:
   - terminal
   properties:
   - type: OpenAPI
@@ -6001,6 +6145,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Thermal
+  tags_raw:
   - thermal
   properties:
   - type: OpenAPI
@@ -6058,6 +6204,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Top
+  tags_raw:
   - top
   properties:
   - type: OpenAPI
@@ -6229,6 +6377,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Views
+  tags_raw:
   - view
   properties:
   - type: OpenAPI
@@ -6286,6 +6436,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Virtualization
+  tags_raw:
   - virtualization
   properties:
   - type: OpenAPI
@@ -6514,6 +6666,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - VRF
+  tags_raw:
   - vrf
   properties:
   - type: OpenAPI
@@ -6571,6 +6725,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Webhook
+  tags_raw:
   - webhook
   properties:
   - type: OpenAPI
@@ -6628,6 +6784,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Workflows
+  tags_raw:
   - workflow
   properties:
   - type: OpenAPI
@@ -6685,6 +6843,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Workload
+  tags_raw:
   - workload
   properties:
   - type: OpenAPI
