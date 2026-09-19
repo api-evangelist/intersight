@@ -320,7 +320,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Appliance
+  - Appliances
   tags_raw:
   - appliance
   properties:
@@ -2528,7 +2528,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - IAM
+  - Identity and Access Management
   tags_raw:
   - iam
   properties:
@@ -3464,7 +3464,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Network
+  - Networks
   tags_raw:
   - network
   properties:
@@ -4105,7 +4105,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Port
+  - Ports
   tags_raw:
   - port
   properties:
@@ -4223,7 +4223,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Processor
+  - Processors
   tags_raw:
   - processor
   properties:
@@ -4341,7 +4341,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Recommendation
+  - Recommendations
   tags_raw:
   - recommendation
   properties:
@@ -4925,7 +4925,7 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
-  - Server
+  - Servers
   tags_raw:
   - server
   properties:
@@ -6563,6 +6563,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -6621,6 +6623,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - Certificate Management
+  tags_raw:
   - certificate management
   properties:
   - type: OpenAPI
@@ -6735,6 +6739,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - On-Prem
+  tags_raw:
   - On Prem
   properties:
   - type: OpenAPI
@@ -6792,6 +6798,8 @@ apis:
   humanURL: https://intersight.com/apidocs/apirefs/
   baseURL: https://intersight.com
   tags:
+  - OpenAPI
+  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
