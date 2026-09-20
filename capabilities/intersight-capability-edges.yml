@@ -1,0 +1,514 @@
+slug: intersight
+provider: Cisco Intersight
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 51
+edges:
+- tag: iam
+  spec_file: intersight-iam-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: CreateIamAccount 'iam.Account'; CreateIamApiKey 'iam.ApiKey'; schemas iam.PrivilegeSet.Response,
+    iam.LdapPolicy, iam.Idp.List, iam.LocalUserPasswordPolicy.Response, iam.Session.List
+  reason: Accounts, users, API keys, privilege sets, LDAP/IdP federation, password policies and sessions
+    — identity and access management for the platform.
+- tag: compute
+  spec_file: intersight-compute-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GET /api/v1/compute/Blades  GetComputeBladeList  Read a 'compute.Blade' resource.
+  reason: Direct management of physical compute resources — blades, boards, blade identities, server settings
+    — the definition of compute infrastructure management.
+- tag: equipment
+  spec_file: intersight-equipment-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GetEquipmentChassisList ... equipment.Fan, equipment.PsuControl, equipment.Fex, equipment.RackEnclosure,
+    equipment.Tpm
+  reason: Physical hardware inventory and control — chassis, controllers, fans, PSUs, FEX, risers, rack
+    enclosures — for data-centre compute. Squarely cross-industry IT Infrastructure Management.
+- tag: fabric
+  spec_file: intersight-fabric-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: CreateFabricAppliancePcRole ... fabric.PortPolicy, fabric.EthNetworkGroupPolicyInventory,
+    fabric.FcNetworkPolicy.Response, fabric.MulticastPolicy.Relationship
+  reason: Large CRUD surface over UCS fabric port roles, VLAN sets, port channels, and Ethernet/FC network
+    policies — configuration of data-centre network fabric. Cross-industry IT Infrastructure Management.
+- tag: hci
+  spec_file: intersight-hci-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GetHciAhvVmList 'hci.AhvVm'; hci.StorageContainer.List, hci.PhysicalGpu.Response, GetHciAlarmList
+    'hci.Alarm'
+  reason: Hyperconverged infrastructure management — virtual machines, disks, NICs, GPUs, storage containers
+    and alarms for HCI clusters, i.e. compute/storage/virtualisation infrastructure.
+- tag: hyperflex
+  spec_file: intersight-hyperflex-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: hyperflex.ClusterProfile, hyperflex.ClusterNetworkPolicy, GetHyperflexBackupClusterList 'hyperflex.BackupCluster',
+    GetHyperflexAlarmList
+  reason: Configuration, policy, inventory and alarm management of HyperFlex hyperconverged clusters (compute,
+    storage, drives, cluster profiles) — enterprise IT infrastructure management.
+- tag: server
+  spec_file: intersight-server-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GetServerConfigChangeDetailList; CreateServerConfigImport; GetServerDiagnosticStatusList
+  reason: Configuration, config-result and diagnostics management for physical servers (compute.Physical,
+    firmware.RunningFirmware) — clearly IT infrastructure (compute) management.
+- tag: servicenow
+  spec_file: intersight-servicenow-api-openapi.yml
+  capability_id: BC-600.30
+  capability_id_l1: BC-600
+  capability_name: IT Service Management
+  confidence: 0.85
+  evidence: GetServicenowChangeRequestList Read a 'servicenow.ChangeRequest' resource; GetServicenowIncidentList
+    Read a 'servicenow.Incident' resource
+  reason: Exposes ServiceNow change requests and incidents integrated with the infrastructure platform
+    — classic ITSM incident and change management.
+- tag: storage
+  spec_file: intersight-storage-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GetStorageControllerList ... storage.DiskGroup, storage.BatteryBackupUnit, storage.VirtualDriveExtension
+  reason: Inventory and configuration of storage controllers, disk groups and drives in data-centre hardware
+    — plainly compute/storage infrastructure management.
+- tag: virtualization
+  spec_file: intersight-virtualization-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: GET /api/v1/virtualization/VirtualMachines ... virtualization.VmwareHost, virtualization.VmwareDatastore,
+    virtualization.BaseHypervisorManager
+  reason: CRUD over virtual machines, hypervisor hosts, datastores and distributed switches — management
+    of compute/storage/network virtualisation infrastructure, squarely IT Infrastructure Management.
+- tag: convergedinfra
+  spec_file: intersight-convergedinfra-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /api/v1/convergedinfra/Pods  GetConvergedinfraPodList ... GetConvergedinfraServerComplianceDetailsList
+    / GetConvergedinfraStorageComplianceDetailsList
+  reason: Converged-infrastructure 'Pods' with server, storage, switch and adapter compliance details
+    — management of compute/storage/network infrastructure stacks. Cross-industry IT Infrastructure Management;
+    the 'Compliance' here is hardware-interoperability compliance, not regulatory compliance.
+- tag: ether
+  spec_file: intersight-ether-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /api/v1/ether/HostPorts ... GET /api/v1/ether/NetworkPorts  GetEtherNetworkPortList
+  reason: Ethernet host, inter-switch, LAN and network port objects on UCS fabric interconnects — data-centre
+    network infrastructure management. Enterprise IT infrastructure, not carrier network operations.
+- tag: fc
+  spec_file: intersight-fc-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /api/v1/fc/PhysicalPorts ... Read a 'fc.PhysicalPort' resource; schemas fc.PortChannel,
+    fc.Neighbor, network.VlanPortInfo.Relationship
+  reason: Fibre Channel physical ports, port channels and neighbour discovery on Cisco data-centre fabrics
+    — management of enterprise compute/network infrastructure, not carrier telecom network operations.
+- tag: firmware
+  spec_file: intersight-firmware-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: CreateFirmwareChassisUpgrade 'firmware.ChassisUpgrade'; firmware.Upgrade, firmware.RunningFirmware.Relationship,
+    firmware.BiosDescriptor
+  reason: Firmware descriptors, distributables and chassis/server upgrade objects — lifecycle maintenance
+    of compute hardware, i.e. IT infrastructure management.
+- tag: graphics
+  spec_file: intersight-graphics-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GetGraphicsCardList  Read a 'graphics.Card' resource.; GetGraphicsControllerList 'graphics.Controller';
+    schemas compute.Physical, pci.Endpoint.Relationship
+  reason: Inventory and update of GPU cards and controllers installed in physical servers — compute hardware
+    asset/infrastructure management, not media or design.
+- tag: pci
+  spec_file: intersight-pci-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /api/v1/pci/Devices  'pci.Device' resource; GET /api/v1/pci/CoprocessorCards; GET /api/v1/pci/Links
+  reason: Read/update of server PCI hardware components (devices, coprocessor cards, links, endpoints)
+    alongside storage/equipment schemas — compute hardware inventory and configuration, i.e. IT Infrastructure
+    Management.
+- tag: vnic
+  spec_file: intersight-vnic-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /api/v1/vnic/EthAdapterPolicies ... vnic.EthIf, vnic.FcQosPolicy, vnic.IscsiBootPolicy,
+    macpool.PoolMember
+  reason: Virtual NIC / vHBA adapter, ethernet and SAN interface policies for UCS servers — server network
+    adapter configuration, part of IT infrastructure (compute/network) management rather than carrier
+    network operations.
+- tag: network
+  spec_file: intersight-network-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: GET /api/v1/network/Elements 'network.Element'; GET /api/v1/network/FcZoneInfos; schemas fc.PortChannel,
+    network.SupervisorCard, equipment.Fex
+  reason: Data-centre fabric switch inventory and configuration (Nexus/FC zoning, supervisor cards, port
+    channels) — enterprise network infrastructure management, not carrier network operations. Cross-Industry
+    IT Infrastructure Management is the correct frame for this devtool/infra vendor.
+- tag: port
+  spec_file: intersight-port-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: GET /api/v1/port/Groups, GET /api/v1/port/MacBindings, schemas fc.PortChannel, ether.HostPort.Relationship,
+    network.VlanPortInfo.Relationship
+  reason: Fabric switch port groups, sub-groups and MAC bindings — datacenter network element configuration/inventory
+    within an enterprise IT platform, so Cross-Industry IT Infrastructure Management rather than telecom
+    carrier network operations.
+- tag: processor
+  spec_file: intersight-processor-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: GET /api/v1/processor/Units  Read a 'processor.Unit' resource
+  reason: CPU unit inventory/update on managed physical servers (compute.Physical, equipment.* schemas)
+    — compute infrastructure inventory, i.e. IT Infrastructure Management.
+- tag: adapter
+  spec_file: intersight-adapter-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /api/v1/adapter/HostEthInterfaces  Read a 'adapter.HostEthInterface' resource; GET /api/v1/adapter/ConfigPolicies
+  reason: Configuration of server network adapter interfaces and adapter config policies in Cisco UCS
+    infrastructure — enterprise IT infrastructure (compute/network hardware) management.
+- tag: bios
+  spec_file: intersight-bios-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /api/v1/bios/BootModes  Read a 'bios.BootMode' resource; POST /api/v1/bios/Policies  Create
+    a 'bios.Policy' resource.
+  reason: Server BIOS settings, boot devices and BIOS configuration policies for UCS hardware — configuration
+    of enterprise compute infrastructure.
+- tag: chassis
+  spec_file: intersight-chassis-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /api/v1/chassis/Profiles  GetChassisProfileList
+  reason: Chassis profiles, config imports and config change details for UCS chassis hardware (schemas
+    equipment.PsuControl, equipment.Fan) — management of physical compute infrastructure.
+- tag: os
+  spec_file: intersight-os-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /api/v1/os/Distributions, GET /api/v1/os/BulkInstallInfos, 'os.ConfigurationFile', 'os.Install.List'
+  reason: Operations drive operating-system installation and configuration on physical servers (bulk install,
+    OS catalogs, distributions, config files) — server/compute infrastructure provisioning, i.e. IT Infrastructure
+    Management.
+- tag: cond
+  spec_file: intersight-cond-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.72
+  evidence: GET /api/v1/cond/AlarmRules  GetCondAlarmRuleList  Read a 'cond.AlarmRule' resource.
+  reason: Alarms, alarm classifications, definitions and rules over managed IT infrastructure — monitoring/alerting
+    in IT operations. Note 'Alarm' here is infrastructure fault monitoring, not telecom network fault
+    management by a carrier, and not financial-crime alerting.
+- tag: inventory
+  spec_file: intersight-inventory-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GET /api/v1/inventory/DeviceInfos ... 'inventory.GenericInventory' resource; schemas compute.Physical,
+    storage.Controller, equipment.Fan
+  reason: Read-only inventory of managed data-centre compute/storage hardware in Cisco's IT operations
+    SaaS — cross-industry IT infrastructure management, not telecom network inventory.
+- tag: memory
+  spec_file: intersight-memory-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GetMemoryArrayList  Read a 'memory.Array' resource; GetMemoryPersistentMemoryConfigurationList
+  reason: Server memory arrays and persistent-memory configuration — physical compute infrastructure management.
+- tag: power
+  spec_file: intersight-power-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GET /api/v1/power/Policies, GET /api/v1/power/ControlStates, POST /api/v1/power/PowerGroups
+  reason: Server/chassis power policies, power groups and power control states on managed compute hardware
+    — infrastructure configuration and operation, not facilities or telecom capability.
+- tag: rack
+  spec_file: intersight-rack-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GET /api/v1/rack/UnitPersonalities  Read a 'rack.UnitPersonality' resource
+  reason: Rack-server unit personality read/update against physical compute and equipment schemas — server
+    hardware configuration within IT infrastructure management.
+- tag: tam
+  spec_file: intersight-tam-api-openapi.yml
+  capability_id: BC-620.40
+  capability_id_l1: BC-620
+  capability_name: Vulnerability Management
+  confidence: 0.72
+  evidence: tam.SecurityAdvisory, tam.AdvisoryInstance, tam.Severity, GetTamAdvisoryDefinitionList
+  reason: Security advisories with severity, definitions and per-device advisory instances — i.e. exposure
+    of managed infrastructure to published vulnerabilities/advisories, matching vulnerability management.
+- tag: access
+  spec_file: intersight-access-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/access/IpAddresses  Read a 'access.IpAddress' resource; schemas ippool.IpV4Block,
+    ippool.IpLease, vrf.Vrf.Relationship
+  reason: Manages IP address pools/leases and access policies for data-centre server management infrastructure
+    — IT infrastructure (network addressing) management, not telecom carrier networks.
+- tag: appliance
+  spec_file: intersight-appliance-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: GET /api/v1/appliance/AppStatuses; POST /api/v1/appliance/Backups  Create a 'appliance.Backup'
+    resource; appliance.UpgradePolicy
+  reason: Operations of the on-prem Intersight appliance itself — app status monitoring, backups, upgrades
+    — i.e. day-to-day IT operations management of an infrastructure platform.
+- tag: asset
+  spec_file: intersight-asset-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/asset/DeviceClaims  Create a 'asset.DeviceClaim' resource; GET /api/v1/asset/Deployments;
+    asset.DeviceContractInformation.List
+  reason: Claiming, registering and tracking managed IT devices/deployments and their contract information
+    — inventory and lifecycle of IT infrastructure assets, not corporate fixed-asset accounting.
+- tag: boot
+  spec_file: intersight-boot-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/boot/DeviceBootModes  GetBootDeviceBootModeList  Read a 'boot.DeviceBootMode'
+    resource.
+  reason: Operations read and update boot device, boot mode and boot security objects on physical servers
+    (schemas boot.NvmeDevice, bios.SystemBootOrder, storage.Controller). This is configuration of compute
+    infrastructure, i.e. IT Infrastructure Management; no business capability beyond IT.
+- tag: catalystsdwan
+  spec_file: intersight-catalystsdwan-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/catalystsdwan/VedgeDevices  GetCatalystsdwanVedgeDeviceList
+  reason: Reads SD-WAN edge devices, interfaces, physical ports, port channels and VLANs for enterprise
+    network infrastructure managed via Intersight. That is IT network infrastructure management, not carrier-grade
+    telecom network operations.
+- tag: dnac
+  spec_file: intersight-dnac-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/dnac/Devices  GetDnacDeviceList ... GET /api/v1/dnac/FabricSites  GetDnacFabricSiteList
+    ... dnac.InventoryEntity
+  reason: Read-only inventory of Cisco DNA Center devices, device interfaces, fabric sites, transits and
+    templates — enterprise campus network infrastructure records. Cross-industry IT Infrastructure Management
+    is the honest fit; this is not carrier network inventory despite the network vocabulary.
+- tag: fault
+  spec_file: intersight-fault-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: GET /api/v1/fault/Instances  GetFaultInstanceList  Read a 'fault.Instance' resource.
+  reason: Fault instances raised against inventoried devices (schemas inventory.DeviceInfo, fault.Instance)
+    — monitoring and fault handling of managed IT infrastructure. Mapped to cross-industry IT Operations
+    Management rather than telecom network fault management, since the estate is enterprise data-centre
+    equipment.
+- tag: fcpool
+  spec_file: intersight-fcpool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateFcpoolPool 'fcpool.Pool'; fcpool.FcBlock, fcpool.Lease, fcpool.Reservation
+  reason: Fibre Channel identifier (WWN) address pools, blocks, leases and reservations used when configuring
+    UCS server fabric connectivity — data-centre infrastructure resource administration.
+- tag: hcl
+  spec_file: intersight-hcl-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateHclCompatibilityStatus 'hcl.CompatibilityStatus'; GetHclDriverImageList, GetHclHwCatalogInfoList,
+    hcl.ServerConfiguration
+  reason: Hardware Compatibility List services — validating server/OS/driver/firmware combinations against
+    a hardware catalogue, part of infrastructure standards and lifecycle management.
+- tag: ipmioverlan
+  spec_file: intersight-ipmioverlan-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateIpmioverlanPolicy  Create a 'ipmioverlan.Policy' resource
+  reason: IPMI-over-LAN server management policy CRUD for UCS hardware — configuration of IT compute infrastructure.
+- tag: ippool
+  spec_file: intersight-ip-pool-api-openapi.yml
+  reanchored_from: intersight-ippool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/ippool/IpLeases ... CreateIppoolPool  Create a 'ippool.Pool' resource
+  reason: IP address pool and lease management for server/infrastructure provisioning in a data-centre
+    management platform — IT infrastructure management.
+- tag: iqnpool
+  spec_file: intersight-iqnpool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateIqnpoolPool  Create a 'iqnpool.Pool' resource; iqnpool.IqnSuffixBlock
+  reason: iSCSI Qualified Name identifier pools used to provision server storage connectivity — IT infrastructure
+    resource management.
+- tag: kvm
+  spec_file: intersight-kvm-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateKvmSession  Create a 'kvm.Session' resource; kvm.TunneledKvmPolicy; compute.Physical
+  reason: Remote KVM console sessions and policies against physical servers — remote operation of IT compute
+    infrastructure.
+- tag: macpool
+  spec_file: intersight-macpool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateMacpoolPool  Create a 'macpool.Pool' resource; macpool.IdBlock
+  reason: MAC address pool, block and lease administration for server NIC provisioning — IT infrastructure
+    resource management.
+- tag: metrics
+  spec_file: intersight-metrics-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: GET /api/v1/metrics/MetricsExplorations  'metrics.MetricsExploration'; "management platform
+    delivered as a service with embedded analytics for your Cisco and 3rd party IT infrastructure"
+  reason: Configuration and exploration of infrastructure metrics/telemetry — day-to-day IT operations
+    monitoring of servers and fabrics. Cross-industry IT operations is the honest reading for a data-centre
+    ops SaaS, not telecom network performance management.
+- tag: niatelemetry
+  spec_file: intersight-niatelemetry-api-openapi.yml
+  capability_id: BC-600.40
+  capability_id_l1: BC-600
+  capability_name: IT Operations Management
+  confidence: 0.7
+  evidence: GET /api/v1/niatelemetry/Anomalies  'niatelemetry.Anomaly'; schemas niatelemetry.SwitchDiskUtilization,
+    niatelemetry.NexusDashboardDetails.Response
+  reason: Telemetry collection and anomaly reporting from APIC/Nexus/DCNM estates — monitoring of IT infrastructure
+    under IT Operations Management. Not telecom carrier performance management; these are data-centre
+    fabric devices.
+- tag: resourcepool
+  spec_file: intersight-resourcepool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: resourcepool.ChassisQualificationPolicy; GetResourcepoolLeaseList; resourcepool.MembershipReservation
+  reason: Pools, leases and reservations of physical chassis/server resources — allocation of compute
+    infrastructure, i.e. IT Infrastructure Management, not supply-chain inventory.
+- tag: thermal
+  spec_file: intersight-thermal-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/thermal/Policies CreateThermalPolicy  Create a 'thermal.Policy' resource.
+  reason: Server thermal/cooling policy definition and inventory for Cisco UCS hardware — configuration
+    of compute infrastructure, i.e. Cross-Industry IT Infrastructure Management. Not a telecom network
+    capability since the domain is data-centre servers.
+- tag: uuidpool
+  spec_file: intersight-uuidpool-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/uuidpool/Pools  CreateUuidpoolPool ... uuidpool.UuidLease, uuidpool.Reservation,
+    uuidpool.Block
+  reason: Management of UUID identifier pools, blocks, leases and reservations assigned to UCS server
+    profiles — an identifier-resource management function of compute infrastructure administration, i.e.
+    IT Infrastructure Management.
+- tag: vmedia
+  spec_file: intersight-vmedia-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateVmediaPolicy  Create a 'vmedia.Policy' resource ... vmedia.Mapping
+  reason: Virtual media policies and mappings (remote ISO mounting) for UCS servers — server configuration
+    standards within IT infrastructure administration.
+- tag: vrf
+  spec_file: intersight-vrf-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/vrf/Vrves  CreateVrfVrf  Create a 'vrf.Vrf' resource.
+  reason: CRUD on VRF (virtual routing and forwarding) objects in a data-centre fabric management platform
+    — enterprise IT network infrastructure configuration, not telecom operator network element management.
