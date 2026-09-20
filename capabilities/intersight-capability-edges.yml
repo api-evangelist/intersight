@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 51
+edge_count: 59
 edges:
 - tag: iam
   spec_file: intersight-iam-api-openapi.yml
@@ -240,6 +240,26 @@ edges:
   evidence: GET /api/v1/chassis/Profiles  GetChassisProfileList
   reason: Chassis profiles, config imports and config change details for UCS chassis hardware (schemas
     equipment.PsuControl, equipment.Fan) — management of physical compute infrastructure.
+- tag: management
+  spec_file: intersight-management-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GetManagementControllerList  Read a 'management.Controller' resource; GET /api/v1/management/Interfaces
+  reason: Management controllers (CIMC), entities and management interfaces of physical servers — hardware
+    infrastructure management, despite the generic tag name.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: networkconfig
+  spec_file: intersight-networkconfig-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: CreateNetworkconfigPolicy  Create a 'networkconfig.Policy' resource
+  reason: CRUD over network configuration policies and their inventory for managed servers/fabric — configuration
+    of network infrastructure. Generic 'Policy' resources keep confidence moderate.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: os
   spec_file: intersight-os-api-openapi.yml
   capability_id: BC-600.50
@@ -250,6 +270,16 @@ edges:
   reason: Operations drive operating-system installation and configuration on physical servers (bulk install,
     OS catalogs, distributions, config files) — server/compute infrastructure provisioning, i.e. IT Infrastructure
     Management.
+- tag: sdcard
+  spec_file: intersight-sdcard-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: 'Create a ''sdcard.Policy'' resource ... schemas: sdcard.Partition, sdcard.VirtualDrive'
+  reason: Server SD-card partition/virtual-drive configuration policy and its inventory — configuration
+    of compute/storage hardware, i.e. IT infrastructure management.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: cond
   spec_file: intersight-cond-api-openapi.yml
   capability_id: BC-600.40
@@ -270,6 +300,16 @@ edges:
     storage.Controller, equipment.Fan
   reason: Read-only inventory of managed data-centre compute/storage hardware in Cisco's IT operations
     SaaS — cross-industry IT infrastructure management, not telecom network inventory.
+- tag: ls
+  spec_file: intersight-ls-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GET /api/v1/ls/ServiceProfiles  GetLsServiceProfileList  Read a 'ls.ServiceProfile' resource.
+  reason: UCS logical service profiles describing server hardware configuration; inventory.DeviceInfo
+    relationships confirm this is compute infrastructure configuration management.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: memory
   spec_file: intersight-memory-api-openapi.yml
   capability_id: BC-600.50
@@ -278,6 +318,26 @@ edges:
   confidence: 0.72
   evidence: GetMemoryArrayList  Read a 'memory.Array' resource; GetMemoryPersistentMemoryConfigurationList
   reason: Server memory arrays and persistent-memory configuration — physical compute infrastructure management.
+- tag: meraki
+  spec_file: intersight-meraki-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GetMerakiDeviceList, GetMerakiNetworkList, GetMerakiPortProfileList
+  reason: Read-only inventory of Meraki devices, networks, organizations and port profiles — network infrastructure
+    visibility within the IT estate.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: ntp
+  spec_file: intersight-ntp-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.72
+  evidence: GetNtpNtpServerList  Read a 'ntp.NtpServer' resource; CreateNtpPolicy
+  reason: Configuration of NTP servers and time-sync policies applied to managed servers — infrastructure
+    configuration management. Narrow technical scope, so moderate confidence.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: power
   spec_file: intersight-power-api-openapi.yml
   capability_id: BC-600.50
@@ -356,6 +416,18 @@ edges:
   reason: Reads SD-WAN edge devices, interfaces, physical ports, port channels and VLANs for enterprise
     network infrastructure managed via Intersight. That is IT network infrastructure management, not carrier-grade
     telecom network operations.
+- tag: cloud
+  spec_file: intersight-cloud-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: CreateCloudCollectInventory; GetCloudTfcWorkspaceList  Read a 'cloud.TfcWorkspace' resource;
+    cloud.TfcOrganization
+  reason: Operations inventory cloud resources and integrate Terraform Cloud organizations/workspaces/agent
+    pools — infrastructure-as-code and cloud infrastructure management, not a business capability of the
+    buyer.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: dnac
   spec_file: intersight-dnac-api-openapi.yml
   capability_id: BC-600.50
@@ -473,6 +545,16 @@ edges:
   evidence: resourcepool.ChassisQualificationPolicy; GetResourcepoolLeaseList; resourcepool.MembershipReservation
   reason: Pools, leases and reservations of physical chassis/server resources — allocation of compute
     infrastructure, i.e. IT Infrastructure Management, not supply-chain inventory.
+- tag: sol
+  spec_file: intersight-sol-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/sol/Policies  CreateSolPolicy  Create a 'sol.Policy' resource.
+  reason: Serial-over-LAN policy and its inventory is a server out-of-band access configuration policy
+    applied to managed compute — IT infrastructure configuration management.
+  recovered_from: sweep-20260828T235257Z-edges.json
 - tag: thermal
   spec_file: intersight-thermal-api-openapi.yml
   capability_id: BC-600.50
