@@ -2,39 +2,7 @@ openapi: 3.2.0
 info:
   description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
 
-    3rd party IT infrastructure. This platform offers an intelligent level of management that enables
-
-    IT organizations to analyze, simplify, and automate their environments in more advanced ways than the prior
-
-    generations of tools. Cisco Intersight provides an integrated and intuitive management experience for
-
-    resources in the traditional data center as well as at the edge. With flexible deployment options to address
-
-    complex security needs, getting started with Intersight is quick and easy.
-
-    Cisco Intersight has deep integration with Cisco UCS and HyperFlex systems allowing for remote deployment,
-
-    configuration, and ongoing maintenance. The model-based deployment works for a single system in a remote
-
-    location or hundreds of systems in a data center and enables rapid, standardized configuration and deployment.
-
-    It also streamlines maintaining those systems whether you are working with small or very large configurations.
-
-    The Intersight OpenAPI document defines the complete set of properties that are returned in the
-
-    HTTP response. From that perspective, a client can expect that no additional properties are returned,
-
-    unless these properties are explicitly defined in the OpenAPI document.
-
-    However, when a client uses an older version of the Intersight OpenAPI document, the server may
-
-    send additional properties because the software is more recent than the client. In that case, the client
-
-    may receive properties that it does not know about.
-
-    Some generated SDKs perform a strict validation of the HTTP response body against the OpenAPI document.
-
-    This document was created on 2026-08-07T06:46:04Z.'
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
   title: Cisco Intersight Workflows Energy API
   license:
@@ -65,14 +33,14 @@ servers:
       default: intersight.com
   description: The Intersight URL for the cloud-based infrastructure management APIs.
 tags:
-- name: energy
+- name: Energy
 paths:
   /api/v1/energy/DailyMetrics:
     post:
       tags:
-      - energy
+      - Energy
       x-intersight-type: SaaS
-      summary: Create a 'energy.DailyMetrics' resource.
+      summary: Create a 'energy.DailyMetrics' resource
       operationId: CreateEnergyDailyMetrics
       security:
       - cookieAuth: []
@@ -128,9 +96,9 @@ paths:
   /api/v1/energy/Metrics:
     post:
       tags:
-      - energy
+      - Energy
       x-intersight-type: SaaS
-      summary: Create a 'energy.Metrics' resource.
+      summary: Create a 'energy.Metrics' resource
       operationId: CreateEnergyMetrics
       security:
       - cookieAuth: []
@@ -184,6 +152,70 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
+  responses:
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   schemas:
     energy.DailyMetrics:
       title: Energy:Daily Metrics
@@ -197,6 +229,17 @@ components:
       x-allOf-name: energy.Metrics
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+  links:
+    GetIamAccountByMoid:
+      operationId: GetIamAccountByMoid
+      parameters:
+        Moid: $response.body#/AccountMoid
+      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
+    GetIamDomainGroupByMoid:
+      operationId: GetIamDomainGroupByMoid
+      parameters:
+        Moid: $response.body#/DomainGroupMoid
+      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
   parameters:
     IfMatch:
       name: If-Match
@@ -256,81 +299,6 @@ components:
       schema:
         type: string
         example: X-Starship-Token=abcde12345; Path=/
-  responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-  links:
-    GetIamAccountByMoid:
-      operationId: GetIamAccountByMoid
-      parameters:
-        Moid: $response.body#/AccountMoid
-      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
-    GetIamDomainGroupByMoid:
-      operationId: GetIamDomainGroupByMoid
-      parameters:
-        Moid: $response.body#/DomainGroupMoid
-      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
   securitySchemes:
     cookieAuth:
       type: apiKey

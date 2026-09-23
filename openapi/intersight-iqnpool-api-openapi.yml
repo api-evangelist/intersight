@@ -2,39 +2,7 @@ openapi: 3.2.0
 info:
   description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
 
-    3rd party IT infrastructure. This platform offers an intelligent level of management that enables
-
-    IT organizations to analyze, simplify, and automate their environments in more advanced ways than the prior
-
-    generations of tools. Cisco Intersight provides an integrated and intuitive management experience for
-
-    resources in the traditional data center as well as at the edge. With flexible deployment options to address
-
-    complex security needs, getting started with Intersight is quick and easy.
-
-    Cisco Intersight has deep integration with Cisco UCS and HyperFlex systems allowing for remote deployment,
-
-    configuration, and ongoing maintenance. The model-based deployment works for a single system in a remote
-
-    location or hundreds of systems in a data center and enables rapid, standardized configuration and deployment.
-
-    It also streamlines maintaining those systems whether you are working with small or very large configurations.
-
-    The Intersight OpenAPI document defines the complete set of properties that are returned in the
-
-    HTTP response. From that perspective, a client can expect that no additional properties are returned,
-
-    unless these properties are explicitly defined in the OpenAPI document.
-
-    However, when a client uses an older version of the Intersight OpenAPI document, the server may
-
-    send additional properties because the software is more recent than the client. In that case, the client
-
-    may receive properties that it does not know about.
-
-    Some generated SDKs perform a strict validation of the HTTP response body against the OpenAPI document.
-
-    This document was created on 2026-08-07T06:46:04Z.'
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
   title: Cisco Intersight Server Iqnpool API
   license:
@@ -71,7 +39,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Block' resource.
+      summary: Read a 'iqnpool.Block' resource
       operationId: GetIqnpoolBlockList
       security:
       - cookieAuth: []
@@ -135,7 +103,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Block' resource.
+      summary: Read a 'iqnpool.Block' resource
       operationId: GetIqnpoolBlockByMoid
       security:
       - cookieAuth: []
@@ -202,7 +170,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Lease' resource.
+      summary: Read a 'iqnpool.Lease' resource
       operationId: GetIqnpoolLeaseList
       security:
       - cookieAuth: []
@@ -266,7 +234,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Lease' resource.
+      summary: Read a 'iqnpool.Lease' resource
       operationId: GetIqnpoolLeaseByMoid
       security:
       - cookieAuth: []
@@ -332,7 +300,7 @@ paths:
     delete:
       tags:
       - iqnpool
-      summary: Delete a 'iqnpool.Lease' resource.
+      summary: Delete a 'iqnpool.Lease' resource
       operationId: DeleteIqnpoolLease
       security:
       - cookieAuth: []
@@ -365,7 +333,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Pool' resource.
+      summary: Read a 'iqnpool.Pool' resource
       operationId: GetIqnpoolPoolList
       security:
       - cookieAuth: []
@@ -428,7 +396,7 @@ paths:
     post:
       tags:
       - iqnpool
-      summary: Create a 'iqnpool.Pool' resource.
+      summary: Create a 'iqnpool.Pool' resource
       operationId: CreateIqnpoolPool
       security:
       - cookieAuth: []
@@ -487,7 +455,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Pool' resource.
+      summary: Read a 'iqnpool.Pool' resource
       operationId: GetIqnpoolPoolByMoid
       security:
       - cookieAuth: []
@@ -553,7 +521,7 @@ paths:
     post:
       tags:
       - iqnpool
-      summary: Update a 'iqnpool.Pool' resource.
+      summary: Update a 'iqnpool.Pool' resource
       operationId: UpdateIqnpoolPool
       security:
       - cookieAuth: []
@@ -614,7 +582,7 @@ paths:
     patch:
       tags:
       - iqnpool
-      summary: Update a 'iqnpool.Pool' resource.
+      summary: Update a 'iqnpool.Pool' resource
       operationId: PatchIqnpoolPool
       security:
       - cookieAuth: []
@@ -675,7 +643,7 @@ paths:
     delete:
       tags:
       - iqnpool
-      summary: Delete a 'iqnpool.Pool' resource.
+      summary: Delete a 'iqnpool.Pool' resource
       operationId: DeleteIqnpoolPool
       security:
       - cookieAuth: []
@@ -712,7 +680,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.PoolMember' resource.
+      summary: Read a 'iqnpool.PoolMember' resource
       operationId: GetIqnpoolPoolMemberList
       security:
       - cookieAuth: []
@@ -776,7 +744,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.PoolMember' resource.
+      summary: Read a 'iqnpool.PoolMember' resource
       operationId: GetIqnpoolPoolMemberByMoid
       security:
       - cookieAuth: []
@@ -843,7 +811,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Reservation' resource.
+      summary: Read a 'iqnpool.Reservation' resource
       operationId: GetIqnpoolReservationList
       security:
       - cookieAuth: []
@@ -908,7 +876,7 @@ paths:
     post:
       tags:
       - iqnpool
-      summary: Create a 'iqnpool.Reservation' resource.
+      summary: Create a 'iqnpool.Reservation' resource
       operationId: CreateIqnpoolReservation
       security:
       - cookieAuth: []
@@ -965,7 +933,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Reservation' resource.
+      summary: Read a 'iqnpool.Reservation' resource
       operationId: GetIqnpoolReservationByMoid
       security:
       - cookieAuth: []
@@ -1033,7 +1001,7 @@ paths:
     delete:
       tags:
       - iqnpool
-      summary: Delete a 'iqnpool.Reservation' resource.
+      summary: Delete a 'iqnpool.Reservation' resource
       operationId: DeleteIqnpoolReservation
       security:
       - cookieAuth: []
@@ -1068,7 +1036,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Universe' resource.
+      summary: Read a 'iqnpool.Universe' resource
       operationId: GetIqnpoolUniverseList
       security:
       - cookieAuth: []
@@ -1132,7 +1100,7 @@ paths:
     get:
       tags:
       - iqnpool
-      summary: Read a 'iqnpool.Universe' resource.
+      summary: Read a 'iqnpool.Universe' resource
       operationId: GetIqnpoolUniverseByMoid
       security:
       - cookieAuth: []
@@ -1196,326 +1164,9 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
-  parameters:
-    IfMatch:
-      name: If-Match
-      in: header
-      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
-
-        the lost update problem. It can check if the modification of a resource that the user wants to upload
-
-        will not override another change that has been done since the original resource was fetched.
-
-        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
-
-        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
-
-        the resource ModTime property after which no lost update problem should occur.
-
-        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
-
-        The ModTime indicates the last time the resource was created or modified. The client then sends
-
-        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
-
-        in the GET request.'
-      required: false
-      schema:
-        type: string
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
-    atParam:
-      name: at
-      in: query
-      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
-
-        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
-
-        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
-
-        expression specified by the query option.
-
-        The expression language that is used in at operators supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false) or any of the additional literal representations shown in the Abstract
-
-        Type System section.'
-      examples:
-        versiontype_equality:
-          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
-          value: at=VersionType eq 'Configured'
-        interestedmos_query:
-          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
-          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
-      required: false
-      schema:
-        type: string
-    applyParam:
-      name: $apply
-      in: query
-      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
-
-        are processed in order with the output from a transformation being used as input for the subsequent transformation.
-
-        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
-
-        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
-
-        Supported aggregation methods are "aggregate" and "groupby".
-
-        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
-
-        a result set with a single instance, representing the aggregated value for all instances in the input set.
-
-        The **groupby** transformation takes one or two parameters and
-
-        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
-
-        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
-
-        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
-
-        4. Concatenates the intermediate result sets into one result set.
-
-        A groupby transformation affects the structure of the result set.'
-      required: false
-      schema:
-        type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
   responses:
     http_status_404:
       description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -1568,45 +1219,34 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   schemas:
-    iqnpool.Reservation.List:
-      title: List of 'iqnpool.Reservation' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iqnpool.Reservation'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iqnpool.Reservation' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Reservation'
-    iqnpool.PoolMember.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.PoolMember' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.PoolMember' resources."
-      x-one-of-name: iqnpool.PoolMember.Response
+    iqnpool.Block.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.Block' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Block' resources."
+      x-one-of-name: iqnpool.Block.Response
       oneOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.PoolMember.List'
+      - $ref: '#/components/schemas/iqnpool.Block.List'
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-    iqnpool.IqnSuffixBlock:
-      title: Iqnpool:Iqn Suffix Block
-      description: The suffix block of iSCSI Qualified Names (IQNs).
-      x-allOf-name: iqnpool.IqnSuffixBlock
+    iqnpool.Block:
+      title: Iqnpool:Block
+      description: A block of contiguous IQNs that are part of a pool.
+      x-allOf-name: iqnpool.Block
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlockType
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlock
       - type: object
-        description: Definition of the list of properties defined in 'iqnpool.IqnSuffixBlock', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'iqnpool.Block', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -1618,33 +1258,426 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - iqnpool.IqnSuffixBlock
-            default: iqnpool.IqnSuffixBlock
+            - iqnpool.Block
+            default: iqnpool.Block
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - iqnpool.IqnSuffixBlock
-            default: iqnpool.IqnSuffixBlock
+            - iqnpool.Block
+            default: iqnpool.Block
             x-enum-as-string: true
-          From:
-            description: The first suffix number in the block.
+          IqnSuffixBlock:
+            description: A Block of IQN suffix Addresses.
+            $ref: '#/components/schemas/iqnpool.IqnSuffixBlock'
+            x-omitempty: true
+          Prefix:
+            description: Prefix of the IQN pool. IQN Address is constructed as <prefix>:<suffix>:<number>.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Pool:
+            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
+            description: 'A reference to a iqnpoolPool resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Reservations:
+            description: An array of relationships to iqnpoolReservation resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
+            readOnly: true
+    iqnpool.Block.List:
+      title: List of 'iqnpool.Block' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iqnpool.Block'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iqnpool.Block' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Block'
+    iqnpool.Lease.List:
+      title: List of 'iqnpool.Lease' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iqnpool.Lease'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iqnpool.Lease' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Lease'
+    iqnpool.Pool:
+      title: Iqnpool:Pool
+      description: Pool represents a collection of iSCSI Qualified Names (IQNs) for use as initiator identifiers by iSCSI vNICs.
+      x-allOf-name: iqnpool.Pool
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractPool
+      - type: object
+        description: Definition of the list of properties defined in 'iqnpool.Pool', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iqnpool.Pool
+            default: iqnpool.Pool
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iqnpool.Pool
+            default: iqnpool.Pool
+            x-enum-as-string: true
+          IqnSuffixBlocks:
+            type:
+            - array
+            - 'null'
+            items:
+              description: Collection of IQN blocks.
+              $ref: '#/components/schemas/iqnpool.IqnSuffixBlock'
+              x-omitempty: true
+          Prefix:
+            description: The prefix for any IQN blocks created for this pool. IQN Prefix must have the following format "iqn.yyyy-mm.naming-authority", where naming-authority is usually the reverse syntax of the Internet domain name of the naming authority.
+            type: string
+            x-omitempty: true
+          BlockHeads:
+            description: An array of relationships to iqnpoolBlock resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Block.Relationship'
+            readOnly: true
+          Organization:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
+            description: 'A reference to a organizationOrganization resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            x-createOnly: true
+          Reservations:
+            description: An array of relationships to iqnpoolReservation resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
+    iqnpool.Universe.Relationship:
+      description: A relationship to the 'iqnpool.Universe' resource, or the expanded 'iqnpool.Universe' resource, or the 'null' value.
+      x-one-of-name: iqnpool.Universe.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iqnpool.Universe'
+      discriminator:
+        propertyName: ClassId
+    iqnpool.PoolMember.Relationship:
+      description: A relationship to the 'iqnpool.PoolMember' resource, or the expanded 'iqnpool.PoolMember' resource, or the 'null' value.
+      x-one-of-name: iqnpool.PoolMember.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iqnpool.PoolMember'
+      discriminator:
+        propertyName: ClassId
+    iqnpool.Pool.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.Pool' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Pool' resources."
+      x-one-of-name: iqnpool.Pool.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iqnpool.Pool.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iqnpool.Pool.List:
+      title: List of 'iqnpool.Pool' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iqnpool.Pool'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iqnpool.Pool' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Pool'
+    iqnpool.Block.Relationship:
+      description: A relationship to the 'iqnpool.Block' resource, or the expanded 'iqnpool.Block' resource, or the 'null' value.
+      x-one-of-name: iqnpool.Block.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iqnpool.Block'
+      discriminator:
+        propertyName: ClassId
+    iqnpool.PoolMember.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.PoolMember' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.PoolMember' resources."
+      x-one-of-name: iqnpool.PoolMember.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iqnpool.PoolMember.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iqnpool.Reservation.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.Reservation' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Reservation' resources."
+      x-one-of-name: iqnpool.Reservation.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iqnpool.Reservation.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iqnpool.Universe:
+      title: Iqnpool:Universe
+      description: Universe represents a book keeping container to keep track of all IDs for a given account and pool type.
+      x-allOf-name: iqnpool.Universe
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'iqnpool.Universe', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iqnpool.Universe
+            default: iqnpool.Universe
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iqnpool.Universe
+            default: iqnpool.Universe
+            x-enum-as-string: true
+          Account:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.Account.Relationship
+            description: 'A reference to a iamAccount resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    iqnpool.PoolMember:
+      title: Iqnpool:Pool Member
+      description: PoolMember represents a single IQN address that is part of a pool.
+      x-allOf-name: iqnpool.PoolMember
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractIdPoolMember
+      - type: object
+        description: Definition of the list of properties defined in 'iqnpool.PoolMember', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iqnpool.PoolMember
+            default: iqnpool.PoolMember
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iqnpool.PoolMember
+            default: iqnpool.PoolMember
+            x-enum-as-string: true
+          IqnAddress:
+            description: IQN Address of this pool member. It is constructed as <prefix>:<suffix>:<number>.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          IqnNumber:
+            description: Number of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
             type: integer
             format: int64
-            minimum: 0
+            readOnly: true
             x-omitempty: true
-          Suffix:
-            description: The suffix for this block of IQNs.
+          IqnPrefix:
+            description: Prefix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
             type: string
+            readOnly: true
+            x-omitempty: true
+          IqnSuffix:
+            description: Suffix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          AssignedToEntity:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
+            description: 'A reference to a moBaseMo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+          BlockHead:
+            $ref: '#/components/schemas/iqnpool.Block.Relationship'
+            description: 'A reference to a iqnpoolBlock resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Peer:
+            $ref: '#/components/schemas/iqnpool.Lease.Relationship'
+            description: 'A reference to a iqnpoolLease resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Pool:
+            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
+            description: 'A reference to a iqnpoolPool resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Reservation:
+            $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
+            description: 'A reference to a iqnpoolReservation resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    iqnpool.Reservation:
+      title: Iqnpool:Reservation
+      description: The IQN reservation object, used to hold reserved identity.
+      x-allOf-name: iqnpool.Reservation
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.Reservation
+      - type: object
+        description: Definition of the list of properties defined in 'iqnpool.Reservation', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iqnpool.Reservation
+            default: iqnpool.Reservation
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iqnpool.Reservation
+            default: iqnpool.Reservation
+            x-enum-as-string: true
+          Identity:
+            description: IQN identity to be reserved.
+            type: string
+            pattern: ^$|^(?:iqn\.[0-9]{4}-[0-9]{2}(?:\.[A-Za-z](?:[A-Za-z0-9\-]*[A-Za-z0-9])?)+(?::.*)?|eui\.[0-9A-Fa-f]{16})
             x-createOnly: true
             x-omitempty: true
-          To:
-            description: The last suffix number in the block.
+          IqnNumber:
+            description: Number of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
             type: integer
             format: int64
+            readOnly: true
             x-omitempty: true
+          IqnPrefix:
+            description: Prefix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          IqnSuffix:
+            description: Suffix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Block:
+            $ref: '#/components/schemas/iqnpool.Block.Relationship'
+            description: 'A reference to a iqnpoolBlock resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Organization:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
+            description: 'A reference to a organizationOrganization resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            x-createOnly: true
+          Pool:
+            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
+            description: 'A reference to a iqnpoolPool resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+          PoolMember:
+            $ref: '#/components/schemas/iqnpool.PoolMember.Relationship'
+            description: 'A reference to a iqnpoolPoolMember resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          Universe:
+            $ref: '#/components/schemas/iqnpool.Universe.Relationship'
+            description: 'A reference to a iqnpoolUniverse resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    iqnpool.Reservation.Relationship:
+      description: A relationship to the 'iqnpool.Reservation' resource, or the expanded 'iqnpool.Reservation' resource, or the 'null' value.
+      x-one-of-name: iqnpool.Reservation.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iqnpool.Reservation'
+      discriminator:
+        propertyName: ClassId
     iqnpool.PoolMember.List:
       title: List of 'iqnpool.PoolMember' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
@@ -1665,15 +1698,61 @@ components:
             - 'null'
             items:
               $ref: '#/components/schemas/iqnpool.PoolMember'
-    iqnpool.Universe.Relationship:
-      description: A relationship to the 'iqnpool.Universe' resource, or the expanded 'iqnpool.Universe' resource, or the 'null' value.
-      x-one-of-name: iqnpool.Universe.Relationship
+    iqnpool.Lease.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.Lease' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Lease' resources."
+      x-one-of-name: iqnpool.Lease.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iqnpool.Lease.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iqnpool.Reservation.List:
+      title: List of 'iqnpool.Reservation' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iqnpool.Reservation'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iqnpool.Reservation' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iqnpool.Reservation'
+    iqnpool.Lease.Relationship:
+      description: A relationship to the 'iqnpool.Lease' resource, or the expanded 'iqnpool.Lease' resource, or the 'null' value.
+      x-one-of-name: iqnpool.Lease.Relationship
       oneOf:
       - type: 'null'
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iqnpool.Universe'
+      - $ref: '#/components/schemas/iqnpool.Lease'
       discriminator:
         propertyName: ClassId
+    iqnpool.ReservationReference:
+      title: Iqnpool:Reservation Reference
+      description: The reference to the reservation object.
+      x-allOf-name: iqnpool.ReservationReference
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.ReservationReference
+    iqnpool.Universe.Response:
+      description: "The response body of a HTTP GET request for the 'iqnpool.Universe' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Universe' resources."
+      x-one-of-name: iqnpool.Universe.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iqnpool.Universe.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
     iqnpool.Lease:
       title: Iqnpool:Lease
       description: Lease represents a single IQN address that is part of the universe, allocated either from a pool or through static assignment.
@@ -1760,16 +1839,6 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    iqnpool.Universe.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.Universe' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Universe' resources."
-      x-one-of-name: iqnpool.Universe.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.Universe.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
     iqnpool.Pool.Relationship:
       description: A relationship to the 'iqnpool.Pool' resource, or the expanded 'iqnpool.Pool' resource, or the 'null' value.
       x-one-of-name: iqnpool.Pool.Relationship
@@ -1779,63 +1848,14 @@ components:
       - $ref: '#/components/schemas/iqnpool.Pool'
       discriminator:
         propertyName: ClassId
-    iqnpool.Reservation.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.Reservation' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Reservation' resources."
-      x-one-of-name: iqnpool.Reservation.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.Reservation.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iqnpool.Pool.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.Pool' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Pool' resources."
-      x-one-of-name: iqnpool.Pool.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.Pool.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iqnpool.Reservation.Relationship:
-      description: A relationship to the 'iqnpool.Reservation' resource, or the expanded 'iqnpool.Reservation' resource, or the 'null' value.
-      x-one-of-name: iqnpool.Reservation.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iqnpool.Reservation'
-      discriminator:
-        propertyName: ClassId
-    iqnpool.Lease.List:
-      title: List of 'iqnpool.Lease' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+    iqnpool.IqnSuffixBlock:
+      title: Iqnpool:Iqn Suffix Block
+      description: The suffix block of iSCSI Qualified Names (IQNs).
+      x-allOf-name: iqnpool.IqnSuffixBlock
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlockType
       - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iqnpool.Lease'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iqnpool.Lease' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Lease'
-    iqnpool.Pool:
-      title: Iqnpool:Pool
-      description: Pool represents a collection of iSCSI Qualified Names (IQNs) for use as initiator identifiers by iSCSI vNICs.
-      x-allOf-name: iqnpool.Pool
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractPool
-      - type: object
-        description: Definition of the list of properties defined in 'iqnpool.Pool', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'iqnpool.IqnSuffixBlock', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -1847,283 +1867,33 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - iqnpool.Pool
-            default: iqnpool.Pool
+            - iqnpool.IqnSuffixBlock
+            default: iqnpool.IqnSuffixBlock
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - iqnpool.Pool
-            default: iqnpool.Pool
+            - iqnpool.IqnSuffixBlock
+            default: iqnpool.IqnSuffixBlock
             x-enum-as-string: true
-          IqnSuffixBlocks:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Collection of IQN blocks.
-              $ref: '#/components/schemas/iqnpool.IqnSuffixBlock'
-              x-omitempty: true
-          Prefix:
-            description: The prefix for any IQN blocks created for this pool. IQN Prefix must have the following format "iqn.yyyy-mm.naming-authority", where naming-authority is usually the reverse syntax of the Internet domain name of the naming authority.
-            type: string
-            x-omitempty: true
-          BlockHeads:
-            description: An array of relationships to iqnpoolBlock resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Block.Relationship'
-            readOnly: true
-          Organization:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
-            description: 'A reference to a organizationOrganization resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          Reservations:
-            description: An array of relationships to iqnpoolReservation resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
-    iqnpool.Block.Relationship:
-      description: A relationship to the 'iqnpool.Block' resource, or the expanded 'iqnpool.Block' resource, or the 'null' value.
-      x-one-of-name: iqnpool.Block.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iqnpool.Block'
-      discriminator:
-        propertyName: ClassId
-    iqnpool.Reservation:
-      title: Iqnpool:Reservation
-      description: The IQN reservation object, used to hold reserved identity.
-      x-allOf-name: iqnpool.Reservation
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.Reservation
-      - type: object
-        description: Definition of the list of properties defined in 'iqnpool.Reservation', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iqnpool.Reservation
-            default: iqnpool.Reservation
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iqnpool.Reservation
-            default: iqnpool.Reservation
-            x-enum-as-string: true
-          Identity:
-            description: IQN identity to be reserved.
-            type: string
-            pattern: ^$|^(?:iqn\.[0-9]{4}-[0-9]{2}(?:\.[A-Za-z](?:[A-Za-z0-9\-]*[A-Za-z0-9])?)+(?::.*)?|eui\.[0-9A-Fa-f]{16})
-            x-createOnly: true
-            x-omitempty: true
-          IqnNumber:
-            description: Number of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
+          From:
+            description: The first suffix number in the block.
             type: integer
             format: int64
-            readOnly: true
+            minimum: 0
             x-omitempty: true
-          IqnPrefix:
-            description: Prefix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
+          Suffix:
+            description: The suffix for this block of IQNs.
             type: string
-            readOnly: true
-            x-omitempty: true
-          IqnSuffix:
-            description: Suffix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Block:
-            $ref: '#/components/schemas/iqnpool.Block.Relationship'
-            description: 'A reference to a iqnpoolBlock resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Organization:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
-            description: 'A reference to a organizationOrganization resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
             x-createOnly: true
-          Pool:
-            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
-            description: 'A reference to a iqnpoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          PoolMember:
-            $ref: '#/components/schemas/iqnpool.PoolMember.Relationship'
-            description: 'A reference to a iqnpoolPoolMember resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Universe:
-            $ref: '#/components/schemas/iqnpool.Universe.Relationship'
-            description: 'A reference to a iqnpoolUniverse resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    iqnpool.PoolMember.Relationship:
-      description: A relationship to the 'iqnpool.PoolMember' resource, or the expanded 'iqnpool.PoolMember' resource, or the 'null' value.
-      x-one-of-name: iqnpool.PoolMember.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iqnpool.PoolMember'
-      discriminator:
-        propertyName: ClassId
-    iqnpool.Pool.List:
-      title: List of 'iqnpool.Pool' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iqnpool.Pool'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            x-omitempty: true
+          To:
+            description: The last suffix number in the block.
             type: integer
-            format: int32
-          Results:
-            description: The array of 'iqnpool.Pool' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Pool'
-    iqnpool.Lease.Relationship:
-      description: A relationship to the 'iqnpool.Lease' resource, or the expanded 'iqnpool.Lease' resource, or the 'null' value.
-      x-one-of-name: iqnpool.Lease.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iqnpool.Lease'
-      discriminator:
-        propertyName: ClassId
-    iqnpool.Block.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.Block' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Block' resources."
-      x-one-of-name: iqnpool.Block.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.Block.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iqnpool.Universe:
-      title: Iqnpool:Universe
-      description: Universe represents a book keeping container to keep track of all IDs for a given account and pool type.
-      x-allOf-name: iqnpool.Universe
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'iqnpool.Universe', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iqnpool.Universe
-            default: iqnpool.Universe
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iqnpool.Universe
-            default: iqnpool.Universe
-            x-enum-as-string: true
-          Account:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.Account.Relationship
-            description: 'A reference to a iamAccount resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    iqnpool.ReservationReference:
-      title: Iqnpool:Reservation Reference
-      description: The reference to the reservation object.
-      x-allOf-name: iqnpool.ReservationReference
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.ReservationReference
-    iqnpool.Block:
-      title: Iqnpool:Block
-      description: A block of contiguous IQNs that are part of a pool.
-      x-allOf-name: iqnpool.Block
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlock
-      - type: object
-        description: Definition of the list of properties defined in 'iqnpool.Block', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iqnpool.Block
-            default: iqnpool.Block
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iqnpool.Block
-            default: iqnpool.Block
-            x-enum-as-string: true
-          IqnSuffixBlock:
-            description: A Block of IQN suffix Addresses.
-            $ref: '#/components/schemas/iqnpool.IqnSuffixBlock'
+            format: int64
             x-omitempty: true
-          Prefix:
-            description: Prefix of the IQN pool. IQN Address is constructed as <prefix>:<suffix>:<number>.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Pool:
-            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
-            description: 'A reference to a iqnpoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Reservations:
-            description: An array of relationships to iqnpoolReservation resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
-            readOnly: true
     iqnpool.Universe.List:
       title: List of 'iqnpool.Universe' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
@@ -2144,116 +1914,314 @@ components:
             - 'null'
             items:
               $ref: '#/components/schemas/iqnpool.Universe'
-    iqnpool.PoolMember:
-      title: Iqnpool:Pool Member
-      description: PoolMember represents a single IQN address that is part of a pool.
-      x-allOf-name: iqnpool.PoolMember
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractIdPoolMember
-      - type: object
-        description: Definition of the list of properties defined in 'iqnpool.PoolMember', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
+  parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
 
-              This property is used as a discriminator to identify the type of the payload
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
 
-              when marshaling and unmarshaling data.'
-            enum:
-            - iqnpool.PoolMember
-            default: iqnpool.PoolMember
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
 
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iqnpool.PoolMember
-            default: iqnpool.PoolMember
-            x-enum-as-string: true
-          IqnAddress:
-            description: IQN Address of this pool member. It is constructed as <prefix>:<suffix>:<number>.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          IqnNumber:
-            description: Number of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          IqnPrefix:
-            description: Prefix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          IqnSuffix:
-            description: Suffix of the IQN address. IQN Address is constructed as <prefix>:<suffix>:<number>.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          AssignedToEntity:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
 
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          BlockHead:
-            $ref: '#/components/schemas/iqnpool.Block.Relationship'
-            description: 'A reference to a iqnpoolBlock resource.
+        only the Entries that satisfy the predicate expression specified by the $filter option.
 
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Peer:
-            $ref: '#/components/schemas/iqnpool.Lease.Relationship'
-            description: 'A reference to a iqnpoolLease resource.
+        The expression language that is used in $filter queries supports references to properties and
 
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Pool:
-            $ref: '#/components/schemas/iqnpool.Pool.Relationship'
-            description: 'A reference to a iqnpoolPool resource.
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
 
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Reservation:
-            $ref: '#/components/schemas/iqnpool.Reservation.Relationship'
-            description: 'A reference to a iqnpoolReservation resource.
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
 
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    iqnpool.Lease.Response:
-      description: "The response body of a HTTP GET request for the 'iqnpool.Lease' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iqnpool.Lease' resources."
-      x-one-of-name: iqnpool.Lease.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iqnpool.Lease.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iqnpool.Block.List:
-      title: List of 'iqnpool.Block' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iqnpool.Block'' resources matching the request, accross all pages.
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
 
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iqnpool.Block' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iqnpool.Block'
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
+    IfMatch:
+      name: If-Match
+      in: header
+      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
+
+        the lost update problem. It can check if the modification of a resource that the user wants to upload
+
+        will not override another change that has been done since the original resource was fetched.
+
+        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
+
+        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
+
+        the resource ModTime property after which no lost update problem should occur.
+
+        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
+
+        The ModTime indicates the last time the resource was created or modified. The client then sends
+
+        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
+
+        in the GET request.'
+      required: false
+      schema:
+        type: string
+    atParam:
+      name: at
+      in: query
+      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
+
+        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
+
+        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
+
+        expression specified by the query option.
+
+        The expression language that is used in at operators supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false) or any of the additional literal representations shown in the Abstract
+
+        Type System section.'
+      examples:
+        versiontype_equality:
+          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
+          value: at=VersionType eq 'Configured'
+        interestedmos_query:
+          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
+          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
+      required: false
+      schema:
+        type: string
+    applyParam:
+      name: $apply
+      in: query
+      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
+
+        are processed in order with the output from a transformation being used as input for the subsequent transformation.
+
+        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
+
+        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
+
+        Supported aggregation methods are "aggregate" and "groupby".
+
+        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
+
+        a result set with a single instance, representing the aggregated value for all instances in the input set.
+
+        The **groupby** transformation takes one or two parameters and
+
+        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
+
+        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
+
+        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
+
+        4. Concatenates the intermediate result sets into one result set.
+
+        A groupby transformation affects the structure of the result set.'
+      required: false
+      schema:
+        type: string
+  headers:
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
+      schema:
+        type: string
   links:
     GetIamAccountByMoid:
       operationId: GetIamAccountByMoid

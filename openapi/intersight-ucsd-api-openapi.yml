@@ -1,19 +1,17 @@
 openapi: 3.2.0
 info:
-  title: Intersight Ucsd API
+  description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
+
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
+  title: Cisco Intersight Workflows Ucsd API
+  license:
+    name: Apache License, Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   contact:
     name: Intersight API support
     url: https://intersight.com/help
     email: intersight@cisco.com
-  license:
-    name: Apache License, Version 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-  x-evidence:
-  - type: source
-    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-openapi-v3-1.0.11-20260807064027971.json
-  - type: source
-    url: https://intersight.com/apidocs/apirefs/
   x-provenance:
     method: harvested
     authored_by: Cisco Intersight
@@ -23,7 +21,11 @@ info:
     provider_published: true
     source_host: cdn.intersight.com
     note: Cisco publishes the full Intersight OpenAPI 3.0.2 anonymously from its CDN (27.5MB master document; 3,963 operations / 2,448 paths / 5,612 schemas) plus 11 per-service documents covering 100% of the master's paths. Byte-identity reconfirmed 2026-08-19 by SHA-256. Note intersight.com itself is a soft-404 farm — the contract is on the CDN, not the app host.
-  description: 'Operations tagged ucsd across 2 of this provider''s published API definitions: intersight-orchestrator-openapi.json, intersight-workflows-openapi.json. Each path carries the servers of the definition it was published in.'
+  x-evidence:
+  - type: source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-openapi-v3-1.0.11-20260807064027971.json
+  - type: source
+    url: https://intersight.com/apidocs/apirefs/
 servers:
 - url: https://{server}
   variables:
@@ -37,7 +39,7 @@ paths:
     get:
       tags:
       - ucsd
-      summary: Read a 'ucsd.BackupInfo' resource.
+      summary: Read a 'ucsd.BackupInfo' resource
       operationId: GetUcsdBackupInfoList
       security:
       - cookieAuth: []
@@ -92,17 +94,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/ucsd/BackupInfos/{Moid}:
     get:
       tags:
       - ucsd
-      summary: Read a 'ucsd.BackupInfo' resource.
+      summary: Read a 'ucsd.BackupInfo' resource
       operationId: GetUcsdBackupInfoByMoid
       security:
       - cookieAuth: []
@@ -163,7 +159,7 @@ paths:
     delete:
       tags:
       - ucsd
-      summary: Delete a 'ucsd.BackupInfo' resource.
+      summary: Delete a 'ucsd.BackupInfo' resource
       operationId: DeleteUcsdBackupInfo
       security:
       - cookieAuth: []
@@ -192,43 +188,10 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
 components:
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
   responses:
     http_status_404:
       description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -281,7 +244,36 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
     moidParam:
       name: Moid
       in: path
@@ -289,6 +281,25 @@ components:
       description: The unique Moid identifier of a resource instance.
       schema:
         type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
     expandParam:
       name: $expand
       in: query
@@ -300,6 +311,131 @@ components:
         expand_displaynames:
           summary: Return the resources.
           value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
     atParam:
       name: at
       in: query
@@ -359,182 +495,128 @@ components:
       required: false
       schema:
         type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
+  headers:
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
       schema:
         type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
       schema:
         type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
       schema:
         type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-  links:
-    GetIamAccountByMoid:
-      operationId: GetIamAccountByMoid
-      parameters:
-        Moid: $response.body#/AccountMoid
-      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
-    GetIamDomainGroupByMoid:
-      operationId: GetIamDomainGroupByMoid
-      parameters:
-        Moid: $response.body#/DomainGroupMoid
-      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
   schemas:
+    ucsd.BackupInfo.List:
+      title: List of 'ucsd.BackupInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''ucsd.BackupInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'ucsd.BackupInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ucsd.BackupInfo'
+    ucsd.BackupInfo.Response:
+      description: "The response body of a HTTP GET request for the 'ucsd.BackupInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ucsd.BackupInfo' resources."
+      x-one-of-name: ucsd.BackupInfo.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/ucsd.BackupInfo.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    ucsd.ConnectorPack:
+      title: Ucsd:Connector Pack
+      description: Connector pack details from the backup file.
+      x-allOf-name: ucsd.ConnectorPack
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+      - type: object
+        description: Definition of the list of properties defined in 'ucsd.ConnectorPack', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - ucsd.ConnectorPack
+            default: ucsd.ConnectorPack
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - ucsd.ConnectorPack
+            default: ucsd.ConnectorPack
+            x-enum-as-string: true
+          ConnectorFeature:
+            description: State of connector pack (enabled/ disabled).
+            type: string
+            readOnly: true
+            x-omitempty: true
+          DependencyNames:
+            type:
+            - array
+            - 'null'
+            items:
+              description: List of dependent connectors on UCS Director (e.g., BigData depends on UCS Connector).
+              type: string
+              readOnly: true
+              x-omitempty: true
+          DownloadedVersion:
+            description: Last successfully downloaded connector pack version successfully for UCS Director.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Name:
+            description: UCS Director connector pack name.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Services:
+            type:
+            - array
+            - 'null'
+            items:
+              description: List of dependent connectors on UCS Director (e.g., BigData depends on UCS Connector).
+              type: string
+              readOnly: true
+              x-omitempty: true
+          State:
+            description: Connector pack state (enabled/disabled).
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Version:
+            description: The connector pack version.
+            type: string
+            readOnly: true
+            x-omitempty: true
     ucsd.BackupInfo:
       title: Ucsd:Backup Info
       description: 'The BackupInfo object provides detailed insights into backup images available for restoration on target endpoint (UCS Director) devices. It captures essential metadata and status information to support recovery operations.
@@ -665,109 +747,17 @@ components:
             type: string
             readOnly: true
             x-omitempty: true
-    ucsd.BackupInfo.Response:
-      description: "The response body of a HTTP GET request for the 'ucsd.BackupInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ucsd.BackupInfo' resources."
-      x-one-of-name: ucsd.BackupInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ucsd.BackupInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ucsd.ConnectorPack:
-      title: Ucsd:Connector Pack
-      description: Connector pack details from the backup file.
-      x-allOf-name: ucsd.ConnectorPack
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'ucsd.ConnectorPack', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ucsd.ConnectorPack
-            default: ucsd.ConnectorPack
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ucsd.ConnectorPack
-            default: ucsd.ConnectorPack
-            x-enum-as-string: true
-          ConnectorFeature:
-            description: State of connector pack (enabled/ disabled).
-            type: string
-            readOnly: true
-            x-omitempty: true
-          DependencyNames:
-            type:
-            - array
-            - 'null'
-            items:
-              description: List of dependent connectors on UCS Director (e.g., BigData depends on UCS Connector).
-              type: string
-              readOnly: true
-              x-omitempty: true
-          DownloadedVersion:
-            description: Last successfully downloaded connector pack version successfully for UCS Director.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Name:
-            description: UCS Director connector pack name.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Services:
-            type:
-            - array
-            - 'null'
-            items:
-              description: List of dependent connectors on UCS Director (e.g., BigData depends on UCS Connector).
-              type: string
-              readOnly: true
-              x-omitempty: true
-          State:
-            description: Connector pack state (enabled/disabled).
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Version:
-            description: The connector pack version.
-            type: string
-            readOnly: true
-            x-omitempty: true
-    ucsd.BackupInfo.List:
-      title: List of 'ucsd.BackupInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ucsd.BackupInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ucsd.BackupInfo' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ucsd.BackupInfo'
+  links:
+    GetIamAccountByMoid:
+      operationId: GetIamAccountByMoid
+      parameters:
+        Moid: $response.body#/AccountMoid
+      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
+    GetIamDomainGroupByMoid:
+      operationId: GetIamDomainGroupByMoid
+      parameters:
+        Moid: $response.body#/DomainGroupMoid
+      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
   securitySchemes:
     cookieAuth:
       type: apiKey
@@ -6529,6 +6519,3 @@ components:
 externalDocs:
   url: /apidocs
   description: Online documentation for the Intersight APIs
-x-refined-from:
-- intersight-orchestrator-openapi.json
-- intersight-workflows-openapi.json

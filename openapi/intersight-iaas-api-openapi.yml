@@ -1,19 +1,17 @@
 openapi: 3.2.0
 info:
-  title: Intersight Iaas API
+  description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
+
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
+  title: Cisco Intersight Workflows Iaas API
+  license:
+    name: Apache License, Version 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   contact:
     name: Intersight API support
     url: https://intersight.com/help
     email: intersight@cisco.com
-  license:
-    name: Apache License, Version 2.0
-    url: https://www.apache.org/licenses/LICENSE-2.0.html
-  x-evidence:
-  - type: source
-    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-openapi-v3-1.0.11-20260807064027971.json
-  - type: source
-    url: https://intersight.com/apidocs/apirefs/
   x-provenance:
     method: harvested
     authored_by: Cisco Intersight
@@ -23,7 +21,11 @@ info:
     provider_published: true
     source_host: cdn.intersight.com
     note: Cisco publishes the full Intersight OpenAPI 3.0.2 anonymously from its CDN (27.5MB master document; 3,963 operations / 2,448 paths / 5,612 schemas) plus 11 per-service documents covering 100% of the master's paths. Byte-identity reconfirmed 2026-08-19 by SHA-256. Note intersight.com itself is a soft-404 farm — the contract is on the CDN, not the app host.
-  description: 'Operations tagged iaas across 2 of this provider''s published API definitions: intersight-orchestrator-openapi.json, intersight-workflows-openapi.json. Each path carries the servers of the definition it was published in.'
+  x-evidence:
+  - type: source
+    url: https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-openapi-v3-1.0.11-20260807064027971.json
+  - type: source
+    url: https://intersight.com/apidocs/apirefs/
 servers:
 - url: https://{server}
   variables:
@@ -37,7 +39,7 @@ paths:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.ConnectorPack' resource.
+      summary: Read a 'iaas.ConnectorPack' resource
       operationId: GetIaasConnectorPackList
       security:
       - cookieAuth: []
@@ -88,17 +90,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/ConnectorPacks/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.ConnectorPack' resource.
+      summary: Read a 'iaas.ConnectorPack' resource
       operationId: GetIaasConnectorPackByMoid
       security:
       - cookieAuth: []
@@ -152,17 +148,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/CustomTaskInfos:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.CustomTaskInfo' resource.
+      summary: Read a 'iaas.CustomTaskInfo' resource
       operationId: GetIaasCustomTaskInfoList
       security:
       - cookieAuth: []
@@ -213,17 +203,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/CustomTaskInfos/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.CustomTaskInfo' resource.
+      summary: Read a 'iaas.CustomTaskInfo' resource
       operationId: GetIaasCustomTaskInfoByMoid
       security:
       - cookieAuth: []
@@ -277,17 +261,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/DeviceStatuses:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.DeviceStatus' resource.
+      summary: Read a 'iaas.DeviceStatus' resource
       operationId: GetIaasDeviceStatusList
       security:
       - cookieAuth: []
@@ -338,17 +316,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/DeviceStatuses/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.DeviceStatus' resource.
+      summary: Read a 'iaas.DeviceStatus' resource
       operationId: GetIaasDeviceStatusByMoid
       security:
       - cookieAuth: []
@@ -402,17 +374,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/DiagnosticMessages:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.DiagnosticMessages' resource.
+      summary: Read a 'iaas.DiagnosticMessages' resource
       operationId: GetIaasDiagnosticMessagesList
       security:
       - cookieAuth: []
@@ -463,17 +429,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/DiagnosticMessages/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.DiagnosticMessages' resource.
+      summary: Read a 'iaas.DiagnosticMessages' resource
       operationId: GetIaasDiagnosticMessagesByMoid
       security:
       - cookieAuth: []
@@ -527,17 +487,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/LicenseInfos:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.LicenseInfo' resource.
+      summary: Read a 'iaas.LicenseInfo' resource
       operationId: GetIaasLicenseInfoList
       security:
       - cookieAuth: []
@@ -588,17 +542,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/LicenseInfos/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.LicenseInfo' resource.
+      summary: Read a 'iaas.LicenseInfo' resource
       operationId: GetIaasLicenseInfoByMoid
       security:
       - cookieAuth: []
@@ -652,17 +600,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/MostRunTasks:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.MostRunTasks' resource.
+      summary: Read a 'iaas.MostRunTasks' resource
       operationId: GetIaasMostRunTasksList
       security:
       - cookieAuth: []
@@ -713,17 +655,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/MostRunTasks/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.MostRunTasks' resource.
+      summary: Read a 'iaas.MostRunTasks' resource
       operationId: GetIaasMostRunTasksByMoid
       security:
       - cookieAuth: []
@@ -777,17 +713,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/ServiceRequests:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.ServiceRequest' resource.
+      summary: Read a 'iaas.ServiceRequest' resource
       operationId: GetIaasServiceRequestList
       security:
       - cookieAuth: []
@@ -838,17 +768,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/ServiceRequests/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.ServiceRequest' resource.
+      summary: Read a 'iaas.ServiceRequest' resource
       operationId: GetIaasServiceRequestByMoid
       security:
       - cookieAuth: []
@@ -902,17 +826,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/SystemTaskInfos:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.SystemTaskInfo' resource.
+      summary: Read a 'iaas.SystemTaskInfo' resource
       operationId: GetIaasSystemTaskInfoList
       security:
       - cookieAuth: []
@@ -963,17 +881,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/SystemTaskInfos/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.SystemTaskInfo' resource.
+      summary: Read a 'iaas.SystemTaskInfo' resource
       operationId: GetIaasSystemTaskInfoByMoid
       security:
       - cookieAuth: []
@@ -1027,17 +939,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdInfos:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdInfo' resource.
+      summary: Read a 'iaas.UcsdInfo' resource
       operationId: GetIaasUcsdInfoList
       security:
       - cookieAuth: []
@@ -1092,17 +998,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdInfos/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdInfo' resource.
+      summary: Read a 'iaas.UcsdInfo' resource
       operationId: GetIaasUcsdInfoByMoid
       security:
       - cookieAuth: []
@@ -1163,7 +1063,7 @@ paths:
     post:
       tags:
       - iaas
-      summary: Update a 'iaas.UcsdInfo' resource.
+      summary: Update a 'iaas.UcsdInfo' resource
       operationId: UpdateIaasUcsdInfo
       security:
       - cookieAuth: []
@@ -1220,7 +1120,7 @@ paths:
     patch:
       tags:
       - iaas
-      summary: Update a 'iaas.UcsdInfo' resource.
+      summary: Update a 'iaas.UcsdInfo' resource
       operationId: PatchIaasUcsdInfo
       security:
       - cookieAuth: []
@@ -1274,17 +1174,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdManagedInfras:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdManagedInfra' resource.
+      summary: Read a 'iaas.UcsdManagedInfra' resource
       operationId: GetIaasUcsdManagedInfraList
       security:
       - cookieAuth: []
@@ -1335,17 +1229,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdManagedInfras/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdManagedInfra' resource.
+      summary: Read a 'iaas.UcsdManagedInfra' resource
       operationId: GetIaasUcsdManagedInfraByMoid
       security:
       - cookieAuth: []
@@ -1399,17 +1287,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdMessages:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdMessages' resource.
+      summary: Read a 'iaas.UcsdMessages' resource
       operationId: GetIaasUcsdMessagesList
       security:
       - cookieAuth: []
@@ -1460,17 +1342,11 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
   /api/v1/iaas/UcsdMessages/{Moid}:
     get:
       tags:
       - iaas
-      summary: Read a 'iaas.UcsdMessages' resource.
+      summary: Read a 'iaas.UcsdMessages' resource
       operationId: GetIaasUcsdMessagesByMoid
       security:
       - cookieAuth: []
@@ -1524,14 +1400,254 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    servers:
-    - url: https://{server}
-      variables:
-        server:
-          default: intersight.com
-      description: The Intersight URL for the cloud-based infrastructure management APIs.
 components:
+  responses:
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
     IfMatch:
       name: If-Match
       in: header
@@ -1557,24 +1673,6 @@ components:
       required: false
       schema:
         type: string
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
     atParam:
       name: at
       in: query
@@ -1634,226 +1732,35 @@ components:
       required: false
       schema:
         type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
   schemas:
-    iaas.DiagnosticMessages.List:
-      title: List of 'iaas.DiagnosticMessages' resources
+    iaas.MostRunTasks.List:
+      title: List of 'iaas.MostRunTasks' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
       - type: object
         properties:
           Count:
-            description: 'The total number of ''iaas.DiagnosticMessages'' resources matching the request, accross all pages.
+            description: 'The total number of ''iaas.MostRunTasks'' resources matching the request, accross all pages.
 
               The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
             type: integer
             format: int32
           Results:
-            description: The array of 'iaas.DiagnosticMessages' resources matching the request.
+            description: The array of 'iaas.MostRunTasks' resources matching the request.
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/iaas.DiagnosticMessages'
-    iaas.ConnectorPack.Relationship:
-      description: A relationship to the 'iaas.ConnectorPack' resource, or the expanded 'iaas.ConnectorPack' resource, or the 'null' value.
-      x-one-of-name: iaas.ConnectorPack.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.ConnectorPack'
-      discriminator:
-        propertyName: ClassId
-    iaas.MostRunTasks:
-      title: Iaas:Most Run Tasks
-      description: "The MostRunTasks object provides insights into frequently executed workflow tasks within UCS Director (UCSD).  \n#### Purpose \nMostRunTasks captures data about task execution frequency, aiding in workflow analysis and improvement strategies.   \n#### Key Concepts  \n- **Execution Frequency:** Tracks how often tasks are executed, supporting process refinement and optimization. \n- **Read-Only Access:** Ensures secure access to task data without modification."
-      x-allOf-name: iaas.MostRunTasks
+              $ref: '#/components/schemas/iaas.MostRunTasks'
+    iaas.CustomTaskInfo:
+      title: Iaas:Custom Task Info
+      description: "The CustomTaskInfo object offers insights into the execution of custom tasks within UCS Director (UCSD), supporting workflow customization and management.  \n#### Purpose  \nCustomTaskInfo documents execution details of custom tasks, aiding in workflow personalization and optimization.  \n#### Key Concepts \n- **Custom Task Execution:** Tracks execution of custom tasks, supporting process customization and refinement. \n- **Read-Only Access:** Ensures secure access to custom task data without alteration."
+      x-allOf-name: iaas.CustomTaskInfo
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
       - type: object
-        description: Definition of the list of properties defined in 'iaas.MostRunTasks', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'iaas.CustomTaskInfo', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -1865,19 +1772,19 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - iaas.MostRunTasks
-            default: iaas.MostRunTasks
+            - iaas.CustomTaskInfo
+            default: iaas.CustomTaskInfo
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - iaas.MostRunTasks
-            default: iaas.MostRunTasks
+            - iaas.CustomTaskInfo
+            default: iaas.CustomTaskInfo
             x-enum-as-string: true
-          TaskCategory:
-            description: A functional area to which a task belongs to.
+          TaskDescription:
+            description: Task decription or Comment of the Custom task.
             type: string
             readOnly: true
             x-omitempty: true
@@ -1887,13 +1794,13 @@ components:
             format: int64
             readOnly: true
             x-omitempty: true
-          TaskName:
-            description: Name of the task executed in UCSD.
+          TaskLabel:
+            description: Task Label in the Workflow.
             type: string
             readOnly: true
             x-omitempty: true
-          TaskType:
-            description: Type of the task whether it is system task or custom task.
+          TaskName:
+            description: Name of the Custom Task in UCSD.
             type: string
             readOnly: true
             x-omitempty: true
@@ -1903,6 +1810,36 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
+    iaas.UcsdInfo.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.UcsdInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.UcsdInfo' resources."
+      x-one-of-name: iaas.UcsdInfo.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.UcsdInfo.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.UcsdMessages.List:
+      title: List of 'iaas.UcsdMessages' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.UcsdMessages'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.UcsdMessages' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.UcsdMessages'
     iaas.LicenseInfo:
       title: Iaas:License Info
       description: "The LicenseInfo object is a fundamental component in managing license details within UCS Director (UCSD), providing a structured overview of license types and expiration dates.   \n#### Purpose \nLicenseInfo offers comprehensive data about licenses in UCSD, supporting proactive license management and compliance.   \n#### Key Concepts  \n- **Type and Expiration:** Captures license type and expiration details, aiding in strategic license management. \n- **Utilization Overview:** Provides insights into license utilization, supporting optimization and planning. \n- **Read-Only Access:** Ensures secure access to license data without modification."
@@ -1967,6 +1904,105 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
+    iaas.ConnectorPack.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.ConnectorPack' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.ConnectorPack' resources."
+      x-one-of-name: iaas.ConnectorPack.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.ConnectorPack.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.CustomTaskInfo.List:
+      title: List of 'iaas.CustomTaskInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.CustomTaskInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.CustomTaskInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.CustomTaskInfo'
+    iaas.DiagnosticMessages.List:
+      title: List of 'iaas.DiagnosticMessages' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.DiagnosticMessages'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.DiagnosticMessages' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.DiagnosticMessages'
+    iaas.ConnectorPack.Relationship:
+      description: A relationship to the 'iaas.ConnectorPack' resource, or the expanded 'iaas.ConnectorPack' resource, or the 'null' value.
+      x-one-of-name: iaas.ConnectorPack.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.ConnectorPack'
+      discriminator:
+        propertyName: ClassId
+    iaas.ConnectorPack.List:
+      title: List of 'iaas.ConnectorPack' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.ConnectorPack'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.ConnectorPack' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.ConnectorPack'
+    iaas.UcsdManagedInfra.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.UcsdManagedInfra' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.UcsdManagedInfra' resources."
+      x-one-of-name: iaas.UcsdManagedInfra.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.UcsdManagedInfra.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.DiagnosticMessages.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.DiagnosticMessages' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.DiagnosticMessages' resources."
+      x-one-of-name: iaas.DiagnosticMessages.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.DiagnosticMessages.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
     iaas.UcsdInfo:
       title: Iaas:Ucsd Info
       description: "The UcsdInfo object is a central component in managing UCS Director accounts, offering insights into system configurations and connection status. It facilitates comprehensive management and monitoring of UCSD environments.\n#### Purpose\nUcsdInfo provides a detailed overview of UCS Director instances supporting effective system administration and status evaluation.\n#### Key Concepts\n- **Comprehensive Management:** Captures vital information about UCSD configurations and accounts, aiding efficient system oversight. \n- **Status Evaluation:** Monitors the operational state of UCSD, assisting in maintaining system health and performance. \n- **Access Control:** Supports privilege-based access to ensure secure and authorized system management."
@@ -2106,36 +2142,6 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    iaas.LicenseInfo.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.LicenseInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.LicenseInfo' resources."
-      x-one-of-name: iaas.LicenseInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.LicenseInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.UcsdInfo.List:
-      title: List of 'iaas.UcsdInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.UcsdInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.UcsdInfo' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.UcsdInfo'
     iaas.UcsdManagedInfra.Relationship:
       description: A relationship to the 'iaas.UcsdManagedInfra' resource, or the expanded 'iaas.UcsdManagedInfra' resource, or the 'null' value.
       x-one-of-name: iaas.UcsdManagedInfra.Relationship
@@ -2145,64 +2151,14 @@ components:
       - $ref: '#/components/schemas/iaas.UcsdManagedInfra'
       discriminator:
         propertyName: ClassId
-    iaas.ServiceRequest.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.ServiceRequest' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.ServiceRequest' resources."
-      x-one-of-name: iaas.ServiceRequest.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.ServiceRequest.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.UcsdManagedInfra.List:
-      title: List of 'iaas.UcsdManagedInfra' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+    iaas.LicenseKeysInfo:
+      title: Iaas:License Keys Info
+      description: "### Overview\nThe LicenseKeysInfo object serves as an essential element in managing license details within UCS Director. It encapsulates information about unique license identifiers and expiration dates, facilitating effective license management and renewal strategies.   \n#### Purpose \nLicenseKeysInfo provides detailed information about the identification and validity of licenses, supporting proactive management and ensuring continuity of service.   \n#### Key Concepts \n- **Unique Identification:** - Each license is uniquely identified, enabling precise tracking and management. \n- **Expiration Management:** - Offers insights into license expiration, assisting in timely renewals and preventing service disruptions. \n- **Read-Only Access:** - Designed for secure access to license information without alteration."
+      x-allOf-name: iaas.LicenseKeysInfo
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
       - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.UcsdManagedInfra'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.UcsdManagedInfra' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.UcsdManagedInfra'
-    iaas.SystemTaskInfo.List:
-      title: List of 'iaas.SystemTaskInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.SystemTaskInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.SystemTaskInfo' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.SystemTaskInfo'
-    iaas.UcsdMessages:
-      title: Iaas:Ucsd Messages
-      description: "The UcsdMessages object captures messages from UCS Director (UCSD), supporting system communication and alert management.   \n#### Purpose\nUcsdMessages document system messages, aiding in communication and issue resolution within UCSD.   \n####Key Concepts \n- **Message Documentation:** Records system messages, supporting communication and alert tracking.\n- **Alert Integration:** Integrates message alerts within the system, supporting proactive management and resolution. \n- **Read-Only Access:** Ensures secure access to message data without modification."
-      x-allOf-name: iaas.UcsdMessages
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'iaas.UcsdMessages', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'iaas.LicenseKeysInfo', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -2214,110 +2170,48 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - iaas.UcsdMessages
-            default: iaas.UcsdMessages
+            - iaas.LicenseKeysInfo
+            default: iaas.LicenseKeysInfo
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - iaas.UcsdMessages
-            default: iaas.UcsdMessages
+            - iaas.LicenseKeysInfo
+            default: iaas.LicenseKeysInfo
             x-enum-as-string: true
-          StatusId:
-            description: Last checked time of the alerts.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          RegisteredDevice:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
-            description: 'A reference to a assetDeviceRegistration resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    iaas.SystemTaskInfo:
-      title: Iaas:System Task Info
-      description: "The SystemTaskInfo object provides details about library task executions within UCS Director (UCSD), supporting system oversight and process management.  \n#### Purpose\nSystemTaskInfo documents task execution data, aiding in workflow task management and optimization strategies. \n#### Key Concepts \n- **Execution Frequency:** Tracks each library tasks execution count, supporting process refinement and optimization.\n- **Functional Categorization:** Provides information regarding the task category to which the library task belongs in UCSD. \n- **Read-Only Access:** Ensures secure access to system task data without modification."
-      x-allOf-name: iaas.SystemTaskInfo
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'iaas.SystemTaskInfo', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iaas.SystemTaskInfo
-            default: iaas.SystemTaskInfo
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iaas.SystemTaskInfo
-            default: iaas.SystemTaskInfo
-            x-enum-as-string: true
-          TaskCategory:
-            description: A functional area to which a task belongs to.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          TaskExecutionCount:
-            description: Number of times this task has been executed.
+          Count:
+            description: Number of licenses available for the UCSD PID (Product ID).
             type: integer
             format: int64
             readOnly: true
             x-omitempty: true
-          TaskName:
-            description: Task name of the UCSD Task.
+          ExpirationDate:
+            description: Expiration date for the license.
             type: string
             readOnly: true
             x-omitempty: true
-          Guid:
-            $ref: '#/components/schemas/iaas.UcsdInfo.Relationship'
-            description: 'A reference to a iaasUcsdInfo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
+          LicenseId:
+            description: UCS Director Unique license ID.
+            type: string
             readOnly: true
-    iaas.ConnectorPack.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.ConnectorPack' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.ConnectorPack' resources."
-      x-one-of-name: iaas.ConnectorPack.Response
+            x-omitempty: true
+          Pid:
+            description: PID (Product ID) for UCSD License.
+            type: string
+            readOnly: true
+            x-omitempty: true
+    iaas.SystemTaskInfo.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.SystemTaskInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.SystemTaskInfo' resources."
+      x-one-of-name: iaas.SystemTaskInfo.Response
       oneOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.ConnectorPack.List'
+      - $ref: '#/components/schemas/iaas.SystemTaskInfo.List'
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-    iaas.ServiceRequest.List:
-      title: List of 'iaas.ServiceRequest' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.ServiceRequest'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.ServiceRequest' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.ServiceRequest'
     iaas.ServiceRequest:
       title: Iaas:Service Request
       description: "The ServiceRequest object is integral to managing service requests within UCS Director (UCSD), capturing essential details about service request and statuses request workflows .\n#### Purpose \nServiceRequest documents and tracks service requests, supporting efficient process management and resolution strategies.   \n#### Key Concepts \n- **Workflow Documentation:** Captures information about workflow steps executed in service requests, aiding process refinement. \n- **Status Tracking:** Monitors request statuses, supporting timely resolution and management. \n- **Read-Only Access:** Ensures secure access to service request data without modification."
@@ -2403,26 +2297,96 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    iaas.MostRunTasks.List:
-      title: List of 'iaas.MostRunTasks' resources
+    iaas.CustomTaskInfo.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.CustomTaskInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.CustomTaskInfo' resources."
+      x-one-of-name: iaas.CustomTaskInfo.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.CustomTaskInfo.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.DeviceStatus.Relationship:
+      description: A relationship to the 'iaas.DeviceStatus' resource, or the expanded 'iaas.DeviceStatus' resource, or the 'null' value.
+      x-one-of-name: iaas.DeviceStatus.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.DeviceStatus'
+      discriminator:
+        propertyName: ClassId
+    iaas.LicenseUtilizationInfo:
+      title: Iaas:License Utilization Info
+      description: "### Overview\nThe LicenseUtilizationInfo object is crucial for managing and understanding the utilization of licenses within the UCS Director (UCSD). This provides a comprehensive view of license details and their actual usage, enabling efficient resource management and planning.   \n#### Purpose  \nThe LicenseUtilizationInfo object helps administrators track and optimize the use of licenses associated with various features in UCSD. It ensures that license limits are adhered to while providing insights into actual usage patterns.   \n#### Key Concepts  \n- **License Tracking:** - Offers a clear view of the licenses available and used within the system, aiding compliance and optimization. \n- **Usage Insights:** - Provides actionable data on how licenses are being utilized, supporting informed decision-making for resource allocation. \n- **Read-Only Access:** - Ensures that the information is accessible for review without modification, maintaining integrity and compliance."
+      x-allOf-name: iaas.LicenseUtilizationInfo
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+      - type: object
+        description: Definition of the list of properties defined in 'iaas.LicenseUtilizationInfo', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iaas.LicenseUtilizationInfo
+            default: iaas.LicenseUtilizationInfo
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iaas.LicenseUtilizationInfo
+            default: iaas.LicenseUtilizationInfo
+            x-enum-as-string: true
+          ActualUsed:
+            description: Number of licenses actually used for this feature.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          Label:
+            description: License label of UCSD license.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          LicensedLimit:
+            description: License limit for this license feature.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Sku:
+            description: SKU for the UCSD license.
+            type: string
+            readOnly: true
+            x-omitempty: true
+    iaas.UcsdManagedInfra.List:
+      title: List of 'iaas.UcsdManagedInfra' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
       - type: object
         properties:
           Count:
-            description: 'The total number of ''iaas.MostRunTasks'' resources matching the request, accross all pages.
+            description: 'The total number of ''iaas.UcsdManagedInfra'' resources matching the request, accross all pages.
 
               The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
             type: integer
             format: int32
           Results:
-            description: The array of 'iaas.MostRunTasks' resources matching the request.
+            description: The array of 'iaas.UcsdManagedInfra' resources matching the request.
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/iaas.MostRunTasks'
+              $ref: '#/components/schemas/iaas.UcsdManagedInfra'
     iaas.UcsdManagedInfra:
       title: Iaas:Ucsd Managed Infra
       description: "The UcsdManagedInfra object is critical for overseeing UCS Director (UCSD) managed infrastructure, providing statistics and insights into managed resources.\n#### Purpose\nUcsdManagedInfra offers a detailed view of infrastructure components managed by UCSD, supporting effective resource management and planning.\n#### Key Concepts\n- **Infrastructure Statistics:** Captures data on infrastructure components like hosts and virtual machines, aiding in system oversight. \n- **Resource Management:** Provides insights into user accounts and groups, supporting efficient resource allocation. \n- **Read-Only Access:** Ensures infrastructure data is available for review without modification."
@@ -2525,6 +2489,181 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
+    iaas.UcsdInfo.Relationship:
+      description: A relationship to the 'iaas.UcsdInfo' resource, or the expanded 'iaas.UcsdInfo' resource, or the 'null' value.
+      x-one-of-name: iaas.UcsdInfo.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.UcsdInfo'
+      discriminator:
+        propertyName: ClassId
+    iaas.UcsdMessages:
+      title: Iaas:Ucsd Messages
+      description: "The UcsdMessages object captures messages from UCS Director (UCSD), supporting system communication and alert management.   \n#### Purpose\nUcsdMessages document system messages, aiding in communication and issue resolution within UCSD.   \n####Key Concepts \n- **Message Documentation:** Records system messages, supporting communication and alert tracking.\n- **Alert Integration:** Integrates message alerts within the system, supporting proactive management and resolution. \n- **Read-Only Access:** Ensures secure access to message data without modification."
+      x-allOf-name: iaas.UcsdMessages
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'iaas.UcsdMessages', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iaas.UcsdMessages
+            default: iaas.UcsdMessages
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iaas.UcsdMessages
+            default: iaas.UcsdMessages
+            x-enum-as-string: true
+          StatusId:
+            description: Last checked time of the alerts.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          RegisteredDevice:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
+            description: 'A reference to a assetDeviceRegistration resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    iaas.UcsdInfo.List:
+      title: List of 'iaas.UcsdInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.UcsdInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.UcsdInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.UcsdInfo'
+    iaas.SystemTaskInfo.Relationship:
+      description: A relationship to the 'iaas.SystemTaskInfo' resource, or the expanded 'iaas.SystemTaskInfo' resource, or the 'null' value.
+      x-one-of-name: iaas.SystemTaskInfo.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.SystemTaskInfo'
+      discriminator:
+        propertyName: ClassId
+    iaas.SystemTaskInfo.List:
+      title: List of 'iaas.SystemTaskInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.SystemTaskInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.SystemTaskInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.SystemTaskInfo'
+    iaas.MostRunTasks.Relationship:
+      description: A relationship to the 'iaas.MostRunTasks' resource, or the expanded 'iaas.MostRunTasks' resource, or the 'null' value.
+      x-one-of-name: iaas.MostRunTasks.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.MostRunTasks'
+      discriminator:
+        propertyName: ClassId
+    iaas.MostRunTasks.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.MostRunTasks' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.MostRunTasks' resources."
+      x-one-of-name: iaas.MostRunTasks.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.MostRunTasks.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.MostRunTasks:
+      title: Iaas:Most Run Tasks
+      description: "The MostRunTasks object provides insights into frequently executed workflow tasks within UCS Director (UCSD).  \n#### Purpose \nMostRunTasks captures data about task execution frequency, aiding in workflow analysis and improvement strategies.   \n#### Key Concepts  \n- **Execution Frequency:** Tracks how often tasks are executed, supporting process refinement and optimization. \n- **Read-Only Access:** Ensures secure access to task data without modification."
+      x-allOf-name: iaas.MostRunTasks
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'iaas.MostRunTasks', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iaas.MostRunTasks
+            default: iaas.MostRunTasks
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iaas.MostRunTasks
+            default: iaas.MostRunTasks
+            x-enum-as-string: true
+          TaskCategory:
+            description: A functional area to which a task belongs to.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          TaskExecutionCount:
+            description: Number of times this task has executed.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          TaskName:
+            description: Name of the task executed in UCSD.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          TaskType:
+            description: Type of the task whether it is system task or custom task.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Guid:
+            $ref: '#/components/schemas/iaas.UcsdInfo.Relationship'
+            description: 'A reference to a iaasUcsdInfo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
     iaas.ConnectorPack:
       title: Iaas:Connector Pack
       description: "The ConnectorPack object is essential for managing connector pack versions within UCS Director (UCSD), facilitating configuration and dependency management.   \n#### Purpose  \nConnectorPack documents the versions and states of connector packs, supporting efficient management and deployment of connectors in UCSD.   \n#### Key Concepts  \n- **Version Management:** Tracks connector pack versions, ensuring compatibility and optimal performance. \n- **Dependency Tracking:** Monitors dependencies, aiding in configuration management and deployment strategies. \n- **Read-Only Access:** Ensures connector pack information is available for review without alteration."
@@ -2595,6 +2734,75 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
+    iaas.LicenseInfo.Relationship:
+      description: A relationship to the 'iaas.LicenseInfo' resource, or the expanded 'iaas.LicenseInfo' resource, or the 'null' value.
+      x-one-of-name: iaas.LicenseInfo.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.LicenseInfo'
+      discriminator:
+        propertyName: ClassId
+    iaas.ServiceRequest.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.ServiceRequest' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.ServiceRequest' resources."
+      x-one-of-name: iaas.ServiceRequest.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.ServiceRequest.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.DeviceStatus.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.DeviceStatus' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.DeviceStatus' resources."
+      x-one-of-name: iaas.DeviceStatus.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.DeviceStatus.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    iaas.LicenseInfo.List:
+      title: List of 'iaas.LicenseInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.LicenseInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.LicenseInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.LicenseInfo'
+    iaas.DeviceStatus.List:
+      title: List of 'iaas.DeviceStatus' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''iaas.DeviceStatus'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'iaas.DeviceStatus' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/iaas.DeviceStatus'
     iaas.UcsdMessages.Response:
       description: "The response body of a HTTP GET request for the 'iaas.UcsdMessages' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.UcsdMessages' resources."
       x-one-of-name: iaas.UcsdMessages.Response
@@ -2605,26 +2813,35 @@ components:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-    iaas.UcsdMessages.List:
-      title: List of 'iaas.UcsdMessages' resources
+    iaas.CustomTaskInfo.Relationship:
+      description: A relationship to the 'iaas.CustomTaskInfo' resource, or the expanded 'iaas.CustomTaskInfo' resource, or the 'null' value.
+      x-one-of-name: iaas.CustomTaskInfo.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/iaas.CustomTaskInfo'
+      discriminator:
+        propertyName: ClassId
+    iaas.ServiceRequest.List:
+      title: List of 'iaas.ServiceRequest' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
       - type: object
         properties:
           Count:
-            description: 'The total number of ''iaas.UcsdMessages'' resources matching the request, accross all pages.
+            description: 'The total number of ''iaas.ServiceRequest'' resources matching the request, accross all pages.
 
               The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
             type: integer
             format: int32
           Results:
-            description: The array of 'iaas.UcsdMessages' resources matching the request.
+            description: The array of 'iaas.ServiceRequest' resources matching the request.
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/iaas.UcsdMessages'
+              $ref: '#/components/schemas/iaas.ServiceRequest'
     iaas.WorkflowSteps:
       title: Iaas:Workflow Steps
       description: "### Overview\nThe WorkflowSteps object is integral to managing workflow operations within UCS Director (UCSD), capturing the step-by-step progression of service requests. This provides structured information about each workflow step, facilitating process monitoring and optimization.   \n#### Purpose  \nWorkflowSteps help in documenting and analyzing the workflow stages in UCSD service requests, enabling better tracking and refinement of operational processes.  \n#### Key Concepts \n- **Process Documentation:** - Records detailed information about each step in a workflow, supporting transparency and traceability. \n- **Status Monitoring:** - Provides status updates for workflow steps, aiding in real-time process management. \n- **Read-Only Access:** - Ensures workflow details are available for review without modification."
@@ -2675,15 +2892,68 @@ components:
             type: string
             readOnly: true
             x-omitempty: true
-    iaas.MostRunTasks.Relationship:
-      description: A relationship to the 'iaas.MostRunTasks' resource, or the expanded 'iaas.MostRunTasks' resource, or the 'null' value.
-      x-one-of-name: iaas.MostRunTasks.Relationship
+    iaas.SystemTaskInfo:
+      title: Iaas:System Task Info
+      description: "The SystemTaskInfo object provides details about library task executions within UCS Director (UCSD), supporting system oversight and process management.  \n#### Purpose\nSystemTaskInfo documents task execution data, aiding in workflow task management and optimization strategies. \n#### Key Concepts \n- **Execution Frequency:** Tracks each library tasks execution count, supporting process refinement and optimization.\n- **Functional Categorization:** Provides information regarding the task category to which the library task belongs in UCSD. \n- **Read-Only Access:** Ensures secure access to system task data without modification."
+      x-allOf-name: iaas.SystemTaskInfo
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'iaas.SystemTaskInfo', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - iaas.SystemTaskInfo
+            default: iaas.SystemTaskInfo
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - iaas.SystemTaskInfo
+            default: iaas.SystemTaskInfo
+            x-enum-as-string: true
+          TaskCategory:
+            description: A functional area to which a task belongs to.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          TaskExecutionCount:
+            description: Number of times this task has been executed.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          TaskName:
+            description: Task name of the UCSD Task.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Guid:
+            $ref: '#/components/schemas/iaas.UcsdInfo.Relationship'
+            description: 'A reference to a iaasUcsdInfo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    iaas.LicenseInfo.Response:
+      description: "The response body of a HTTP GET request for the 'iaas.LicenseInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.LicenseInfo' resources."
+      x-one-of-name: iaas.LicenseInfo.Response
       oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.MostRunTasks'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/iaas.LicenseInfo.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
-        propertyName: ClassId
+        propertyName: ObjectType
     iaas.DeviceStatus:
       title: Iaas:Device Status
       description: "The DeviceStatus object is pivotal in managing infrastructure accounts within UCS Director (UCSD), offering insights into connection status and device details. It aids in maintaining connectivity and operational integrity.   \n#### Purpose \nDeviceStatus provides detailed information about infrastructure accounts managed by UCSD, supporting connection monitoring and device management.  \n#### Key Concepts \n- **Connection Monitoring:** Tracks connection status between UCSD and managed devices, ensuring operational reliability. \n- **Device Insights:** Offers comprehensive details about device vendors, models, and versions, aiding in effective management. \n- **Read-Only Access:** Ensures secure access to device information without modification."
@@ -2789,189 +3059,6 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    iaas.SystemTaskInfo.Relationship:
-      description: A relationship to the 'iaas.SystemTaskInfo' resource, or the expanded 'iaas.SystemTaskInfo' resource, or the 'null' value.
-      x-one-of-name: iaas.SystemTaskInfo.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.SystemTaskInfo'
-      discriminator:
-        propertyName: ClassId
-    iaas.UcsdInfo.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.UcsdInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.UcsdInfo' resources."
-      x-one-of-name: iaas.UcsdInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.UcsdInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.LicenseInfo.List:
-      title: List of 'iaas.LicenseInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.LicenseInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.LicenseInfo' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.LicenseInfo'
-    iaas.CustomTaskInfo.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.CustomTaskInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.CustomTaskInfo' resources."
-      x-one-of-name: iaas.CustomTaskInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.CustomTaskInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.UcsdManagedInfra.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.UcsdManagedInfra' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.UcsdManagedInfra' resources."
-      x-one-of-name: iaas.UcsdManagedInfra.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.UcsdManagedInfra.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.MostRunTasks.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.MostRunTasks' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.MostRunTasks' resources."
-      x-one-of-name: iaas.MostRunTasks.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.MostRunTasks.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.CustomTaskInfo:
-      title: Iaas:Custom Task Info
-      description: "The CustomTaskInfo object offers insights into the execution of custom tasks within UCS Director (UCSD), supporting workflow customization and management.  \n#### Purpose  \nCustomTaskInfo documents execution details of custom tasks, aiding in workflow personalization and optimization.  \n#### Key Concepts \n- **Custom Task Execution:** Tracks execution of custom tasks, supporting process customization and refinement. \n- **Read-Only Access:** Ensures secure access to custom task data without alteration."
-      x-allOf-name: iaas.CustomTaskInfo
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'iaas.CustomTaskInfo', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iaas.CustomTaskInfo
-            default: iaas.CustomTaskInfo
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iaas.CustomTaskInfo
-            default: iaas.CustomTaskInfo
-            x-enum-as-string: true
-          TaskDescription:
-            description: Task decription or Comment of the Custom task.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          TaskExecutionCount:
-            description: Number of times this task has executed.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          TaskLabel:
-            description: Task Label in the Workflow.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          TaskName:
-            description: Name of the Custom Task in UCSD.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Guid:
-            $ref: '#/components/schemas/iaas.UcsdInfo.Relationship'
-            description: 'A reference to a iaasUcsdInfo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    iaas.LicenseInfo.Relationship:
-      description: A relationship to the 'iaas.LicenseInfo' resource, or the expanded 'iaas.LicenseInfo' resource, or the 'null' value.
-      x-one-of-name: iaas.LicenseInfo.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.LicenseInfo'
-      discriminator:
-        propertyName: ClassId
-    iaas.DiagnosticMessages.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.DiagnosticMessages' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.DiagnosticMessages' resources."
-      x-one-of-name: iaas.DiagnosticMessages.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.DiagnosticMessages.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.UcsdInfo.Relationship:
-      description: A relationship to the 'iaas.UcsdInfo' resource, or the expanded 'iaas.UcsdInfo' resource, or the 'null' value.
-      x-one-of-name: iaas.UcsdInfo.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.UcsdInfo'
-      discriminator:
-        propertyName: ClassId
-    iaas.DeviceStatus.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.DeviceStatus' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.DeviceStatus' resources."
-      x-one-of-name: iaas.DeviceStatus.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.DeviceStatus.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.SystemTaskInfo.Response:
-      description: "The response body of a HTTP GET request for the 'iaas.SystemTaskInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'iaas.SystemTaskInfo' resources."
-      x-one-of-name: iaas.SystemTaskInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/iaas.SystemTaskInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    iaas.DeviceStatus.Relationship:
-      description: A relationship to the 'iaas.DeviceStatus' resource, or the expanded 'iaas.DeviceStatus' resource, or the 'null' value.
-      x-one-of-name: iaas.DeviceStatus.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.DeviceStatus'
-      discriminator:
-        propertyName: ClassId
     iaas.DiagnosticMessages:
       title: Iaas:Diagnostic Messages
       description: "The DiagnosticMessages object is vital for capturing diagnostic alerts and messages within UCS Director (UCSD), aiding in system health monitoring and issue resolution.  \n#### Purpose\nDiagnosticMessages document alerts and recommendations, supporting proactive system management and troubleshooting.   \n#### Key Concepts \n- **Alert Tracking:** Records diagnostic alerts, aiding in system health assessment and management. \n- **Recommendation Documentation:** Provides actionable recommendations for alert resolution, supporting efficient troubleshooting. \n- **Read-Only Access:** Ensures secure access to diagnostic data without alteration."
@@ -3048,241 +3135,24 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    iaas.DeviceStatus.List:
-      title: List of 'iaas.DeviceStatus' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.DeviceStatus'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.DeviceStatus' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.DeviceStatus'
-    iaas.CustomTaskInfo.List:
-      title: List of 'iaas.CustomTaskInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.CustomTaskInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.CustomTaskInfo' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.CustomTaskInfo'
-    iaas.ConnectorPack.List:
-      title: List of 'iaas.ConnectorPack' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''iaas.ConnectorPack'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'iaas.ConnectorPack' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/iaas.ConnectorPack'
-    iaas.CustomTaskInfo.Relationship:
-      description: A relationship to the 'iaas.CustomTaskInfo' resource, or the expanded 'iaas.CustomTaskInfo' resource, or the 'null' value.
-      x-one-of-name: iaas.CustomTaskInfo.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/iaas.CustomTaskInfo'
-      discriminator:
-        propertyName: ClassId
-    iaas.LicenseUtilizationInfo:
-      title: Iaas:License Utilization Info
-      description: "### Overview\nThe LicenseUtilizationInfo object is crucial for managing and understanding the utilization of licenses within the UCS Director (UCSD). This provides a comprehensive view of license details and their actual usage, enabling efficient resource management and planning.   \n#### Purpose  \nThe LicenseUtilizationInfo object helps administrators track and optimize the use of licenses associated with various features in UCSD. It ensures that license limits are adhered to while providing insights into actual usage patterns.   \n#### Key Concepts  \n- **License Tracking:** - Offers a clear view of the licenses available and used within the system, aiding compliance and optimization. \n- **Usage Insights:** - Provides actionable data on how licenses are being utilized, supporting informed decision-making for resource allocation. \n- **Read-Only Access:** - Ensures that the information is accessible for review without modification, maintaining integrity and compliance."
-      x-allOf-name: iaas.LicenseUtilizationInfo
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'iaas.LicenseUtilizationInfo', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iaas.LicenseUtilizationInfo
-            default: iaas.LicenseUtilizationInfo
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iaas.LicenseUtilizationInfo
-            default: iaas.LicenseUtilizationInfo
-            x-enum-as-string: true
-          ActualUsed:
-            description: Number of licenses actually used for this feature.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          Label:
-            description: License label of UCSD license.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          LicensedLimit:
-            description: License limit for this license feature.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Sku:
-            description: SKU for the UCSD license.
-            type: string
-            readOnly: true
-            x-omitempty: true
-    iaas.LicenseKeysInfo:
-      title: Iaas:License Keys Info
-      description: "### Overview\nThe LicenseKeysInfo object serves as an essential element in managing license details within UCS Director. It encapsulates information about unique license identifiers and expiration dates, facilitating effective license management and renewal strategies.   \n#### Purpose \nLicenseKeysInfo provides detailed information about the identification and validity of licenses, supporting proactive management and ensuring continuity of service.   \n#### Key Concepts \n- **Unique Identification:** - Each license is uniquely identified, enabling precise tracking and management. \n- **Expiration Management:** - Offers insights into license expiration, assisting in timely renewals and preventing service disruptions. \n- **Read-Only Access:** - Designed for secure access to license information without alteration."
-      x-allOf-name: iaas.LicenseKeysInfo
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'iaas.LicenseKeysInfo', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - iaas.LicenseKeysInfo
-            default: iaas.LicenseKeysInfo
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - iaas.LicenseKeysInfo
-            default: iaas.LicenseKeysInfo
-            x-enum-as-string: true
-          Count:
-            description: Number of licenses available for the UCSD PID (Product ID).
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          ExpirationDate:
-            description: Expiration date for the license.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          LicenseId:
-            description: UCS Director Unique license ID.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Pid:
-            description: PID (Product ID) for UCSD License.
-            type: string
-            readOnly: true
-            x-omitempty: true
-  responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+  headers:
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
+      schema:
+        type: string
   links:
     GetIamAccountByMoid:
       operationId: GetIamAccountByMoid
@@ -9055,6 +8925,3 @@ components:
 externalDocs:
   url: /apidocs
   description: Online documentation for the Intersight APIs
-x-refined-from:
-- intersight-orchestrator-openapi.json
-- intersight-workflows-openapi.json

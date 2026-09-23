@@ -2,39 +2,7 @@ openapi: 3.2.0
 info:
   description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
 
-    3rd party IT infrastructure. This platform offers an intelligent level of management that enables
-
-    IT organizations to analyze, simplify, and automate their environments in more advanced ways than the prior
-
-    generations of tools. Cisco Intersight provides an integrated and intuitive management experience for
-
-    resources in the traditional data center as well as at the edge. With flexible deployment options to address
-
-    complex security needs, getting started with Intersight is quick and easy.
-
-    Cisco Intersight has deep integration with Cisco UCS and HyperFlex systems allowing for remote deployment,
-
-    configuration, and ongoing maintenance. The model-based deployment works for a single system in a remote
-
-    location or hundreds of systems in a data center and enables rapid, standardized configuration and deployment.
-
-    It also streamlines maintaining those systems whether you are working with small or very large configurations.
-
-    The Intersight OpenAPI document defines the complete set of properties that are returned in the
-
-    HTTP response. From that perspective, a client can expect that no additional properties are returned,
-
-    unless these properties are explicitly defined in the OpenAPI document.
-
-    However, when a client uses an older version of the Intersight OpenAPI document, the server may
-
-    send additional properties because the software is more recent than the client. In that case, the client
-
-    may receive properties that it does not know about.
-
-    Some generated SDKs perform a strict validation of the HTTP response body against the OpenAPI document.
-
-    This document was created on 2026-08-07T06:46:04Z.'
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
   title: Cisco Intersight System Apiproxy API
   license:
@@ -71,7 +39,7 @@ paths:
     get:
       tags:
       - apiproxy
-      summary: Read a 'apiproxy.AllowList' resource.
+      summary: Read a 'apiproxy.AllowList' resource
       operationId: GetApiproxyAllowListList
       security:
       - cookieAuth: []
@@ -128,7 +96,7 @@ paths:
     get:
       tags:
       - apiproxy
-      summary: Read a 'apiproxy.AllowList' resource.
+      summary: Read a 'apiproxy.AllowList' resource
       operationId: GetApiproxyAllowListByMoid
       security:
       - cookieAuth: []
@@ -185,17 +153,313 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
+  responses:
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    atParam:
+      name: at
+      in: query
+      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
+
+        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
+
+        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
+
+        expression specified by the query option.
+
+        The expression language that is used in at operators supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false) or any of the additional literal representations shown in the Abstract
+
+        Type System section.'
+      examples:
+        versiontype_equality:
+          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
+          value: at=VersionType eq 'Configured'
+        interestedmos_query:
+          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
+          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
+      required: false
+      schema:
+        type: string
+    applyParam:
+      name: $apply
+      in: query
+      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
+
+        are processed in order with the output from a transformation being used as input for the subsequent transformation.
+
+        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
+
+        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
+
+        Supported aggregation methods are "aggregate" and "groupby".
+
+        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
+
+        a result set with a single instance, representing the aggregated value for all instances in the input set.
+
+        The **groupby** transformation takes one or two parameters and
+
+        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
+
+        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
+
+        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
+
+        4. Concatenates the intermediate result sets into one result set.
+
+        A groupby transformation affects the structure of the result set.'
+      required: false
+      schema:
+        type: string
   schemas:
-    apiproxy.AllowList.Response:
-      description: "The response body of a HTTP GET request for the 'apiproxy.AllowList' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'apiproxy.AllowList' resources."
-      x-one-of-name: apiproxy.AllowList.Response
-      oneOf:
-      - $ref: '#/components/schemas/mo.DocumentCount'
-      - $ref: '#/components/schemas/apiproxy.AllowList.List'
-      - $ref: '#/components/schemas/mo.AggregateTransform'
-      - $ref: '#/components/schemas/mo.TagSummary'
-      discriminator:
-        propertyName: ObjectType
     mo.Tag:
       type: object
       title: Mo:Tag
@@ -254,29 +518,140 @@ components:
           minLength: 0
           maxLength: 256
           x-omitempty: true
-    mo.AggregateTransform:
-      description: "The output of a request that includes the $apply query parameter.\nThe schema of an aggregation query is dynamically determined based on the request query parameters. \nSee https://intersight.com/apidocs/introduction/query/#apply-query-option for more details."
+    mo.VersionContext:
+      title: Mo:Version Context
+      description: VersionContext contains the versioning info for an object.
+      x-allOf-name: mo.VersionContext
       allOf:
-      - $ref: '#/components/schemas/mo.BaseResponse'
+      - $ref: '#/components/schemas/mo.BaseComplexType'
       - type: object
+        description: Definition of the list of properties defined in 'mo.VersionContext', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
         properties:
-          Results:
-            description: The results of the aggregation query.
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - mo.VersionContext
+            default: mo.VersionContext
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - mo.VersionContext
+            default: mo.VersionContext
+            x-enum-as-string: true
+          InterestedMos:
             type:
             - array
             - 'null'
             items:
-              description: A result entry in the aggregate query.
-              type: object
-    mo.BaseMo.Relationship:
-      description: A relationship to the 'mo.BaseMo' resource, or the expanded 'mo.BaseMo' resource, or the 'null' value.
-      x-one-of-name: mo.BaseMo.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: '#/components/schemas/mo.MoRef'
-      - $ref: '#/components/schemas/mo.BaseMo'
-      discriminator:
-        propertyName: ClassId
+              description: 'A collection of objects that have reference to this versioned object.
+
+                The lifecycle of the versioned object is based on the interestedMos list;
+
+                the versioned object will be purged when interestedMos is empty.'
+              $ref: '#/components/schemas/mo.MoRef'
+              readOnly: true
+              x-omitempty: true
+          MarkedForDeletion:
+            description: The flag to indicate if snapshot is marked for deletion or not. If flag is set then snapshot will be removed after the successful deployment of the policy.
+            type: boolean
+            default: false
+            readOnly: true
+            x-omitempty: true
+          RefMo:
+            description: A reference to the original Managed Object.
+            $ref: '#/components/schemas/mo.MoRef'
+            readOnly: true
+            x-omitempty: true
+          Timestamp:
+            description: The time this versioned Managed Object was created.
+            type: string
+            format: date-time
+            readOnly: true
+            x-omitempty: true
+          Version:
+            description: The version of the Managed Object, e.g. an incrementing number or a hash id.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          VersionType:
+            description: 'Specifies type of version. Currently the only supported value is "Configured"
+
+              that is used to keep track of snapshots of policies and profiles that are intended
+
+              to be configured to target endpoints.
+
+              * `Modified` - Version created every time an object is modified.
+
+              * `Configured` - Version created every time an object is configured to the service profile.
+
+              * `Deployed` - Version created for objects related to a service profile when it is deployed.'
+            type: string
+            enum:
+            - Modified
+            - Configured
+            - Deployed
+            default: Modified
+            readOnly: true
+            x-omitempty: true
+    mo.DocumentCount:
+      description: A document returned in a response body when the HTTP GET request specifies the '$count' query parameter.
+      allOf:
+      - $ref: '#/components/schemas/mo.BaseResponse'
+      - type: object
+        properties:
+          Count:
+            description: The total number of resources matching the query filter, accross all pages.
+            type: integer
+            format: int32
+    mo.TagSummary:
+      description: A document returned in a response body when the HTTP GET request specifies the 'tag' query parameter.
+      allOf:
+      - $ref: '#/components/schemas/mo.BaseResponse'
+      - type: object
+        properties:
+          ObjectType:
+            description: A discriminator value to disambiguate the schema of a HTTP GET response body.
+            type: string
+          Results:
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/mo.TagKeySummary'
+    ExcelFile:
+      description: The content is an Excel spreadsheet.
+      type: string
+      format: binary
+    apiproxy.AllowList.List:
+      title: List of 'apiproxy.AllowList' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: '#/components/schemas/mo.BaseResponse'
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''apiproxy.AllowList'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'apiproxy.AllowList' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/apiproxy.AllowList'
     mo.BaseComplexType:
       type: object
       discriminator:
@@ -2156,30 +2531,1410 @@ components:
           - workload.StateAggregation
           - x509.Certificate
           x-enum-as-string: true
-    CsvFile:
-      type: string
-      description: The content is a comma-separated list of values.
-      format: binary
-    apiproxy.AllowList.List:
-      title: List of 'apiproxy.AllowList' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: '#/components/schemas/mo.BaseResponse'
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''apiproxy.AllowList'' resources matching the request, accross all pages.
+    apiproxy.AllowList.Response:
+      description: "The response body of a HTTP GET request for the 'apiproxy.AllowList' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'apiproxy.AllowList' resources."
+      x-one-of-name: apiproxy.AllowList.Response
+      oneOf:
+      - $ref: '#/components/schemas/mo.DocumentCount'
+      - $ref: '#/components/schemas/apiproxy.AllowList.List'
+      - $ref: '#/components/schemas/mo.AggregateTransform'
+      - $ref: '#/components/schemas/mo.TagSummary'
+      discriminator:
+        propertyName: ObjectType
+    mo.TagKeySummary:
+      type: object
+      description: A summary of the Tag usage for an API resource. Tags are Key, Value pairs that can be assigned to API resources.
+      properties:
+        Key:
+          type: string
+          description: The tag key for which usage information is provided.
+        NumKeys:
+          description: The number of times this tag Key has been set in an API resource.
+          type: integer
+          format: int32
+        Values:
+          type: array
+          description: A list of all Tag values that have been assigned to this tag Key.
+          items:
+            type: string
+    mo.MoRef:
+      title: Mo:Mo Ref
+      description: A reference to a REST resource, uniquely identified by object type and Moid.
+      required:
+      - ClassId
+      - ObjectType
+      - objectType
+      properties:
+        ClassId:
+          description: 'The fully-qualified name of the instantiated, concrete type.
 
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'apiproxy.AllowList' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/apiproxy.AllowList'
+            This property is used as a discriminator to identify the type of the payload
+
+            when marshaling and unmarshaling data.'
+          type: string
+          enum:
+          - mo.MoRef
+          default: mo.MoRef
+          x-enum-as-string: true
+        ObjectType:
+          description: The fully-qualified name of the remote type referred by this relationship.
+          type: string
+          enum:
+          - aaa.AuditRecord
+          - aaa.RetentionConfig
+          - aaa.RetentionPolicy
+          - access.IpAddress
+          - access.Policy
+          - access.PolicyInventory
+          - adapter.ConfigPolicy
+          - adapter.ExtEthInterface
+          - adapter.HostEthInterface
+          - adapter.HostFcInterface
+          - adapter.HostIscsiInterface
+          - adapter.Unit
+          - adapter.UnitExpander
+          - apic.AciPod
+          - apic.Application
+          - apic.ApplicationEndpointGroup
+          - apic.BridgeDomain
+          - apic.ExternalRoutedLayerThreeDomain
+          - apic.FabricLeafNode
+          - apic.FabricLeafNodeInterface
+          - apic.Out
+          - apic.Subnet
+          - apic.Tenant
+          - apic.VpcGroup
+          - apic.Vrfs
+          - apiproxy.AllowList
+          - appliance.AppOpStatus
+          - appliance.AppStatus
+          - appliance.AutoRmaPolicy
+          - appliance.Backup
+          - appliance.BackupDownload
+          - appliance.BackupMonitor
+          - appliance.BackupPolicy
+          - appliance.BackupRotateData
+          - appliance.CertificateSetting
+          - appliance.ClusterInfo
+          - appliance.ClusterInstall
+          - appliance.ClusterReplaceNode
+          - appliance.ClusterWorkerNode
+          - appliance.ClusterWorkerNodeReplace
+          - appliance.ClusterWorkerNodeReuse
+          - appliance.CpuUtilization
+          - appliance.DataExportPolicy
+          - appliance.DeviceCertificate
+          - appliance.DeviceClaim
+          - appliance.DeviceClusterInstall
+          - appliance.DeviceState
+          - appliance.DeviceUpgradePolicy
+          - appliance.DiagSetting
+          - appliance.ExternalSyslogSetting
+          - appliance.FileGateway
+          - appliance.FileSystemOpStatus
+          - appliance.FileSystemOpSummary
+          - appliance.FileSystemStatus
+          - appliance.FileSystemTelemetry
+          - appliance.FqdnUpdate
+          - appliance.GroupOpStatus
+          - appliance.GroupStatus
+          - appliance.ImageBundle
+          - appliance.MemoryUtilization
+          - appliance.MetaManifest
+          - appliance.MetricsConfig
+          - appliance.MetricsIngestionUtilization
+          - appliance.NetworkLinkStatus
+          - appliance.NodeInfo
+          - appliance.NodeIopsMetric
+          - appliance.NodeOpStatus
+          - appliance.NodeStatus
+          - appliance.NodeTelemetry
+          - appliance.ReleaseNote
+          - appliance.RemoteFileImport
+          - appliance.Restore
+          - appliance.SetupInfo
+          - appliance.SystemInfo
+          - appliance.SystemOpStatus
+          - appliance.SystemStatus
+          - appliance.Upgrade
+          - appliance.UpgradePolicy
+          - appliance.UpgradeTracker
+          - asset.ClaimToken
+          - asset.ClusterMember
+          - asset.Deployment
+          - asset.DeploymentDevice
+          - asset.DeviceClaim
+          - asset.DeviceConfiguration
+          - asset.DeviceConnectorManager
+          - asset.DeviceContractInformation
+          - asset.DeviceContractNotification
+          - asset.DeviceRegistration
+          - asset.GeoLocation
+          - asset.PreClaim
+          - asset.Subscription
+          - asset.SubscriptionAccount
+          - asset.SubscriptionDeviceContractInformation
+          - asset.Target
+          - auditd.Policy
+          - bios.BootDevice
+          - bios.BootMode
+          - bios.Policy
+          - bios.SystemBootOrder
+          - bios.TokenSettings
+          - bios.Unit
+          - bios.VfSelectMemoryRasConfiguration
+          - boot.CddDevice
+          - boot.DeviceBootMode
+          - boot.DeviceBootSecurity
+          - boot.HddDevice
+          - boot.IscsiDevice
+          - boot.NvmeDevice
+          - boot.PchStorageDevice
+          - boot.PrecisionPolicy
+          - boot.PxeDevice
+          - boot.SanDevice
+          - boot.SdDevice
+          - boot.UefiShellDevice
+          - boot.UsbDevice
+          - boot.VmediaDevice
+          - bulk.Export
+          - bulk.ExportedItem
+          - bulk.MoCloner
+          - bulk.MoDeepCloner
+          - bulk.MoMerger
+          - bulk.Request
+          - bulk.Result
+          - bulk.SubRequestObj
+          - capability.ActionsMetaData
+          - capability.AdapterDeprecatedDef
+          - capability.AdapterFirmwareRequirement
+          - capability.AdapterUnitDescriptor
+          - capability.AdapterUpdateConstraintMeta
+          - capability.AdapterUpgradeSupportMeta
+          - capability.BiosTokens
+          - capability.Catalog
+          - capability.ChassisDescriptor
+          - capability.ChassisManufacturingDef
+          - capability.ChassisUpgradeSupportMeta
+          - capability.CimcFirmwareDescriptor
+          - capability.CpuEndpointDescriptor
+          - capability.DimmsEndpointDescriptor
+          - capability.DomainPolicyRequirement
+          - capability.DrivesEndpointDescriptor
+          - capability.EquipmentPhysicalDef
+          - capability.EquipmentSlotArray
+          - capability.FanModuleDescriptor
+          - capability.FanModuleManufacturingDef
+          - capability.FexCapabilityDef
+          - capability.FexDescriptor
+          - capability.FexManufacturingDef
+          - capability.FexSupportMeta
+          - capability.GpuEndpointDescriptor
+          - capability.HsuIsoFileSupportMeta
+          - capability.IoCardCapabilityDef
+          - capability.IoCardDescriptor
+          - capability.IoCardManufacturingDef
+          - capability.IomUpgradeSupportMeta
+          - capability.NetworkEquipmentPowerDef
+          - capability.PolicyConstants
+          - capability.PortGroupAggregationDef
+          - capability.ProcessorUnitUpdateConstraintMeta
+          - capability.PsuDescriptor
+          - capability.PsuManufacturingDef
+          - capability.ServerActionsMeta
+          - capability.ServerDescriptor
+          - capability.ServerModelsCapabilityDef
+          - capability.ServerPcieConnectivityCatalog
+          - capability.ServerSchemaDescriptor
+          - capability.ServerTopologyMap
+          - capability.ServerUpgradeSupportMeta
+          - capability.SiocModuleCapabilityDef
+          - capability.SiocModuleDescriptor
+          - capability.SiocModuleManufacturingDef
+          - capability.StandardRedfishSupportMeta
+          - capability.StorageControllerUpdateConstraintMeta
+          - capability.StorageControllersMetaData
+          - capability.SwitchCapability
+          - capability.SwitchDescriptor
+          - capability.SwitchEquipmentInfo
+          - capability.SwitchManufacturingDef
+          - capability.SwitchUpgradeSupportMeta
+          - capability.TemplateCatalog
+          - capability.TimeZoneMetaData
+          - capability.UpdateOrderMeta
+          - capability.VicDescriptor
+          - catalystsdwan.ConfigGroup
+          - catalystsdwan.Interface
+          - catalystsdwan.PhysicalPort
+          - catalystsdwan.PolicyGroup
+          - catalystsdwan.PortChannel
+          - catalystsdwan.VedgeDevice
+          - catalystsdwan.Vlan
+          - catalystsdwan.WanEdgeDevice
+          - certificatemanagement.Policy
+          - certificatemanagement.PolicyInventory
+          - chassis.ConfigChangeDetail
+          - chassis.ConfigImport
+          - chassis.ConfigResult
+          - chassis.ConfigResultEntry
+          - chassis.IomProfile
+          - chassis.Profile
+          - chassis.ProfileTemplate
+          - cli.CliPolicy
+          - cloud.CollectInventory
+          - cloud.TfcAgentpool
+          - cloud.TfcOrganization
+          - cloud.TfcWorkspace
+          - comm.HttpProxyPolicy
+          - comm.TagDefinition
+          - compute.Blade
+          - compute.BladeIdentity
+          - compute.Board
+          - compute.DownloadStatus
+          - compute.HostUtilityOperation
+          - compute.Mapping
+          - compute.PcieConnectivityPolicy
+          - compute.PcieConnectivityPolicyInventory
+          - compute.Personality
+          - compute.PhysicalSummary
+          - compute.RackUnit
+          - compute.RackUnitIdentity
+          - compute.ScrubPolicy
+          - compute.ServerIdPool
+          - compute.ServerPowerParameters
+          - compute.ServerPowerPolicy
+          - compute.ServerSetting
+          - compute.Vmedia
+          - cond.Alarm
+          - cond.AlarmAggregation
+          - cond.AlarmClassification
+          - cond.AlarmDefinition
+          - cond.AlarmRule
+          - cond.AlarmSuppression
+          - cond.AlarmSuppressionDryRun
+          - cond.CustomHclBaseline
+          - cond.CustomHclStatus
+          - cond.HclStatus
+          - cond.HclStatusDetail
+          - cond.HclStatusJob
+          - cond.ThresholdDefinition
+          - connectorpack.ConnectorPackUpgrade
+          - connectorpack.UpgradeImpact
+          - console.ConsoleConfig
+          - convergedinfra.AdapterComplianceDetails
+          - convergedinfra.Pod
+          - convergedinfra.PodComplianceInfo
+          - convergedinfra.ServerComplianceDetails
+          - convergedinfra.StorageComplianceDetails
+          - convergedinfra.SwitchComplianceDetails
+          - coremanagement.CoreFile
+          - coremanagement.Download
+          - crd.CustomResource
+          - deviceconnector.Policy
+          - dnac.Device
+          - dnac.DeviceInterface
+          - dnac.ExternalBorderNode
+          - dnac.ExternalBorderNodeInterface
+          - dnac.FabricSite
+          - dnac.Site
+          - dnac.SiteIpPool
+          - dnac.Template
+          - dnac.Transit
+          - dnac.VirtualNetworkFabricSite
+          - energy.DailyMetrics
+          - energy.Metrics
+          - equipment.Chassis
+          - equipment.ChassisController
+          - equipment.ChassisIdPool
+          - equipment.ChassisIdentity
+          - equipment.ChassisOperation
+          - equipment.DeviceSummary
+          - equipment.EnclosureElement
+          - equipment.EndPointLog
+          - equipment.ExpanderModule
+          - equipment.ExpanderModuleIdentity
+          - equipment.ExpanderModuleOperation
+          - equipment.Fan
+          - equipment.FanControl
+          - equipment.FanModule
+          - equipment.Fex
+          - equipment.FexIdentity
+          - equipment.FexOperation
+          - equipment.Fru
+          - equipment.HybridDriveSlot
+          - equipment.Interconnect
+          - equipment.IoCard
+          - equipment.IoCardOperation
+          - equipment.IoExpander
+          - equipment.LocatorLed
+          - equipment.LogDownload
+          - equipment.Psu
+          - equipment.PsuControl
+          - equipment.RackEnclosure
+          - equipment.RackEnclosureSlot
+          - equipment.Riser
+          - equipment.Sensor
+          - equipment.SharedAdapterUnit
+          - equipment.SharedGraphicsCard
+          - equipment.SharedIoModule
+          - equipment.SwitchCard
+          - equipment.SwitchOperation
+          - equipment.SystemIoController
+          - equipment.Tpm
+          - equipment.Transceiver
+          - ether.HostPort
+          - ether.InterSwitchPort
+          - ether.LanPort
+          - ether.NetworkPort
+          - ether.PhysicalPort
+          - ether.PortChannel
+          - externalsite.Authorization
+          - fabric.AppliancePcRole
+          - fabric.ApplianceRole
+          - fabric.ConfigChangeDetail
+          - fabric.ConfigResult
+          - fabric.ConfigResultEntry
+          - fabric.ElementIdentity
+          - fabric.EstimateImpact
+          - fabric.EthNetworkControlPolicy
+          - fabric.EthNetworkControlPolicyInventory
+          - fabric.EthNetworkGroupPolicy
+          - fabric.EthNetworkGroupPolicyInventory
+          - fabric.EthNetworkPolicy
+          - fabric.FcNetworkPolicy
+          - fabric.FcStorageRole
+          - fabric.FcUplinkPcRole
+          - fabric.FcUplinkRole
+          - fabric.FcZonePolicy
+          - fabric.FcoeUplinkPcRole
+          - fabric.FcoeUplinkRole
+          - fabric.FlowControlPolicy
+          - fabric.LanPinGroup
+          - fabric.LinkAggregationPolicy
+          - fabric.LinkControlPolicy
+          - fabric.MacSecPolicy
+          - fabric.MulticastPolicy
+          - fabric.NetFlowExporter
+          - fabric.NetFlowMonitor
+          - fabric.NetFlowPolicy
+          - fabric.NetFlowRecord
+          - fabric.PcMember
+          - fabric.PcOperation
+          - fabric.PortMode
+          - fabric.PortOperation
+          - fabric.PortPolicy
+          - fabric.SanPinGroup
+          - fabric.SecureRouterRole
+          - fabric.ServerRole
+          - fabric.SpanDestEthPort
+          - fabric.SpanSession
+          - fabric.SpanSourceEthPort
+          - fabric.SpanSourceEthPortChannel
+          - fabric.SpanSourceVlan
+          - fabric.SpanSourceVnicEthIf
+          - fabric.SwitchClusterProfile
+          - fabric.SwitchClusterProfileTemplate
+          - fabric.SwitchControlPolicy
+          - fabric.SwitchProfile
+          - fabric.SwitchProfileTemplate
+          - fabric.SystemQosPolicy
+          - fabric.UplinkPcRole
+          - fabric.UplinkRole
+          - fabric.Vlan
+          - fabric.VlanInventory
+          - fabric.VlanSet
+          - fabric.Vsan
+          - fabric.VsanInventory
+          - fault.Instance
+          - fc.Neighbor
+          - fc.PhysicalPort
+          - fc.PortChannel
+          - fcpool.FcBlock
+          - fcpool.Lease
+          - fcpool.Pool
+          - fcpool.PoolMember
+          - fcpool.Reservation
+          - fcpool.Universe
+          - feedback.FeedbackPost
+          - firmware.BiosDescriptor
+          - firmware.BoardControllerDescriptor
+          - firmware.ChassisUpgrade
+          - firmware.CimcDescriptor
+          - firmware.DimmDescriptor
+          - firmware.Distributable
+          - firmware.DistributableMeta
+          - firmware.DriveDescriptor
+          - firmware.DriverDistributable
+          - firmware.Eula
+          - firmware.FirmwareSummary
+          - firmware.GpuDescriptor
+          - firmware.HbaDescriptor
+          - firmware.IomDescriptor
+          - firmware.MswitchDescriptor
+          - firmware.NxosDescriptor
+          - firmware.PciNodeUpgrade
+          - firmware.PcieDescriptor
+          - firmware.Policy
+          - firmware.PsuDescriptor
+          - firmware.PsxDescriptor
+          - firmware.RunningFirmware
+          - firmware.SasExpanderDescriptor
+          - firmware.SecureRouterUpgrade
+          - firmware.ServerConfigurationUtilityDistributable
+          - firmware.StorageControllerDescriptor
+          - firmware.SwitchUpgrade
+          - firmware.UnsupportedVersionUpgrade
+          - firmware.Upgrade
+          - firmware.UpgradeImpact
+          - firmware.UpgradeImpactStatus
+          - firmware.UpgradeStatus
+          - firmware.UpgradeValidity
+          - fmc.Device
+          - fmc.DeviceHaPair
+          - fmc.Domain
+          - fmc.PhysicalInterface
+          - forecast.Catalog
+          - forecast.Definition
+          - forecast.Instance
+          - graphics.Card
+          - graphics.Controller
+          - hci.AhvVm
+          - hci.AhvVmDisk
+          - hci.AhvVmGpu
+          - hci.AhvVmNic
+          - hci.Alarm
+          - hci.Cluster
+          - hci.ClusterOperation
+          - hci.Compliance
+          - hci.Disk
+          - hci.DomainManager
+          - hci.Entitlement
+          - hci.EsxiVm
+          - hci.EsxiVmDisk
+          - hci.EsxiVmNic
+          - hci.ExternalStorage
+          - hci.Gpu
+          - hci.License
+          - hci.NccCheckPolicy
+          - hci.Node
+          - hci.PhysicalGpu
+          - hci.StorageContainer
+          - hci.Violation
+          - hci.VirtualGpu
+          - hcl.CompatibilityStatus
+          - hcl.DataImportLog
+          - hcl.DriverImage
+          - hcl.ExemptedCatalog
+          - hcl.HwCatalogInfo
+          - hcl.HyperflexSoftwareCompatibilityInfo
+          - hcl.OperatingSystem
+          - hcl.OperatingSystemVendor
+          - hcl.ServerCatalog
+          - hcl.ServerHwCatalogInfo
+          - hcl.SupportedDriverName
+          - hyperflex.Alarm
+          - hyperflex.AppCatalog
+          - hyperflex.AutoSupportPolicy
+          - hyperflex.BackupCluster
+          - hyperflex.CapabilityInfo
+          - hyperflex.Cluster
+          - hyperflex.ClusterBackupPolicy
+          - hyperflex.ClusterBackupPolicyDeployment
+          - hyperflex.ClusterBackupPolicyInventory
+          - hyperflex.ClusterHealthCheckExecutionSnapshot
+          - hyperflex.ClusterNetworkPolicy
+          - hyperflex.ClusterProfile
+          - hyperflex.ClusterReplicationNetworkPolicy
+          - hyperflex.ClusterReplicationNetworkPolicyDeployment
+          - hyperflex.ClusterStoragePolicy
+          - hyperflex.ConfigResult
+          - hyperflex.ConfigResultEntry
+          - hyperflex.DataProtectionPeer
+          - hyperflex.DatastoreStatistic
+          - hyperflex.DevicePackageDownloadState
+          - hyperflex.Drive
+          - hyperflex.Encryption
+          - hyperflex.ExtFcStoragePolicy
+          - hyperflex.ExtIscsiStoragePolicy
+          - hyperflex.FeatureLimitExternal
+          - hyperflex.FeatureLimitInternal
+          - hyperflex.Health
+          - hyperflex.HealthCheckDefinition
+          - hyperflex.HealthCheckExecution
+          - hyperflex.HealthCheckExecutionSnapshot
+          - hyperflex.HealthCheckPackageChecksum
+          - hyperflex.HealthCheckSchedulePolicy
+          - hyperflex.HwCatalog
+          - hyperflex.HxdpVersion
+          - hyperflex.HypervisorHost
+          - hyperflex.HypervisorVirtualMachine
+          - hyperflex.InitiatorGroup
+          - hyperflex.IscsiNetwork
+          - hyperflex.KeyEncryptionKey
+          - hyperflex.License
+          - hyperflex.LocalCredentialPolicy
+          - hyperflex.Lun
+          - hyperflex.Node
+          - hyperflex.NodeConfigPolicy
+          - hyperflex.NodeProfile
+          - hyperflex.ProtectedCluster
+          - hyperflex.ProxySettingPolicy
+          - hyperflex.ReduceReSync
+          - hyperflex.ServerFirmwareVersion
+          - hyperflex.ServerFirmwareVersionEntry
+          - hyperflex.ServerModel
+          - hyperflex.ServiceAuthToken
+          - hyperflex.SoftwareDistributionComponent
+          - hyperflex.SoftwareDistributionEntry
+          - hyperflex.SoftwareDistributionVersion
+          - hyperflex.SoftwareVersionPolicy
+          - hyperflex.StartReduceReSync
+          - hyperflex.StorageContainer
+          - hyperflex.SysConfigPolicy
+          - hyperflex.Target
+          - hyperflex.UcsmConfigPolicy
+          - hyperflex.VcenterConfigPolicy
+          - hyperflex.VmBackupInfo
+          - hyperflex.VmImportOperation
+          - hyperflex.VmRestoreOperation
+          - hyperflex.VmSnapshotInfo
+          - hyperflex.Volume
+          - hyperflex.WitnessConfiguration
+          - iaas.ConnectorPack
+          - iaas.CustomTaskInfo
+          - iaas.DeviceStatus
+          - iaas.DiagnosticMessages
+          - iaas.LicenseInfo
+          - iaas.MostRunTasks
+          - iaas.ServiceRequest
+          - iaas.SystemTaskInfo
+          - iaas.UcsdInfo
+          - iaas.UcsdManagedInfra
+          - iaas.UcsdMessages
+          - iam.Account
+          - iam.AccountExperience
+          - iam.ApiKey
+          - iam.AppRegistration
+          - iam.BannerMessage
+          - iam.Certificate
+          - iam.CertificateRequest
+          - iam.CuiIntegration
+          - iam.DefaultAuthentication
+          - iam.DomainGroup
+          - iam.DomainNameInfo
+          - iam.EndPointPrivilege
+          - iam.EndPointRole
+          - iam.EndPointUser
+          - iam.EndPointUserInventory
+          - iam.EndPointUserPolicy
+          - iam.EndPointUserPolicyInventory
+          - iam.EndPointUserRole
+          - iam.EndPointUserRoleInventory
+          - iam.GuestAccessSettings
+          - iam.Idp
+          - iam.IdpReference
+          - iam.IpAccessManagement
+          - iam.IpAddress
+          - iam.LdapConfigParams
+          - iam.LdapGroup
+          - iam.LdapGroupInventory
+          - iam.LdapMeta
+          - iam.LdapPolicy
+          - iam.LdapPolicyInventory
+          - iam.LdapProvider
+          - iam.LdapProviderInventory
+          - iam.LocalUserPassword
+          - iam.LocalUserPasswordPolicy
+          - iam.OAuthToken
+          - iam.PasswordHistorySettingCollection
+          - iam.Permission
+          - iam.PrivateKeySpec
+          - iam.Privilege
+          - iam.PrivilegeSet
+          - iam.PrivilegeSetMetaInfo
+          - iam.Qualifier
+          - iam.ResourceLimits
+          - iam.ResourcePermission
+          - iam.ResourceRoles
+          - iam.Role
+          - iam.SecurityHolder
+          - iam.ServiceProvider
+          - iam.Session
+          - iam.SessionLimits
+          - iam.SharingRule
+          - iam.System
+          - iam.TestIdpConfiguration
+          - iam.TrustPoint
+          - iam.User
+          - iam.UserGroup
+          - iam.UserPreference
+          - iam.UserQualifier
+          - iam.UserSetting
+          - inventory.DeviceInfo
+          - inventory.DnMoBinding
+          - inventory.GenericInventory
+          - inventory.GenericInventoryHolder
+          - inventory.Request
+          - ipmioverlan.Policy
+          - ipmioverlan.PolicyInventory
+          - ippool.BlockLease
+          - ippool.IpLease
+          - ippool.Pool
+          - ippool.PoolMember
+          - ippool.Reservation
+          - ippool.ShadowBlock
+          - ippool.ShadowPool
+          - ippool.Universe
+          - iqnpool.Block
+          - iqnpool.Lease
+          - iqnpool.Pool
+          - iqnpool.PoolMember
+          - iqnpool.Reservation
+          - iqnpool.Universe
+          - iwotenant.MaintenanceNotification
+          - iwotenant.Migrate
+          - iwotenant.TenantCustomization
+          - iwotenant.TenantStatus
+          - kvm.Policy
+          - kvm.PolicyInventory
+          - kvm.Session
+          - kvm.Tunnel
+          - kvm.TunneledKvmPolicy
+          - license.AccountLicenseData
+          - license.CustomerOp
+          - license.ErpCustomerOp
+          - license.ErpLicenseCount
+          - license.IksCustomerOp
+          - license.IksLicenseCount
+          - license.IncCustomerOp
+          - license.IncLicenseCount
+          - license.IwoCustomerOp
+          - license.IwoLicenseCount
+          - license.LicenseInfo
+          - license.LicenseInfoView
+          - license.LicenseRegistrationStatus
+          - license.LicenseReservationOp
+          - license.SmartlicenseToken
+          - ls.ServiceProfile
+          - macpool.IdBlock
+          - macpool.Lease
+          - macpool.Pool
+          - macpool.PoolMember
+          - macpool.Reservation
+          - macpool.Universe
+          - management.Controller
+          - management.Entity
+          - management.Interface
+          - memory.Array
+          - memory.PersistentMemoryConfigResult
+          - memory.PersistentMemoryConfiguration
+          - memory.PersistentMemoryNamespace
+          - memory.PersistentMemoryNamespaceConfigResult
+          - memory.PersistentMemoryPolicy
+          - memory.PersistentMemoryRegion
+          - memory.PersistentMemoryUnit
+          - memory.Policy
+          - memory.PolicyInventory
+          - memory.Unit
+          - meraki.Device
+          - meraki.Network
+          - meraki.Organization
+          - meraki.PortProfile
+          - meraki.Tag
+          - meta.Definition
+          - metrics.Configuration
+          - metrics.MetricsExploration
+          - metrics.ResourceConfiguration
+          - mgmt.BackupCategory
+          - mgmt.ConfigBackupFile
+          - mgmt.ConfigBackupInstance
+          - mgmt.ConfigBackupOperation
+          - mgmt.ConfigCategorySummary
+          - mgmt.ConfigOperationSetting
+          - mgmt.ConfigRestoreCategorySummary
+          - mgmt.ConfigRestoreOperation
+          - mgmt.ObjectBackupMeta
+          - mgmt.OrgBackupOperation
+          - mgmt.OrgRestoreOperation
+          - monitoring.HealthStatus
+          - network.DiscoveredNeighbor
+          - network.Dns
+          - network.Element
+          - network.ElementSummary
+          - network.FcZoneInfo
+          - network.FeatureControl
+          - network.InterfaceList
+          - network.LicenseFile
+          - network.SecureRouter
+          - network.SecureRouterSetting
+          - network.SupervisorCard
+          - network.TelemetryCheck
+          - network.Vethernet
+          - network.Vfc
+          - network.VlanPortInfo
+          - network.VpcDomain
+          - network.VpcMember
+          - network.VpcPeer
+          - network.Vrf
+          - networkconfig.Policy
+          - networkconfig.PolicyInventory
+          - niaapi.ApicCcoPost
+          - niaapi.ApicFieldNotice
+          - niaapi.ApicHweol
+          - niaapi.ApicLatestMaintainedRelease
+          - niaapi.ApicReleaseRecommend
+          - niaapi.ApicSweol
+          - niaapi.DcnmCcoPost
+          - niaapi.DcnmFieldNotice
+          - niaapi.DcnmHweol
+          - niaapi.DcnmLatestMaintainedRelease
+          - niaapi.DcnmReleaseRecommend
+          - niaapi.DcnmSweol
+          - niaapi.FileDownloader
+          - niaapi.NdEncryptedFileDownload
+          - niaapi.NdMetadata
+          - niaapi.NdMetadataFileDownloader
+          - niaapi.NdMetadataSoftwareDownload
+          - niaapi.NiaMetadata
+          - niaapi.NibFileDownloader
+          - niaapi.NibMetadata
+          - niaapi.PuvScriptDownloader
+          - niaapi.SnValidatorMetadata
+          - niaapi.UpgradeAssistFile
+          - niaapi.VersionRegex
+          - niatelemetry.AaaLdapProviderDetails
+          - niatelemetry.AaaRadiusProviderDetails
+          - niatelemetry.AaaTacacsProviderDetails
+          - niatelemetry.Anomaly
+          - niatelemetry.ApicAppPluginDetails
+          - niatelemetry.ApicCoreFileDetails
+          - niatelemetry.ApicDbgexpRsExportDest
+          - niatelemetry.ApicDbgexpRsTsScheduler
+          - niatelemetry.ApicFanDetails
+          - niatelemetry.ApicFexDetails
+          - niatelemetry.ApicFlashDetails
+          - niatelemetry.ApicNtpAuth
+          - niatelemetry.ApicPerformanceData
+          - niatelemetry.ApicPodData
+          - niatelemetry.ApicPsuDetails
+          - niatelemetry.ApicRealmDetails
+          - niatelemetry.ApicSnmpClientGrpDetails
+          - niatelemetry.ApicSnmpCommunityAccessDetails
+          - niatelemetry.ApicSnmpCommunityDetails
+          - niatelemetry.ApicSnmpTrapDetails
+          - niatelemetry.ApicSnmpTrapFwdServerDetails
+          - niatelemetry.ApicSnmpVersionThreeDetails
+          - niatelemetry.ApicSysLogGrp
+          - niatelemetry.ApicSysLogSrc
+          - niatelemetry.ApicTransceiverDetails
+          - niatelemetry.ApicUiPageCounts
+          - niatelemetry.ApicVision
+          - niatelemetry.AppDetails
+          - niatelemetry.CloudDetails
+          - niatelemetry.Cluster
+          - niatelemetry.ClusterNode
+          - niatelemetry.CommonPolicies
+          - niatelemetry.Controller
+          - niatelemetry.DcnmFanDetails
+          - niatelemetry.DcnmFexDetails
+          - niatelemetry.DcnmModuleDetails
+          - niatelemetry.DcnmPsuDetails
+          - niatelemetry.DcnmTransceiverDetails
+          - niatelemetry.DomInfoObject
+          - niatelemetry.DomThresInfoObject
+          - niatelemetry.Epg
+          - niatelemetry.Fabric
+          - niatelemetry.FabricModuleDetails
+          - niatelemetry.FabricNodeControlDetails
+          - niatelemetry.FabricPodProfile
+          - niatelemetry.FabricPodSs
+          - niatelemetry.Fault
+          - niatelemetry.HcloudDetails
+          - niatelemetry.HealthInsightsData
+          - niatelemetry.HttpsAclContractDetails
+          - niatelemetry.HttpsAclContractFilterMap
+          - niatelemetry.HttpsAclEpgContractMap
+          - niatelemetry.HttpsAclEpgDetails
+          - niatelemetry.HttpsAclFilterDetails
+          - niatelemetry.InsightGroupDetails
+          - niatelemetry.Lc
+          - niatelemetry.LeafPolGrpDetails
+          - niatelemetry.Link
+          - niatelemetry.MdsNeighbors
+          - niatelemetry.MsoContractDetails
+          - niatelemetry.MsoEpgDetails
+          - niatelemetry.MsoSchemaDetails
+          - niatelemetry.MsoSiteDetails
+          - niatelemetry.MsoTenantDetails
+          - niatelemetry.Neighbor
+          - niatelemetry.Network
+          - niatelemetry.NexusCloudAccount
+          - niatelemetry.NexusCloudSite
+          - niatelemetry.NexusDashboardControllerDetails
+          - niatelemetry.NexusDashboardDetails
+          - niatelemetry.NexusDashboardMemoryDetails
+          - niatelemetry.NexusDashboards
+          - niatelemetry.NiaFeatureUsage
+          - niatelemetry.NiaInventory
+          - niatelemetry.NiaInventoryDcnm
+          - niatelemetry.NiaInventoryFabric
+          - niatelemetry.NiaLicenseState
+          - niatelemetry.Nicc
+          - niatelemetry.PasswordStrengthCheck
+          - niatelemetry.PodCommPolicies
+          - niatelemetry.PodSnmpPolicies
+          - niatelemetry.PodTimeServerPolicies
+          - niatelemetry.Route
+          - niatelemetry.SiteInventory
+          - niatelemetry.SnmpSrc
+          - niatelemetry.SpinePolGrpDetails
+          - niatelemetry.SshVersionTwo
+          - niatelemetry.SupervisorModuleDetails
+          - niatelemetry.Switch
+          - niatelemetry.SwitchInterface
+          - niatelemetry.SyslogRemoteDest
+          - niatelemetry.SyslogSysMsg
+          - niatelemetry.SyslogSysMsgFacFilter
+          - niatelemetry.SystemControllerDetails
+          - niatelemetry.Tenant
+          - notification.AccountSubscription
+          - ntp.NtpServer
+          - ntp.Policy
+          - ntp.PolicyInventory
+          - oauth.AccessToken
+          - oauth.Authorization
+          - onprem.ApplianceSystemInfo
+          - onprem.AuditRecord
+          - onprem.Upgrade
+          - onprem.UserPreference
+          - openapi.ApiMethodMeta
+          - openapi.OpenApiSpecification
+          - openapi.ProcessFile
+          - openapi.TaskGenerationRequest
+          - openapi.TaskGenerationResult
+          - oprs.Deployment
+          - oprs.SyncTargetListMessage
+          - organization.Organization
+          - os.BulkInstallInfo
+          - os.Catalog
+          - os.ConfigurationFile
+          - os.Distribution
+          - os.Install
+          - os.OsSupport
+          - os.SupportedVersion
+          - os.TemplateFile
+          - os.ValidInstallTarget
+          - os.ValidRemoteTarget
+          - partnerintegration.DcLogs
+          - partnerintegration.DeviceConnector
+          - partnerintegration.DocIssues
+          - partnerintegration.Etl
+          - partnerintegration.File
+          - partnerintegration.Inventory
+          - partnerintegration.Logs
+          - partnerintegration.Metrics
+          - partnerintegration.Model
+          - pci.CoprocessorCard
+          - pci.Device
+          - pci.Endpoint
+          - pci.Link
+          - pci.Node
+          - pci.NodeSetting
+          - pci.Port
+          - pci.Slot
+          - pci.Switch
+          - pci.Zone
+          - pool.IdMappingMember
+          - pool.IdMappingPolicy
+          - port.Group
+          - port.MacBinding
+          - port.SubGroup
+          - power.ControlState
+          - power.Policy
+          - power.PolicyInventory
+          - power.PowerGroup
+          - power.PowerGroupMember
+          - processor.Unit
+          - rack.UnitPersonality
+          - recommendation.CapacityRunway
+          - recommendation.ClusterExpansion
+          - recommendation.HardwareExpansionRequest
+          - recommendation.HardwareExpansionRequestItem
+          - recommendation.PhysicalItem
+          - recommendation.PurchaseOrderEstimate
+          - recommendation.PurchaseOrderList
+          - recommendation.SoftwareItem
+          - recovery.BackupConfigPolicy
+          - recovery.BackupProfile
+          - recovery.ConfigResult
+          - recovery.ConfigResultEntry
+          - recovery.OnDemandBackup
+          - recovery.Restore
+          - recovery.ScheduleConfigPolicy
+          - resource.Group
+          - resource.GroupMember
+          - resource.LicenseResourceCount
+          - resource.Membership
+          - resource.MembershipHolder
+          - resource.Reservation
+          - resource.SelectionCriteria
+          - resource.SharedResourcesInfoHolder
+          - resourcepool.ChassisQualificationPolicy
+          - resourcepool.Lease
+          - resourcepool.LeaseResource
+          - resourcepool.MembershipReservation
+          - resourcepool.Pool
+          - resourcepool.PoolMember
+          - resourcepool.QualificationPolicy
+          - resourcepool.Reservation
+          - resourcepool.Universe
+          - rproxy.ReverseProxy
+          - scheduler.SchedulePolicy
+          - scheduler.TaskResult
+          - scheduler.TaskSchedule
+          - sdaaci.Connection
+          - sdaaci.ConnectionDetail
+          - sdcard.Policy
+          - sdcard.PolicyInventory
+          - search.SearchItem
+          - search.TagItem
+          - security.Unit
+          - server.ConfigChangeDetail
+          - server.ConfigImport
+          - server.ConfigResult
+          - server.ConfigResultEntry
+          - server.DiagnosticStatus
+          - server.Diagnostics
+          - server.Disruption
+          - server.MigrationKeyDetails
+          - server.Profile
+          - server.ProfilePendingChangeEval
+          - server.ProfileTemplate
+          - servicenow.ChangeRequest
+          - servicenow.ChangeRequestDoc
+          - servicenow.Incident
+          - servicenow.IncidentDoc
+          - smtp.Policy
+          - smtp.PolicyInventory
+          - smtp.PolicyTest
+          - snmp.Policy
+          - snmp.PolicyInventory
+          - software.ApplianceDistributable
+          - software.DownloadHistory
+          - software.HciBundleDistributable
+          - software.HciDistributable
+          - software.HclMeta
+          - software.HyperflexBundleDistributable
+          - software.HyperflexDistributable
+          - software.IksBundleDistributable
+          - software.ReleaseMeta
+          - software.SolutionDistributable
+          - software.UcsdBundleDistributable
+          - software.UcsdDistributable
+          - softwarerepository.Authorization
+          - softwarerepository.CachedImage
+          - softwarerepository.Catalog
+          - softwarerepository.CategoryMapper
+          - softwarerepository.CategoryMapperModel
+          - softwarerepository.CategorySupportConstraint
+          - softwarerepository.CategoryUnsupportedModels
+          - softwarerepository.DownloadSpec
+          - softwarerepository.OperatingSystemFile
+          - softwarerepository.Release
+          - sol.Policy
+          - sol.PolicyInventory
+          - ssh.Policy
+          - ssh.PolicyInventory
+          - storage.BatteryBackupUnit
+          - storage.Controller
+          - storage.ControllerDrive
+          - storage.DiskGroup
+          - storage.DiskSlot
+          - storage.DriveGroup
+          - storage.DriveSecurityPolicy
+          - storage.Enclosure
+          - storage.EnclosureDisk
+          - storage.EnclosureDiskSlotEp
+          - storage.FileItem
+          - storage.FlexFlashController
+          - storage.FlexFlashControllerProps
+          - storage.FlexFlashPhysicalDrive
+          - storage.FlexFlashVirtualDrive
+          - storage.FlexUtilController
+          - storage.FlexUtilPhysicalDrive
+          - storage.FlexUtilVirtualDrive
+          - storage.HitachiArray
+          - storage.HitachiController
+          - storage.HitachiDisk
+          - storage.HitachiExternalParityGroup
+          - storage.HitachiExternalPathGroup
+          - storage.HitachiExternalStorageLun
+          - storage.HitachiExternalStoragePort
+          - storage.HitachiHost
+          - storage.HitachiHostLun
+          - storage.HitachiNvmSubsystem
+          - storage.HitachiParityGroup
+          - storage.HitachiPool
+          - storage.HitachiPort
+          - storage.HitachiRemoteCopyPairGad
+          - storage.HitachiRemoteCopyPairTc
+          - storage.HitachiRemoteCopyPairUr
+          - storage.HitachiRemoteReplication
+          - storage.HitachiSnapshot
+          - storage.HitachiVolume
+          - storage.HitachiVolumeMigrationPair
+          - storage.HyperFlexStorageContainer
+          - storage.HyperFlexVolume
+          - storage.Item
+          - storage.KnoxSecureDriveConfiguration
+          - storage.NetAppAggregate
+          - storage.NetAppAggregateEvent
+          - storage.NetAppBaseDisk
+          - storage.NetAppCifsService
+          - storage.NetAppCifsShare
+          - storage.NetAppCloudTarget
+          - storage.NetAppCluster
+          - storage.NetAppClusterEvent
+          - storage.NetAppClusterSnapMirrorPolicy
+          - storage.NetAppClusterSnapshotPolicy
+          - storage.NetAppDataIpInterface
+          - storage.NetAppDataIpInterfaceEvent
+          - storage.NetAppDiskEvent
+          - storage.NetAppEthernetPort
+          - storage.NetAppEthernetPortEvent
+          - storage.NetAppExportPolicy
+          - storage.NetAppFcInterface
+          - storage.NetAppFcInterfaceEvent
+          - storage.NetAppFcPort
+          - storage.NetAppFcPortEvent
+          - storage.NetAppInitiatorGroup
+          - storage.NetAppIpInterface
+          - storage.NetAppIpInterfaceEvent
+          - storage.NetAppIscsiService
+          - storage.NetAppLicense
+          - storage.NetAppLun
+          - storage.NetAppLunEvent
+          - storage.NetAppLunMap
+          - storage.NetAppNamespace
+          - storage.NetAppNfsClient
+          - storage.NetAppNfsService
+          - storage.NetAppNode
+          - storage.NetAppNodeCdpNeighbor
+          - storage.NetAppNodeEvent
+          - storage.NetAppNonDataIpInterface
+          - storage.NetAppNonDataIpInterfaceEvent
+          - storage.NetAppNtpServer
+          - storage.NetAppQtree
+          - storage.NetAppSchedule
+          - storage.NetAppSensor
+          - storage.NetAppSnapMirrorRelationship
+          - storage.NetAppStorageVm
+          - storage.NetAppSvmEvent
+          - storage.NetAppSvmSnapMirrorPolicy
+          - storage.NetAppSvmSnapshotPolicy
+          - storage.NetAppVolume
+          - storage.NetAppVolumeEvent
+          - storage.NetAppVolumeSnapshot
+          - storage.NvmeRaidConfiguration
+          - storage.PhysicalDisk
+          - storage.PhysicalDiskExtension
+          - storage.PhysicalDiskUsage
+          - storage.PureArray
+          - storage.PureArrayAlerts
+          - storage.PureBlade
+          - storage.PureController
+          - storage.PureDirectory
+          - storage.PureDirectoryExport
+          - storage.PureDirectoryPolicy
+          - storage.PureDirectoryQuota
+          - storage.PureDirectorySnapshot
+          - storage.PureDisk
+          - storage.PureFileSystems
+          - storage.PureFlashBladeFileSystem
+          - storage.PureFlashBladeSystem
+          - storage.PureHost
+          - storage.PureHostGroup
+          - storage.PureHostLun
+          - storage.PureManagementAccessPolicy
+          - storage.PureNfsPolicyRule
+          - storage.PureObjectBucket
+          - storage.PureObjectStoreAccount
+          - storage.PureObjectStoreUser
+          - storage.PurePod
+          - storage.PurePort
+          - storage.PureProtectionGroup
+          - storage.PureProtectionGroupSnapshot
+          - storage.PureQuotaPolicyRule
+          - storage.PureRealm
+          - storage.PureReplicationSchedule
+          - storage.PureSmbPolicyRule
+          - storage.PureSnapshotSchedule
+          - storage.PureTargetArray
+          - storage.PureVolume
+          - storage.PureVolumeGroup
+          - storage.PureVolumeSnapshot
+          - storage.SasExpander
+          - storage.SasPort
+          - storage.Span
+          - storage.StoragePolicy
+          - storage.VdMemberEp
+          - storage.VirtualDrive
+          - storage.VirtualDriveContainer
+          - storage.VirtualDriveExtension
+          - storage.VirtualDriveIdentity
+          - syslog.Policy
+          - syslog.PolicyInventory
+          - tam.AdvisoryCount
+          - tam.AdvisoryDefinition
+          - tam.AdvisoryInfo
+          - tam.AdvisoryInstance
+          - tam.SecurityAdvisory
+          - task.CatalystSdwanScopedInventory
+          - task.FabricMosScopedInventory
+          - task.HciScopedInventory
+          - task.HitachiScopedInventory
+          - task.HyperFlexManagementScopedInventory
+          - task.HyperflexScopedInventory
+          - task.MdsScopedInventory
+          - task.MdsSystemScopedInventory
+          - task.MerakiScopedInventory
+          - task.NetAppScopedInventory
+          - task.NexusScopedInventory
+          - task.NexusSystemScopedInventory
+          - task.NexusVlanScopedInventory
+          - task.PureFlashBladeScopedInventory
+          - task.PureScopedInventory
+          - task.ServerScopedInventory
+          - techsupportmanagement.CollectionControlPolicy
+          - techsupportmanagement.Download
+          - techsupportmanagement.EndPoint
+          - techsupportmanagement.TechSupportBundle
+          - techsupportmanagement.TechSupportStatus
+          - terminal.AuditLog
+          - thermal.Policy
+          - thermal.PolicyInventory
+          - top.System
+          - ucsd.BackupInfo
+          - uuidpool.Block
+          - uuidpool.Pool
+          - uuidpool.PoolMember
+          - uuidpool.Reservation
+          - uuidpool.Universe
+          - uuidpool.UuidLease
+          - view.HealthStatus
+          - view.Server
+          - virtualization.EsxiConsole
+          - virtualization.Host
+          - virtualization.VirtualMachine
+          - virtualization.VmwareCluster
+          - virtualization.VmwareDatacenter
+          - virtualization.VmwareDatastore
+          - virtualization.VmwareDatastoreCluster
+          - virtualization.VmwareDistributedNetwork
+          - virtualization.VmwareDistributedSwitch
+          - virtualization.VmwareFolder
+          - virtualization.VmwareHost
+          - virtualization.VmwareHostGpu
+          - virtualization.VmwareKernelNetwork
+          - virtualization.VmwareNetwork
+          - virtualization.VmwarePhysicalNetworkInterface
+          - virtualization.VmwareProactiveHa
+          - virtualization.VmwareUplinkPort
+          - virtualization.VmwareVcenter
+          - virtualization.VmwareVirtualDisk
+          - virtualization.VmwareVirtualMachine
+          - virtualization.VmwareVirtualMachineGpu
+          - virtualization.VmwareVirtualMachineSnapshot
+          - virtualization.VmwareVirtualNetworkInterface
+          - virtualization.VmwareVirtualSwitch
+          - vmedia.Policy
+          - vmedia.PolicyInventory
+          - vmrc.Console
+          - vnic.EthAdapterPolicy
+          - vnic.EthAdapterPolicyInventory
+          - vnic.EthIf
+          - vnic.EthIfInventory
+          - vnic.EthNetworkPolicy
+          - vnic.EthNetworkPolicyInventory
+          - vnic.EthQosPolicy
+          - vnic.EthQosPolicyInventory
+          - vnic.EthVethInventory
+          - vnic.EthVnicInventory
+          - vnic.FcAdapterPolicy
+          - vnic.FcAdapterPolicyInventory
+          - vnic.FcIf
+          - vnic.FcIfInventory
+          - vnic.FcNetworkPolicy
+          - vnic.FcNetworkPolicyInventory
+          - vnic.FcQosPolicy
+          - vnic.FcQosPolicyInventory
+          - vnic.FcVethInventory
+          - vnic.FcVhbaPolicyInventory
+          - vnic.IscsiAdapterPolicy
+          - vnic.IscsiAdapterPolicyInventory
+          - vnic.IscsiBootPolicy
+          - vnic.IscsiBootPolicyInventory
+          - vnic.IscsiStaticTargetPolicy
+          - vnic.IscsiStaticTargetPolicyInventory
+          - vnic.LanConnectivityPolicy
+          - vnic.LanConnectivityPolicyInventory
+          - vnic.LanSettings
+          - vnic.LcpStatus
+          - vnic.SanConnectivityPolicy
+          - vnic.SanConnectivityPolicyInventory
+          - vnic.SanSettings
+          - vnic.ScpStatus
+          - vnic.ServiceEthIf
+          - vnic.ServiceEthIfInventory
+          - vnic.VhbaTemplate
+          - vnic.VifIdPool
+          - vnic.VnicTemplate
+          - vrf.Vrf
+          - webhook.Endpoint
+          - webhook.Schema
+          - workflow.AnsibleBatchExecutor
+          - workflow.BatchApiExecutor
+          - workflow.Catalog
+          - workflow.CatalogItemDefinition
+          - workflow.CatalogServiceRequest
+          - workflow.CustomDataTypeDefinition
+          - workflow.ErrorResponseHandler
+          - workflow.PowerShellBatchApiExecutor
+          - workflow.RollbackWorkflow
+          - workflow.ServiceItemActionDefinition
+          - workflow.ServiceItemActionInstance
+          - workflow.ServiceItemAttribute
+          - workflow.ServiceItemDefinition
+          - workflow.ServiceItemHealthCheckDefinition
+          - workflow.ServiceItemHealthCheckExecution
+          - workflow.ServiceItemInstance
+          - workflow.ServiceItemOutput
+          - workflow.SshBatchExecutor
+          - workflow.TaskDebugLog
+          - workflow.TaskDefinition
+          - workflow.TaskInfo
+          - workflow.TaskMetadata
+          - workflow.TemplateEvaluation
+          - workflow.TemplateFunctionMeta
+          - workflow.TemplateParser
+          - workflow.UiDisplayMetadata
+          - workflow.Variable
+          - workflow.WorkflowDefinition
+          - workflow.WorkflowInfo
+          - workflow.WorkflowMetadata
+          - workload.Blueprint
+          - workload.ClearWorkloadTag
+          - workload.DeploymentInput
+          - workload.WorkloadDefinition
+          - workload.WorkloadDeployment
+          - workload.WorkloadInstance
+          - workload.WorkloadMetadata
+          x-enum-as-string: true
+        Moid:
+          description: The Moid of the referenced REST resource.
+          type: string
+          x-omitempty: true
+        Selector:
+          description: 'An OData $filter expression which describes the REST resource to be referenced. This field may
+
+            be set instead of ''moid'' by clients.
+
+            1. If ''moid'' is set this field is ignored.
+
+            1. If ''selector'' is set and ''moid'' is empty/absent from the request, Intersight determines the Moid of the
+
+            resource matching the filter expression and populates it in the MoRef that is part of the object
+
+            instance being inserted/updated to fulfill the REST request.
+
+            An error is returned if the filter matches zero or more than one REST resource.
+
+            An example filter string is: Serial eq ''3AA8B7T11''.'
+          type: string
+          x-omitempty: true
+        link:
+          type: string
+          description: A URL to an instance of the 'mo.MoRef' class.
+    mo.BaseMo.Relationship:
+      description: A relationship to the 'mo.BaseMo' resource, or the expanded 'mo.BaseMo' resource, or the 'null' value.
+      x-one-of-name: mo.BaseMo.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: '#/components/schemas/mo.MoRef'
+      - $ref: '#/components/schemas/mo.BaseMo'
+      discriminator:
+        propertyName: ClassId
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: A value that is used to determine the nature of the error, and why it occurred.
+          enum:
+          - InternalServerError
+          - InvalidMethod
+          - InvalidUrl
+          - InvalidRequest
+          - NotFound
+          - NotSupported
+          - NotImplemented
+          - AuthenticationFailure
+          - UnauthorizedOperation
+          - ValidationConflict
+          - ServiceUnavailable
+        messageId:
+          type: string
+          description: A language-independent identifier of the specific error message.
+        message:
+          type: string
+          description: 'A human-readable description of the error, localized with the i18n standard.
+
+            The language is determined from the "Accept-Language" request-header.
+
+            The Accept-Language request-header restricts the set of natural languages that are preferred as a response
+
+            to the request. See RFC 2616 for more details.
+
+            Codes:
+
+            1. **InternalServerError**   An internal error occurred.
+
+            1. **InvalidMethod**         The HTTP method (POST, PUT...) is invalid for this API path. For example, a POST request was sent but this API path only supports GET.
+
+            1. **InvalidUrl**            The HTTP request contains an invalid URL.
+
+            1. **InvalidRequest**        The HTTP request contains an invalid or malformed message body.
+
+            1. **NotSupported**          The request is not supported for the specified REST resource.
+
+            1. **NotImplemented**        This API path is experimental and not implemented yet.
+
+            1. **NotFound**              The requested REST resource does not exist.
+
+            1. **AuthenticationFailure** The request lacks valid authentication credentials.
+
+            1. **UnauthorizedOperation** The client is not authorized to perform the operation, such as when the user has insufficient privileges.
+
+            1. **ValidationConflict**    The request contains conflicting attributes, such as two mutually exclusive attribute values.
+
+            1. **ServiceUnavailable**    See RFC 7231, status 503.'
+        cause:
+          description: The cause of this error.
+          $ref: '#/components/schemas/Error'
+    mo.BaseResponse:
+      description: The base response schema.
+      type: object
+      discriminator:
+        propertyName: ObjectType
+      required:
+      - ObjectType
+      properties:
+        ObjectType:
+          description: A discriminator value to disambiguate the schema of a HTTP GET response body.
+          type: string
     apiproxy.AllowList:
       title: Apiproxy:Allow List
       description: Object representing the platform's API Allow-List used by the casanova proxy server.
@@ -2480,76 +4235,44 @@ components:
             type: string
             readOnly: true
             x-omitempty: true
-    Error:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: A value that is used to determine the nature of the error, and why it occurred.
-          enum:
-          - InternalServerError
-          - InvalidMethod
-          - InvalidUrl
-          - InvalidRequest
-          - NotFound
-          - NotSupported
-          - NotImplemented
-          - AuthenticationFailure
-          - UnauthorizedOperation
-          - ValidationConflict
-          - ServiceUnavailable
-        messageId:
-          type: string
-          description: A language-independent identifier of the specific error message.
-        message:
-          type: string
-          description: 'A human-readable description of the error, localized with the i18n standard.
-
-            The language is determined from the "Accept-Language" request-header.
-
-            The Accept-Language request-header restricts the set of natural languages that are preferred as a response
-
-            to the request. See RFC 2616 for more details.
-
-            Codes:
-
-            1. **InternalServerError**   An internal error occurred.
-
-            1. **InvalidMethod**         The HTTP method (POST, PUT...) is invalid for this API path. For example, a POST request was sent but this API path only supports GET.
-
-            1. **InvalidUrl**            The HTTP request contains an invalid URL.
-
-            1. **InvalidRequest**        The HTTP request contains an invalid or malformed message body.
-
-            1. **NotSupported**          The request is not supported for the specified REST resource.
-
-            1. **NotImplemented**        This API path is experimental and not implemented yet.
-
-            1. **NotFound**              The requested REST resource does not exist.
-
-            1. **AuthenticationFailure** The request lacks valid authentication credentials.
-
-            1. **UnauthorizedOperation** The client is not authorized to perform the operation, such as when the user has insufficient privileges.
-
-            1. **ValidationConflict**    The request contains conflicting attributes, such as two mutually exclusive attribute values.
-
-            1. **ServiceUnavailable**    See RFC 7231, status 503.'
-        cause:
-          description: The cause of this error.
-          $ref: '#/components/schemas/Error'
-    mo.DocumentCount:
-      description: A document returned in a response body when the HTTP GET request specifies the '$count' query parameter.
+    CsvFile:
+      type: string
+      description: The content is a comma-separated list of values.
+      format: binary
+    mo.AggregateTransform:
+      description: "The output of a request that includes the $apply query parameter.\nThe schema of an aggregation query is dynamically determined based on the request query parameters. \nSee https://intersight.com/apidocs/introduction/query/#apply-query-option for more details."
       allOf:
       - $ref: '#/components/schemas/mo.BaseResponse'
       - type: object
         properties:
-          Count:
-            description: The total number of resources matching the query filter, accross all pages.
-            type: integer
-            format: int32
+          Results:
+            description: The results of the aggregation query.
+            type:
+            - array
+            - 'null'
+            items:
+              description: A result entry in the aggregate query.
+              type: object
+    DisplayNames:
+      type:
+      - object
+      - 'null'
+      description: 'A set of display names for the MO resource. These names are calculated based on other properties of the
+
+        MO and potentially properties of Ancestor MOs. Displaynames are intended as a way to provide a normalized
+
+        user appropriate name for an MO, especially for MOs which do not have a ''Name'' property, which is the case
+
+        for much of the inventory discovered from managed targets.
+
+        There are a limited number of keys, currently ''short'', ''hierarchical'', and ''auditlog''. The value is an array and clients
+
+        should use the first element of the array.'
+      readOnly: true
+      additionalProperties:
+        type: array
+        items:
+          type: string
     mo.BaseMo:
       type: object
       discriminator:
@@ -5159,1460 +6882,7 @@ components:
           readOnly: true
         DisplayNames:
           $ref: '#/components/schemas/DisplayNames'
-    DisplayNames:
-      type:
-      - object
-      - 'null'
-      description: 'A set of display names for the MO resource. These names are calculated based on other properties of the
-
-        MO and potentially properties of Ancestor MOs. Displaynames are intended as a way to provide a normalized
-
-        user appropriate name for an MO, especially for MOs which do not have a ''Name'' property, which is the case
-
-        for much of the inventory discovered from managed targets.
-
-        There are a limited number of keys, currently ''short'', ''hierarchical'', and ''auditlog''. The value is an array and clients
-
-        should use the first element of the array.'
-      readOnly: true
-      additionalProperties:
-        type: array
-        items:
-          type: string
-    mo.TagKeySummary:
-      type: object
-      description: A summary of the Tag usage for an API resource. Tags are Key, Value pairs that can be assigned to API resources.
-      properties:
-        Key:
-          type: string
-          description: The tag key for which usage information is provided.
-        NumKeys:
-          description: The number of times this tag Key has been set in an API resource.
-          type: integer
-          format: int32
-        Values:
-          type: array
-          description: A list of all Tag values that have been assigned to this tag Key.
-          items:
-            type: string
-    mo.VersionContext:
-      title: Mo:Version Context
-      description: VersionContext contains the versioning info for an object.
-      x-allOf-name: mo.VersionContext
-      allOf:
-      - $ref: '#/components/schemas/mo.BaseComplexType'
-      - type: object
-        description: Definition of the list of properties defined in 'mo.VersionContext', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - mo.VersionContext
-            default: mo.VersionContext
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - mo.VersionContext
-            default: mo.VersionContext
-            x-enum-as-string: true
-          InterestedMos:
-            type:
-            - array
-            - 'null'
-            items:
-              description: 'A collection of objects that have reference to this versioned object.
-
-                The lifecycle of the versioned object is based on the interestedMos list;
-
-                the versioned object will be purged when interestedMos is empty.'
-              $ref: '#/components/schemas/mo.MoRef'
-              readOnly: true
-              x-omitempty: true
-          MarkedForDeletion:
-            description: The flag to indicate if snapshot is marked for deletion or not. If flag is set then snapshot will be removed after the successful deployment of the policy.
-            type: boolean
-            default: false
-            readOnly: true
-            x-omitempty: true
-          RefMo:
-            description: A reference to the original Managed Object.
-            $ref: '#/components/schemas/mo.MoRef'
-            readOnly: true
-            x-omitempty: true
-          Timestamp:
-            description: The time this versioned Managed Object was created.
-            type: string
-            format: date-time
-            readOnly: true
-            x-omitempty: true
-          Version:
-            description: The version of the Managed Object, e.g. an incrementing number or a hash id.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          VersionType:
-            description: 'Specifies type of version. Currently the only supported value is "Configured"
-
-              that is used to keep track of snapshots of policies and profiles that are intended
-
-              to be configured to target endpoints.
-
-              * `Modified` - Version created every time an object is modified.
-
-              * `Configured` - Version created every time an object is configured to the service profile.
-
-              * `Deployed` - Version created for objects related to a service profile when it is deployed.'
-            type: string
-            enum:
-            - Modified
-            - Configured
-            - Deployed
-            default: Modified
-            readOnly: true
-            x-omitempty: true
-    mo.MoRef:
-      title: Mo:Mo Ref
-      description: A reference to a REST resource, uniquely identified by object type and Moid.
-      required:
-      - ClassId
-      - ObjectType
-      - objectType
-      properties:
-        ClassId:
-          description: 'The fully-qualified name of the instantiated, concrete type.
-
-            This property is used as a discriminator to identify the type of the payload
-
-            when marshaling and unmarshaling data.'
-          type: string
-          enum:
-          - mo.MoRef
-          default: mo.MoRef
-          x-enum-as-string: true
-        ObjectType:
-          description: The fully-qualified name of the remote type referred by this relationship.
-          type: string
-          enum:
-          - aaa.AuditRecord
-          - aaa.RetentionConfig
-          - aaa.RetentionPolicy
-          - access.IpAddress
-          - access.Policy
-          - access.PolicyInventory
-          - adapter.ConfigPolicy
-          - adapter.ExtEthInterface
-          - adapter.HostEthInterface
-          - adapter.HostFcInterface
-          - adapter.HostIscsiInterface
-          - adapter.Unit
-          - adapter.UnitExpander
-          - apic.AciPod
-          - apic.Application
-          - apic.ApplicationEndpointGroup
-          - apic.BridgeDomain
-          - apic.ExternalRoutedLayerThreeDomain
-          - apic.FabricLeafNode
-          - apic.FabricLeafNodeInterface
-          - apic.Out
-          - apic.Subnet
-          - apic.Tenant
-          - apic.VpcGroup
-          - apic.Vrfs
-          - apiproxy.AllowList
-          - appliance.AppOpStatus
-          - appliance.AppStatus
-          - appliance.AutoRmaPolicy
-          - appliance.Backup
-          - appliance.BackupDownload
-          - appliance.BackupMonitor
-          - appliance.BackupPolicy
-          - appliance.BackupRotateData
-          - appliance.CertificateSetting
-          - appliance.ClusterInfo
-          - appliance.ClusterInstall
-          - appliance.ClusterReplaceNode
-          - appliance.ClusterWorkerNode
-          - appliance.ClusterWorkerNodeReplace
-          - appliance.ClusterWorkerNodeReuse
-          - appliance.CpuUtilization
-          - appliance.DataExportPolicy
-          - appliance.DeviceCertificate
-          - appliance.DeviceClaim
-          - appliance.DeviceClusterInstall
-          - appliance.DeviceState
-          - appliance.DeviceUpgradePolicy
-          - appliance.DiagSetting
-          - appliance.ExternalSyslogSetting
-          - appliance.FileGateway
-          - appliance.FileSystemOpStatus
-          - appliance.FileSystemOpSummary
-          - appliance.FileSystemStatus
-          - appliance.FileSystemTelemetry
-          - appliance.FqdnUpdate
-          - appliance.GroupOpStatus
-          - appliance.GroupStatus
-          - appliance.ImageBundle
-          - appliance.MemoryUtilization
-          - appliance.MetaManifest
-          - appliance.MetricsConfig
-          - appliance.MetricsIngestionUtilization
-          - appliance.NetworkLinkStatus
-          - appliance.NodeInfo
-          - appliance.NodeIopsMetric
-          - appliance.NodeOpStatus
-          - appliance.NodeStatus
-          - appliance.NodeTelemetry
-          - appliance.ReleaseNote
-          - appliance.RemoteFileImport
-          - appliance.Restore
-          - appliance.SetupInfo
-          - appliance.SystemInfo
-          - appliance.SystemOpStatus
-          - appliance.SystemStatus
-          - appliance.Upgrade
-          - appliance.UpgradePolicy
-          - appliance.UpgradeTracker
-          - asset.ClaimToken
-          - asset.ClusterMember
-          - asset.Deployment
-          - asset.DeploymentDevice
-          - asset.DeviceClaim
-          - asset.DeviceConfiguration
-          - asset.DeviceConnectorManager
-          - asset.DeviceContractInformation
-          - asset.DeviceContractNotification
-          - asset.DeviceRegistration
-          - asset.GeoLocation
-          - asset.PreClaim
-          - asset.Subscription
-          - asset.SubscriptionAccount
-          - asset.SubscriptionDeviceContractInformation
-          - asset.Target
-          - auditd.Policy
-          - bios.BootDevice
-          - bios.BootMode
-          - bios.Policy
-          - bios.SystemBootOrder
-          - bios.TokenSettings
-          - bios.Unit
-          - bios.VfSelectMemoryRasConfiguration
-          - boot.CddDevice
-          - boot.DeviceBootMode
-          - boot.DeviceBootSecurity
-          - boot.HddDevice
-          - boot.IscsiDevice
-          - boot.NvmeDevice
-          - boot.PchStorageDevice
-          - boot.PrecisionPolicy
-          - boot.PxeDevice
-          - boot.SanDevice
-          - boot.SdDevice
-          - boot.UefiShellDevice
-          - boot.UsbDevice
-          - boot.VmediaDevice
-          - bulk.Export
-          - bulk.ExportedItem
-          - bulk.MoCloner
-          - bulk.MoDeepCloner
-          - bulk.MoMerger
-          - bulk.Request
-          - bulk.Result
-          - bulk.SubRequestObj
-          - capability.ActionsMetaData
-          - capability.AdapterDeprecatedDef
-          - capability.AdapterFirmwareRequirement
-          - capability.AdapterUnitDescriptor
-          - capability.AdapterUpdateConstraintMeta
-          - capability.AdapterUpgradeSupportMeta
-          - capability.BiosTokens
-          - capability.Catalog
-          - capability.ChassisDescriptor
-          - capability.ChassisManufacturingDef
-          - capability.ChassisUpgradeSupportMeta
-          - capability.CimcFirmwareDescriptor
-          - capability.CpuEndpointDescriptor
-          - capability.DimmsEndpointDescriptor
-          - capability.DomainPolicyRequirement
-          - capability.DrivesEndpointDescriptor
-          - capability.EquipmentPhysicalDef
-          - capability.EquipmentSlotArray
-          - capability.FanModuleDescriptor
-          - capability.FanModuleManufacturingDef
-          - capability.FexCapabilityDef
-          - capability.FexDescriptor
-          - capability.FexManufacturingDef
-          - capability.FexSupportMeta
-          - capability.GpuEndpointDescriptor
-          - capability.HsuIsoFileSupportMeta
-          - capability.IoCardCapabilityDef
-          - capability.IoCardDescriptor
-          - capability.IoCardManufacturingDef
-          - capability.IomUpgradeSupportMeta
-          - capability.NetworkEquipmentPowerDef
-          - capability.PolicyConstants
-          - capability.PortGroupAggregationDef
-          - capability.ProcessorUnitUpdateConstraintMeta
-          - capability.PsuDescriptor
-          - capability.PsuManufacturingDef
-          - capability.ServerActionsMeta
-          - capability.ServerDescriptor
-          - capability.ServerModelsCapabilityDef
-          - capability.ServerPcieConnectivityCatalog
-          - capability.ServerSchemaDescriptor
-          - capability.ServerTopologyMap
-          - capability.ServerUpgradeSupportMeta
-          - capability.SiocModuleCapabilityDef
-          - capability.SiocModuleDescriptor
-          - capability.SiocModuleManufacturingDef
-          - capability.StandardRedfishSupportMeta
-          - capability.StorageControllerUpdateConstraintMeta
-          - capability.StorageControllersMetaData
-          - capability.SwitchCapability
-          - capability.SwitchDescriptor
-          - capability.SwitchEquipmentInfo
-          - capability.SwitchManufacturingDef
-          - capability.SwitchUpgradeSupportMeta
-          - capability.TemplateCatalog
-          - capability.TimeZoneMetaData
-          - capability.UpdateOrderMeta
-          - capability.VicDescriptor
-          - catalystsdwan.ConfigGroup
-          - catalystsdwan.Interface
-          - catalystsdwan.PhysicalPort
-          - catalystsdwan.PolicyGroup
-          - catalystsdwan.PortChannel
-          - catalystsdwan.VedgeDevice
-          - catalystsdwan.Vlan
-          - catalystsdwan.WanEdgeDevice
-          - certificatemanagement.Policy
-          - certificatemanagement.PolicyInventory
-          - chassis.ConfigChangeDetail
-          - chassis.ConfigImport
-          - chassis.ConfigResult
-          - chassis.ConfigResultEntry
-          - chassis.IomProfile
-          - chassis.Profile
-          - chassis.ProfileTemplate
-          - cli.CliPolicy
-          - cloud.CollectInventory
-          - cloud.TfcAgentpool
-          - cloud.TfcOrganization
-          - cloud.TfcWorkspace
-          - comm.HttpProxyPolicy
-          - comm.TagDefinition
-          - compute.Blade
-          - compute.BladeIdentity
-          - compute.Board
-          - compute.DownloadStatus
-          - compute.HostUtilityOperation
-          - compute.Mapping
-          - compute.PcieConnectivityPolicy
-          - compute.PcieConnectivityPolicyInventory
-          - compute.Personality
-          - compute.PhysicalSummary
-          - compute.RackUnit
-          - compute.RackUnitIdentity
-          - compute.ScrubPolicy
-          - compute.ServerIdPool
-          - compute.ServerPowerParameters
-          - compute.ServerPowerPolicy
-          - compute.ServerSetting
-          - compute.Vmedia
-          - cond.Alarm
-          - cond.AlarmAggregation
-          - cond.AlarmClassification
-          - cond.AlarmDefinition
-          - cond.AlarmRule
-          - cond.AlarmSuppression
-          - cond.AlarmSuppressionDryRun
-          - cond.CustomHclBaseline
-          - cond.CustomHclStatus
-          - cond.HclStatus
-          - cond.HclStatusDetail
-          - cond.HclStatusJob
-          - cond.ThresholdDefinition
-          - connectorpack.ConnectorPackUpgrade
-          - connectorpack.UpgradeImpact
-          - console.ConsoleConfig
-          - convergedinfra.AdapterComplianceDetails
-          - convergedinfra.Pod
-          - convergedinfra.PodComplianceInfo
-          - convergedinfra.ServerComplianceDetails
-          - convergedinfra.StorageComplianceDetails
-          - convergedinfra.SwitchComplianceDetails
-          - coremanagement.CoreFile
-          - coremanagement.Download
-          - crd.CustomResource
-          - deviceconnector.Policy
-          - dnac.Device
-          - dnac.DeviceInterface
-          - dnac.ExternalBorderNode
-          - dnac.ExternalBorderNodeInterface
-          - dnac.FabricSite
-          - dnac.Site
-          - dnac.SiteIpPool
-          - dnac.Template
-          - dnac.Transit
-          - dnac.VirtualNetworkFabricSite
-          - energy.DailyMetrics
-          - energy.Metrics
-          - equipment.Chassis
-          - equipment.ChassisController
-          - equipment.ChassisIdPool
-          - equipment.ChassisIdentity
-          - equipment.ChassisOperation
-          - equipment.DeviceSummary
-          - equipment.EnclosureElement
-          - equipment.EndPointLog
-          - equipment.ExpanderModule
-          - equipment.ExpanderModuleIdentity
-          - equipment.ExpanderModuleOperation
-          - equipment.Fan
-          - equipment.FanControl
-          - equipment.FanModule
-          - equipment.Fex
-          - equipment.FexIdentity
-          - equipment.FexOperation
-          - equipment.Fru
-          - equipment.HybridDriveSlot
-          - equipment.Interconnect
-          - equipment.IoCard
-          - equipment.IoCardOperation
-          - equipment.IoExpander
-          - equipment.LocatorLed
-          - equipment.LogDownload
-          - equipment.Psu
-          - equipment.PsuControl
-          - equipment.RackEnclosure
-          - equipment.RackEnclosureSlot
-          - equipment.Riser
-          - equipment.Sensor
-          - equipment.SharedAdapterUnit
-          - equipment.SharedGraphicsCard
-          - equipment.SharedIoModule
-          - equipment.SwitchCard
-          - equipment.SwitchOperation
-          - equipment.SystemIoController
-          - equipment.Tpm
-          - equipment.Transceiver
-          - ether.HostPort
-          - ether.InterSwitchPort
-          - ether.LanPort
-          - ether.NetworkPort
-          - ether.PhysicalPort
-          - ether.PortChannel
-          - externalsite.Authorization
-          - fabric.AppliancePcRole
-          - fabric.ApplianceRole
-          - fabric.ConfigChangeDetail
-          - fabric.ConfigResult
-          - fabric.ConfigResultEntry
-          - fabric.ElementIdentity
-          - fabric.EstimateImpact
-          - fabric.EthNetworkControlPolicy
-          - fabric.EthNetworkControlPolicyInventory
-          - fabric.EthNetworkGroupPolicy
-          - fabric.EthNetworkGroupPolicyInventory
-          - fabric.EthNetworkPolicy
-          - fabric.FcNetworkPolicy
-          - fabric.FcStorageRole
-          - fabric.FcUplinkPcRole
-          - fabric.FcUplinkRole
-          - fabric.FcZonePolicy
-          - fabric.FcoeUplinkPcRole
-          - fabric.FcoeUplinkRole
-          - fabric.FlowControlPolicy
-          - fabric.LanPinGroup
-          - fabric.LinkAggregationPolicy
-          - fabric.LinkControlPolicy
-          - fabric.MacSecPolicy
-          - fabric.MulticastPolicy
-          - fabric.NetFlowExporter
-          - fabric.NetFlowMonitor
-          - fabric.NetFlowPolicy
-          - fabric.NetFlowRecord
-          - fabric.PcMember
-          - fabric.PcOperation
-          - fabric.PortMode
-          - fabric.PortOperation
-          - fabric.PortPolicy
-          - fabric.SanPinGroup
-          - fabric.SecureRouterRole
-          - fabric.ServerRole
-          - fabric.SpanDestEthPort
-          - fabric.SpanSession
-          - fabric.SpanSourceEthPort
-          - fabric.SpanSourceEthPortChannel
-          - fabric.SpanSourceVlan
-          - fabric.SpanSourceVnicEthIf
-          - fabric.SwitchClusterProfile
-          - fabric.SwitchClusterProfileTemplate
-          - fabric.SwitchControlPolicy
-          - fabric.SwitchProfile
-          - fabric.SwitchProfileTemplate
-          - fabric.SystemQosPolicy
-          - fabric.UplinkPcRole
-          - fabric.UplinkRole
-          - fabric.Vlan
-          - fabric.VlanInventory
-          - fabric.VlanSet
-          - fabric.Vsan
-          - fabric.VsanInventory
-          - fault.Instance
-          - fc.Neighbor
-          - fc.PhysicalPort
-          - fc.PortChannel
-          - fcpool.FcBlock
-          - fcpool.Lease
-          - fcpool.Pool
-          - fcpool.PoolMember
-          - fcpool.Reservation
-          - fcpool.Universe
-          - feedback.FeedbackPost
-          - firmware.BiosDescriptor
-          - firmware.BoardControllerDescriptor
-          - firmware.ChassisUpgrade
-          - firmware.CimcDescriptor
-          - firmware.DimmDescriptor
-          - firmware.Distributable
-          - firmware.DistributableMeta
-          - firmware.DriveDescriptor
-          - firmware.DriverDistributable
-          - firmware.Eula
-          - firmware.FirmwareSummary
-          - firmware.GpuDescriptor
-          - firmware.HbaDescriptor
-          - firmware.IomDescriptor
-          - firmware.MswitchDescriptor
-          - firmware.NxosDescriptor
-          - firmware.PciNodeUpgrade
-          - firmware.PcieDescriptor
-          - firmware.Policy
-          - firmware.PsuDescriptor
-          - firmware.PsxDescriptor
-          - firmware.RunningFirmware
-          - firmware.SasExpanderDescriptor
-          - firmware.SecureRouterUpgrade
-          - firmware.ServerConfigurationUtilityDistributable
-          - firmware.StorageControllerDescriptor
-          - firmware.SwitchUpgrade
-          - firmware.UnsupportedVersionUpgrade
-          - firmware.Upgrade
-          - firmware.UpgradeImpact
-          - firmware.UpgradeImpactStatus
-          - firmware.UpgradeStatus
-          - firmware.UpgradeValidity
-          - fmc.Device
-          - fmc.DeviceHaPair
-          - fmc.Domain
-          - fmc.PhysicalInterface
-          - forecast.Catalog
-          - forecast.Definition
-          - forecast.Instance
-          - graphics.Card
-          - graphics.Controller
-          - hci.AhvVm
-          - hci.AhvVmDisk
-          - hci.AhvVmGpu
-          - hci.AhvVmNic
-          - hci.Alarm
-          - hci.Cluster
-          - hci.ClusterOperation
-          - hci.Compliance
-          - hci.Disk
-          - hci.DomainManager
-          - hci.Entitlement
-          - hci.EsxiVm
-          - hci.EsxiVmDisk
-          - hci.EsxiVmNic
-          - hci.ExternalStorage
-          - hci.Gpu
-          - hci.License
-          - hci.NccCheckPolicy
-          - hci.Node
-          - hci.PhysicalGpu
-          - hci.StorageContainer
-          - hci.Violation
-          - hci.VirtualGpu
-          - hcl.CompatibilityStatus
-          - hcl.DataImportLog
-          - hcl.DriverImage
-          - hcl.ExemptedCatalog
-          - hcl.HwCatalogInfo
-          - hcl.HyperflexSoftwareCompatibilityInfo
-          - hcl.OperatingSystem
-          - hcl.OperatingSystemVendor
-          - hcl.ServerCatalog
-          - hcl.ServerHwCatalogInfo
-          - hcl.SupportedDriverName
-          - hyperflex.Alarm
-          - hyperflex.AppCatalog
-          - hyperflex.AutoSupportPolicy
-          - hyperflex.BackupCluster
-          - hyperflex.CapabilityInfo
-          - hyperflex.Cluster
-          - hyperflex.ClusterBackupPolicy
-          - hyperflex.ClusterBackupPolicyDeployment
-          - hyperflex.ClusterBackupPolicyInventory
-          - hyperflex.ClusterHealthCheckExecutionSnapshot
-          - hyperflex.ClusterNetworkPolicy
-          - hyperflex.ClusterProfile
-          - hyperflex.ClusterReplicationNetworkPolicy
-          - hyperflex.ClusterReplicationNetworkPolicyDeployment
-          - hyperflex.ClusterStoragePolicy
-          - hyperflex.ConfigResult
-          - hyperflex.ConfigResultEntry
-          - hyperflex.DataProtectionPeer
-          - hyperflex.DatastoreStatistic
-          - hyperflex.DevicePackageDownloadState
-          - hyperflex.Drive
-          - hyperflex.Encryption
-          - hyperflex.ExtFcStoragePolicy
-          - hyperflex.ExtIscsiStoragePolicy
-          - hyperflex.FeatureLimitExternal
-          - hyperflex.FeatureLimitInternal
-          - hyperflex.Health
-          - hyperflex.HealthCheckDefinition
-          - hyperflex.HealthCheckExecution
-          - hyperflex.HealthCheckExecutionSnapshot
-          - hyperflex.HealthCheckPackageChecksum
-          - hyperflex.HealthCheckSchedulePolicy
-          - hyperflex.HwCatalog
-          - hyperflex.HxdpVersion
-          - hyperflex.HypervisorHost
-          - hyperflex.HypervisorVirtualMachine
-          - hyperflex.InitiatorGroup
-          - hyperflex.IscsiNetwork
-          - hyperflex.KeyEncryptionKey
-          - hyperflex.License
-          - hyperflex.LocalCredentialPolicy
-          - hyperflex.Lun
-          - hyperflex.Node
-          - hyperflex.NodeConfigPolicy
-          - hyperflex.NodeProfile
-          - hyperflex.ProtectedCluster
-          - hyperflex.ProxySettingPolicy
-          - hyperflex.ReduceReSync
-          - hyperflex.ServerFirmwareVersion
-          - hyperflex.ServerFirmwareVersionEntry
-          - hyperflex.ServerModel
-          - hyperflex.ServiceAuthToken
-          - hyperflex.SoftwareDistributionComponent
-          - hyperflex.SoftwareDistributionEntry
-          - hyperflex.SoftwareDistributionVersion
-          - hyperflex.SoftwareVersionPolicy
-          - hyperflex.StartReduceReSync
-          - hyperflex.StorageContainer
-          - hyperflex.SysConfigPolicy
-          - hyperflex.Target
-          - hyperflex.UcsmConfigPolicy
-          - hyperflex.VcenterConfigPolicy
-          - hyperflex.VmBackupInfo
-          - hyperflex.VmImportOperation
-          - hyperflex.VmRestoreOperation
-          - hyperflex.VmSnapshotInfo
-          - hyperflex.Volume
-          - hyperflex.WitnessConfiguration
-          - iaas.ConnectorPack
-          - iaas.CustomTaskInfo
-          - iaas.DeviceStatus
-          - iaas.DiagnosticMessages
-          - iaas.LicenseInfo
-          - iaas.MostRunTasks
-          - iaas.ServiceRequest
-          - iaas.SystemTaskInfo
-          - iaas.UcsdInfo
-          - iaas.UcsdManagedInfra
-          - iaas.UcsdMessages
-          - iam.Account
-          - iam.AccountExperience
-          - iam.ApiKey
-          - iam.AppRegistration
-          - iam.BannerMessage
-          - iam.Certificate
-          - iam.CertificateRequest
-          - iam.CuiIntegration
-          - iam.DefaultAuthentication
-          - iam.DomainGroup
-          - iam.DomainNameInfo
-          - iam.EndPointPrivilege
-          - iam.EndPointRole
-          - iam.EndPointUser
-          - iam.EndPointUserInventory
-          - iam.EndPointUserPolicy
-          - iam.EndPointUserPolicyInventory
-          - iam.EndPointUserRole
-          - iam.EndPointUserRoleInventory
-          - iam.GuestAccessSettings
-          - iam.Idp
-          - iam.IdpReference
-          - iam.IpAccessManagement
-          - iam.IpAddress
-          - iam.LdapConfigParams
-          - iam.LdapGroup
-          - iam.LdapGroupInventory
-          - iam.LdapMeta
-          - iam.LdapPolicy
-          - iam.LdapPolicyInventory
-          - iam.LdapProvider
-          - iam.LdapProviderInventory
-          - iam.LocalUserPassword
-          - iam.LocalUserPasswordPolicy
-          - iam.OAuthToken
-          - iam.PasswordHistorySettingCollection
-          - iam.Permission
-          - iam.PrivateKeySpec
-          - iam.Privilege
-          - iam.PrivilegeSet
-          - iam.PrivilegeSetMetaInfo
-          - iam.Qualifier
-          - iam.ResourceLimits
-          - iam.ResourcePermission
-          - iam.ResourceRoles
-          - iam.Role
-          - iam.SecurityHolder
-          - iam.ServiceProvider
-          - iam.Session
-          - iam.SessionLimits
-          - iam.SharingRule
-          - iam.System
-          - iam.TestIdpConfiguration
-          - iam.TrustPoint
-          - iam.User
-          - iam.UserGroup
-          - iam.UserPreference
-          - iam.UserQualifier
-          - iam.UserSetting
-          - inventory.DeviceInfo
-          - inventory.DnMoBinding
-          - inventory.GenericInventory
-          - inventory.GenericInventoryHolder
-          - inventory.Request
-          - ipmioverlan.Policy
-          - ipmioverlan.PolicyInventory
-          - ippool.BlockLease
-          - ippool.IpLease
-          - ippool.Pool
-          - ippool.PoolMember
-          - ippool.Reservation
-          - ippool.ShadowBlock
-          - ippool.ShadowPool
-          - ippool.Universe
-          - iqnpool.Block
-          - iqnpool.Lease
-          - iqnpool.Pool
-          - iqnpool.PoolMember
-          - iqnpool.Reservation
-          - iqnpool.Universe
-          - iwotenant.MaintenanceNotification
-          - iwotenant.Migrate
-          - iwotenant.TenantCustomization
-          - iwotenant.TenantStatus
-          - kvm.Policy
-          - kvm.PolicyInventory
-          - kvm.Session
-          - kvm.Tunnel
-          - kvm.TunneledKvmPolicy
-          - license.AccountLicenseData
-          - license.CustomerOp
-          - license.ErpCustomerOp
-          - license.ErpLicenseCount
-          - license.IksCustomerOp
-          - license.IksLicenseCount
-          - license.IncCustomerOp
-          - license.IncLicenseCount
-          - license.IwoCustomerOp
-          - license.IwoLicenseCount
-          - license.LicenseInfo
-          - license.LicenseInfoView
-          - license.LicenseRegistrationStatus
-          - license.LicenseReservationOp
-          - license.SmartlicenseToken
-          - ls.ServiceProfile
-          - macpool.IdBlock
-          - macpool.Lease
-          - macpool.Pool
-          - macpool.PoolMember
-          - macpool.Reservation
-          - macpool.Universe
-          - management.Controller
-          - management.Entity
-          - management.Interface
-          - memory.Array
-          - memory.PersistentMemoryConfigResult
-          - memory.PersistentMemoryConfiguration
-          - memory.PersistentMemoryNamespace
-          - memory.PersistentMemoryNamespaceConfigResult
-          - memory.PersistentMemoryPolicy
-          - memory.PersistentMemoryRegion
-          - memory.PersistentMemoryUnit
-          - memory.Policy
-          - memory.PolicyInventory
-          - memory.Unit
-          - meraki.Device
-          - meraki.Network
-          - meraki.Organization
-          - meraki.PortProfile
-          - meraki.Tag
-          - meta.Definition
-          - metrics.Configuration
-          - metrics.MetricsExploration
-          - metrics.ResourceConfiguration
-          - mgmt.BackupCategory
-          - mgmt.ConfigBackupFile
-          - mgmt.ConfigBackupInstance
-          - mgmt.ConfigBackupOperation
-          - mgmt.ConfigCategorySummary
-          - mgmt.ConfigOperationSetting
-          - mgmt.ConfigRestoreCategorySummary
-          - mgmt.ConfigRestoreOperation
-          - mgmt.ObjectBackupMeta
-          - mgmt.OrgBackupOperation
-          - mgmt.OrgRestoreOperation
-          - monitoring.HealthStatus
-          - network.DiscoveredNeighbor
-          - network.Dns
-          - network.Element
-          - network.ElementSummary
-          - network.FcZoneInfo
-          - network.FeatureControl
-          - network.InterfaceList
-          - network.LicenseFile
-          - network.SecureRouter
-          - network.SecureRouterSetting
-          - network.SupervisorCard
-          - network.TelemetryCheck
-          - network.Vethernet
-          - network.Vfc
-          - network.VlanPortInfo
-          - network.VpcDomain
-          - network.VpcMember
-          - network.VpcPeer
-          - network.Vrf
-          - networkconfig.Policy
-          - networkconfig.PolicyInventory
-          - niaapi.ApicCcoPost
-          - niaapi.ApicFieldNotice
-          - niaapi.ApicHweol
-          - niaapi.ApicLatestMaintainedRelease
-          - niaapi.ApicReleaseRecommend
-          - niaapi.ApicSweol
-          - niaapi.DcnmCcoPost
-          - niaapi.DcnmFieldNotice
-          - niaapi.DcnmHweol
-          - niaapi.DcnmLatestMaintainedRelease
-          - niaapi.DcnmReleaseRecommend
-          - niaapi.DcnmSweol
-          - niaapi.FileDownloader
-          - niaapi.NdEncryptedFileDownload
-          - niaapi.NdMetadata
-          - niaapi.NdMetadataFileDownloader
-          - niaapi.NdMetadataSoftwareDownload
-          - niaapi.NiaMetadata
-          - niaapi.NibFileDownloader
-          - niaapi.NibMetadata
-          - niaapi.PuvScriptDownloader
-          - niaapi.SnValidatorMetadata
-          - niaapi.UpgradeAssistFile
-          - niaapi.VersionRegex
-          - niatelemetry.AaaLdapProviderDetails
-          - niatelemetry.AaaRadiusProviderDetails
-          - niatelemetry.AaaTacacsProviderDetails
-          - niatelemetry.Anomaly
-          - niatelemetry.ApicAppPluginDetails
-          - niatelemetry.ApicCoreFileDetails
-          - niatelemetry.ApicDbgexpRsExportDest
-          - niatelemetry.ApicDbgexpRsTsScheduler
-          - niatelemetry.ApicFanDetails
-          - niatelemetry.ApicFexDetails
-          - niatelemetry.ApicFlashDetails
-          - niatelemetry.ApicNtpAuth
-          - niatelemetry.ApicPerformanceData
-          - niatelemetry.ApicPodData
-          - niatelemetry.ApicPsuDetails
-          - niatelemetry.ApicRealmDetails
-          - niatelemetry.ApicSnmpClientGrpDetails
-          - niatelemetry.ApicSnmpCommunityAccessDetails
-          - niatelemetry.ApicSnmpCommunityDetails
-          - niatelemetry.ApicSnmpTrapDetails
-          - niatelemetry.ApicSnmpTrapFwdServerDetails
-          - niatelemetry.ApicSnmpVersionThreeDetails
-          - niatelemetry.ApicSysLogGrp
-          - niatelemetry.ApicSysLogSrc
-          - niatelemetry.ApicTransceiverDetails
-          - niatelemetry.ApicUiPageCounts
-          - niatelemetry.ApicVision
-          - niatelemetry.AppDetails
-          - niatelemetry.CloudDetails
-          - niatelemetry.Cluster
-          - niatelemetry.ClusterNode
-          - niatelemetry.CommonPolicies
-          - niatelemetry.Controller
-          - niatelemetry.DcnmFanDetails
-          - niatelemetry.DcnmFexDetails
-          - niatelemetry.DcnmModuleDetails
-          - niatelemetry.DcnmPsuDetails
-          - niatelemetry.DcnmTransceiverDetails
-          - niatelemetry.DomInfoObject
-          - niatelemetry.DomThresInfoObject
-          - niatelemetry.Epg
-          - niatelemetry.Fabric
-          - niatelemetry.FabricModuleDetails
-          - niatelemetry.FabricNodeControlDetails
-          - niatelemetry.FabricPodProfile
-          - niatelemetry.FabricPodSs
-          - niatelemetry.Fault
-          - niatelemetry.HcloudDetails
-          - niatelemetry.HealthInsightsData
-          - niatelemetry.HttpsAclContractDetails
-          - niatelemetry.HttpsAclContractFilterMap
-          - niatelemetry.HttpsAclEpgContractMap
-          - niatelemetry.HttpsAclEpgDetails
-          - niatelemetry.HttpsAclFilterDetails
-          - niatelemetry.InsightGroupDetails
-          - niatelemetry.Lc
-          - niatelemetry.LeafPolGrpDetails
-          - niatelemetry.Link
-          - niatelemetry.MdsNeighbors
-          - niatelemetry.MsoContractDetails
-          - niatelemetry.MsoEpgDetails
-          - niatelemetry.MsoSchemaDetails
-          - niatelemetry.MsoSiteDetails
-          - niatelemetry.MsoTenantDetails
-          - niatelemetry.Neighbor
-          - niatelemetry.Network
-          - niatelemetry.NexusCloudAccount
-          - niatelemetry.NexusCloudSite
-          - niatelemetry.NexusDashboardControllerDetails
-          - niatelemetry.NexusDashboardDetails
-          - niatelemetry.NexusDashboardMemoryDetails
-          - niatelemetry.NexusDashboards
-          - niatelemetry.NiaFeatureUsage
-          - niatelemetry.NiaInventory
-          - niatelemetry.NiaInventoryDcnm
-          - niatelemetry.NiaInventoryFabric
-          - niatelemetry.NiaLicenseState
-          - niatelemetry.Nicc
-          - niatelemetry.PasswordStrengthCheck
-          - niatelemetry.PodCommPolicies
-          - niatelemetry.PodSnmpPolicies
-          - niatelemetry.PodTimeServerPolicies
-          - niatelemetry.Route
-          - niatelemetry.SiteInventory
-          - niatelemetry.SnmpSrc
-          - niatelemetry.SpinePolGrpDetails
-          - niatelemetry.SshVersionTwo
-          - niatelemetry.SupervisorModuleDetails
-          - niatelemetry.Switch
-          - niatelemetry.SwitchInterface
-          - niatelemetry.SyslogRemoteDest
-          - niatelemetry.SyslogSysMsg
-          - niatelemetry.SyslogSysMsgFacFilter
-          - niatelemetry.SystemControllerDetails
-          - niatelemetry.Tenant
-          - notification.AccountSubscription
-          - ntp.NtpServer
-          - ntp.Policy
-          - ntp.PolicyInventory
-          - oauth.AccessToken
-          - oauth.Authorization
-          - onprem.ApplianceSystemInfo
-          - onprem.AuditRecord
-          - onprem.Upgrade
-          - onprem.UserPreference
-          - openapi.ApiMethodMeta
-          - openapi.OpenApiSpecification
-          - openapi.ProcessFile
-          - openapi.TaskGenerationRequest
-          - openapi.TaskGenerationResult
-          - oprs.Deployment
-          - oprs.SyncTargetListMessage
-          - organization.Organization
-          - os.BulkInstallInfo
-          - os.Catalog
-          - os.ConfigurationFile
-          - os.Distribution
-          - os.Install
-          - os.OsSupport
-          - os.SupportedVersion
-          - os.TemplateFile
-          - os.ValidInstallTarget
-          - os.ValidRemoteTarget
-          - partnerintegration.DcLogs
-          - partnerintegration.DeviceConnector
-          - partnerintegration.DocIssues
-          - partnerintegration.Etl
-          - partnerintegration.File
-          - partnerintegration.Inventory
-          - partnerintegration.Logs
-          - partnerintegration.Metrics
-          - partnerintegration.Model
-          - pci.CoprocessorCard
-          - pci.Device
-          - pci.Endpoint
-          - pci.Link
-          - pci.Node
-          - pci.NodeSetting
-          - pci.Port
-          - pci.Slot
-          - pci.Switch
-          - pci.Zone
-          - pool.IdMappingMember
-          - pool.IdMappingPolicy
-          - port.Group
-          - port.MacBinding
-          - port.SubGroup
-          - power.ControlState
-          - power.Policy
-          - power.PolicyInventory
-          - power.PowerGroup
-          - power.PowerGroupMember
-          - processor.Unit
-          - rack.UnitPersonality
-          - recommendation.CapacityRunway
-          - recommendation.ClusterExpansion
-          - recommendation.HardwareExpansionRequest
-          - recommendation.HardwareExpansionRequestItem
-          - recommendation.PhysicalItem
-          - recommendation.PurchaseOrderEstimate
-          - recommendation.PurchaseOrderList
-          - recommendation.SoftwareItem
-          - recovery.BackupConfigPolicy
-          - recovery.BackupProfile
-          - recovery.ConfigResult
-          - recovery.ConfigResultEntry
-          - recovery.OnDemandBackup
-          - recovery.Restore
-          - recovery.ScheduleConfigPolicy
-          - resource.Group
-          - resource.GroupMember
-          - resource.LicenseResourceCount
-          - resource.Membership
-          - resource.MembershipHolder
-          - resource.Reservation
-          - resource.SelectionCriteria
-          - resource.SharedResourcesInfoHolder
-          - resourcepool.ChassisQualificationPolicy
-          - resourcepool.Lease
-          - resourcepool.LeaseResource
-          - resourcepool.MembershipReservation
-          - resourcepool.Pool
-          - resourcepool.PoolMember
-          - resourcepool.QualificationPolicy
-          - resourcepool.Reservation
-          - resourcepool.Universe
-          - rproxy.ReverseProxy
-          - scheduler.SchedulePolicy
-          - scheduler.TaskResult
-          - scheduler.TaskSchedule
-          - sdaaci.Connection
-          - sdaaci.ConnectionDetail
-          - sdcard.Policy
-          - sdcard.PolicyInventory
-          - search.SearchItem
-          - search.TagItem
-          - security.Unit
-          - server.ConfigChangeDetail
-          - server.ConfigImport
-          - server.ConfigResult
-          - server.ConfigResultEntry
-          - server.DiagnosticStatus
-          - server.Diagnostics
-          - server.Disruption
-          - server.MigrationKeyDetails
-          - server.Profile
-          - server.ProfilePendingChangeEval
-          - server.ProfileTemplate
-          - servicenow.ChangeRequest
-          - servicenow.ChangeRequestDoc
-          - servicenow.Incident
-          - servicenow.IncidentDoc
-          - smtp.Policy
-          - smtp.PolicyInventory
-          - smtp.PolicyTest
-          - snmp.Policy
-          - snmp.PolicyInventory
-          - software.ApplianceDistributable
-          - software.DownloadHistory
-          - software.HciBundleDistributable
-          - software.HciDistributable
-          - software.HclMeta
-          - software.HyperflexBundleDistributable
-          - software.HyperflexDistributable
-          - software.IksBundleDistributable
-          - software.ReleaseMeta
-          - software.SolutionDistributable
-          - software.UcsdBundleDistributable
-          - software.UcsdDistributable
-          - softwarerepository.Authorization
-          - softwarerepository.CachedImage
-          - softwarerepository.Catalog
-          - softwarerepository.CategoryMapper
-          - softwarerepository.CategoryMapperModel
-          - softwarerepository.CategorySupportConstraint
-          - softwarerepository.CategoryUnsupportedModels
-          - softwarerepository.DownloadSpec
-          - softwarerepository.OperatingSystemFile
-          - softwarerepository.Release
-          - sol.Policy
-          - sol.PolicyInventory
-          - ssh.Policy
-          - ssh.PolicyInventory
-          - storage.BatteryBackupUnit
-          - storage.Controller
-          - storage.ControllerDrive
-          - storage.DiskGroup
-          - storage.DiskSlot
-          - storage.DriveGroup
-          - storage.DriveSecurityPolicy
-          - storage.Enclosure
-          - storage.EnclosureDisk
-          - storage.EnclosureDiskSlotEp
-          - storage.FileItem
-          - storage.FlexFlashController
-          - storage.FlexFlashControllerProps
-          - storage.FlexFlashPhysicalDrive
-          - storage.FlexFlashVirtualDrive
-          - storage.FlexUtilController
-          - storage.FlexUtilPhysicalDrive
-          - storage.FlexUtilVirtualDrive
-          - storage.HitachiArray
-          - storage.HitachiController
-          - storage.HitachiDisk
-          - storage.HitachiExternalParityGroup
-          - storage.HitachiExternalPathGroup
-          - storage.HitachiExternalStorageLun
-          - storage.HitachiExternalStoragePort
-          - storage.HitachiHost
-          - storage.HitachiHostLun
-          - storage.HitachiNvmSubsystem
-          - storage.HitachiParityGroup
-          - storage.HitachiPool
-          - storage.HitachiPort
-          - storage.HitachiRemoteCopyPairGad
-          - storage.HitachiRemoteCopyPairTc
-          - storage.HitachiRemoteCopyPairUr
-          - storage.HitachiRemoteReplication
-          - storage.HitachiSnapshot
-          - storage.HitachiVolume
-          - storage.HitachiVolumeMigrationPair
-          - storage.HyperFlexStorageContainer
-          - storage.HyperFlexVolume
-          - storage.Item
-          - storage.KnoxSecureDriveConfiguration
-          - storage.NetAppAggregate
-          - storage.NetAppAggregateEvent
-          - storage.NetAppBaseDisk
-          - storage.NetAppCifsService
-          - storage.NetAppCifsShare
-          - storage.NetAppCloudTarget
-          - storage.NetAppCluster
-          - storage.NetAppClusterEvent
-          - storage.NetAppClusterSnapMirrorPolicy
-          - storage.NetAppClusterSnapshotPolicy
-          - storage.NetAppDataIpInterface
-          - storage.NetAppDataIpInterfaceEvent
-          - storage.NetAppDiskEvent
-          - storage.NetAppEthernetPort
-          - storage.NetAppEthernetPortEvent
-          - storage.NetAppExportPolicy
-          - storage.NetAppFcInterface
-          - storage.NetAppFcInterfaceEvent
-          - storage.NetAppFcPort
-          - storage.NetAppFcPortEvent
-          - storage.NetAppInitiatorGroup
-          - storage.NetAppIpInterface
-          - storage.NetAppIpInterfaceEvent
-          - storage.NetAppIscsiService
-          - storage.NetAppLicense
-          - storage.NetAppLun
-          - storage.NetAppLunEvent
-          - storage.NetAppLunMap
-          - storage.NetAppNamespace
-          - storage.NetAppNfsClient
-          - storage.NetAppNfsService
-          - storage.NetAppNode
-          - storage.NetAppNodeCdpNeighbor
-          - storage.NetAppNodeEvent
-          - storage.NetAppNonDataIpInterface
-          - storage.NetAppNonDataIpInterfaceEvent
-          - storage.NetAppNtpServer
-          - storage.NetAppQtree
-          - storage.NetAppSchedule
-          - storage.NetAppSensor
-          - storage.NetAppSnapMirrorRelationship
-          - storage.NetAppStorageVm
-          - storage.NetAppSvmEvent
-          - storage.NetAppSvmSnapMirrorPolicy
-          - storage.NetAppSvmSnapshotPolicy
-          - storage.NetAppVolume
-          - storage.NetAppVolumeEvent
-          - storage.NetAppVolumeSnapshot
-          - storage.NvmeRaidConfiguration
-          - storage.PhysicalDisk
-          - storage.PhysicalDiskExtension
-          - storage.PhysicalDiskUsage
-          - storage.PureArray
-          - storage.PureArrayAlerts
-          - storage.PureBlade
-          - storage.PureController
-          - storage.PureDirectory
-          - storage.PureDirectoryExport
-          - storage.PureDirectoryPolicy
-          - storage.PureDirectoryQuota
-          - storage.PureDirectorySnapshot
-          - storage.PureDisk
-          - storage.PureFileSystems
-          - storage.PureFlashBladeFileSystem
-          - storage.PureFlashBladeSystem
-          - storage.PureHost
-          - storage.PureHostGroup
-          - storage.PureHostLun
-          - storage.PureManagementAccessPolicy
-          - storage.PureNfsPolicyRule
-          - storage.PureObjectBucket
-          - storage.PureObjectStoreAccount
-          - storage.PureObjectStoreUser
-          - storage.PurePod
-          - storage.PurePort
-          - storage.PureProtectionGroup
-          - storage.PureProtectionGroupSnapshot
-          - storage.PureQuotaPolicyRule
-          - storage.PureRealm
-          - storage.PureReplicationSchedule
-          - storage.PureSmbPolicyRule
-          - storage.PureSnapshotSchedule
-          - storage.PureTargetArray
-          - storage.PureVolume
-          - storage.PureVolumeGroup
-          - storage.PureVolumeSnapshot
-          - storage.SasExpander
-          - storage.SasPort
-          - storage.Span
-          - storage.StoragePolicy
-          - storage.VdMemberEp
-          - storage.VirtualDrive
-          - storage.VirtualDriveContainer
-          - storage.VirtualDriveExtension
-          - storage.VirtualDriveIdentity
-          - syslog.Policy
-          - syslog.PolicyInventory
-          - tam.AdvisoryCount
-          - tam.AdvisoryDefinition
-          - tam.AdvisoryInfo
-          - tam.AdvisoryInstance
-          - tam.SecurityAdvisory
-          - task.CatalystSdwanScopedInventory
-          - task.FabricMosScopedInventory
-          - task.HciScopedInventory
-          - task.HitachiScopedInventory
-          - task.HyperFlexManagementScopedInventory
-          - task.HyperflexScopedInventory
-          - task.MdsScopedInventory
-          - task.MdsSystemScopedInventory
-          - task.MerakiScopedInventory
-          - task.NetAppScopedInventory
-          - task.NexusScopedInventory
-          - task.NexusSystemScopedInventory
-          - task.NexusVlanScopedInventory
-          - task.PureFlashBladeScopedInventory
-          - task.PureScopedInventory
-          - task.ServerScopedInventory
-          - techsupportmanagement.CollectionControlPolicy
-          - techsupportmanagement.Download
-          - techsupportmanagement.EndPoint
-          - techsupportmanagement.TechSupportBundle
-          - techsupportmanagement.TechSupportStatus
-          - terminal.AuditLog
-          - thermal.Policy
-          - thermal.PolicyInventory
-          - top.System
-          - ucsd.BackupInfo
-          - uuidpool.Block
-          - uuidpool.Pool
-          - uuidpool.PoolMember
-          - uuidpool.Reservation
-          - uuidpool.Universe
-          - uuidpool.UuidLease
-          - view.HealthStatus
-          - view.Server
-          - virtualization.EsxiConsole
-          - virtualization.Host
-          - virtualization.VirtualMachine
-          - virtualization.VmwareCluster
-          - virtualization.VmwareDatacenter
-          - virtualization.VmwareDatastore
-          - virtualization.VmwareDatastoreCluster
-          - virtualization.VmwareDistributedNetwork
-          - virtualization.VmwareDistributedSwitch
-          - virtualization.VmwareFolder
-          - virtualization.VmwareHost
-          - virtualization.VmwareHostGpu
-          - virtualization.VmwareKernelNetwork
-          - virtualization.VmwareNetwork
-          - virtualization.VmwarePhysicalNetworkInterface
-          - virtualization.VmwareProactiveHa
-          - virtualization.VmwareUplinkPort
-          - virtualization.VmwareVcenter
-          - virtualization.VmwareVirtualDisk
-          - virtualization.VmwareVirtualMachine
-          - virtualization.VmwareVirtualMachineGpu
-          - virtualization.VmwareVirtualMachineSnapshot
-          - virtualization.VmwareVirtualNetworkInterface
-          - virtualization.VmwareVirtualSwitch
-          - vmedia.Policy
-          - vmedia.PolicyInventory
-          - vmrc.Console
-          - vnic.EthAdapterPolicy
-          - vnic.EthAdapterPolicyInventory
-          - vnic.EthIf
-          - vnic.EthIfInventory
-          - vnic.EthNetworkPolicy
-          - vnic.EthNetworkPolicyInventory
-          - vnic.EthQosPolicy
-          - vnic.EthQosPolicyInventory
-          - vnic.EthVethInventory
-          - vnic.EthVnicInventory
-          - vnic.FcAdapterPolicy
-          - vnic.FcAdapterPolicyInventory
-          - vnic.FcIf
-          - vnic.FcIfInventory
-          - vnic.FcNetworkPolicy
-          - vnic.FcNetworkPolicyInventory
-          - vnic.FcQosPolicy
-          - vnic.FcQosPolicyInventory
-          - vnic.FcVethInventory
-          - vnic.FcVhbaPolicyInventory
-          - vnic.IscsiAdapterPolicy
-          - vnic.IscsiAdapterPolicyInventory
-          - vnic.IscsiBootPolicy
-          - vnic.IscsiBootPolicyInventory
-          - vnic.IscsiStaticTargetPolicy
-          - vnic.IscsiStaticTargetPolicyInventory
-          - vnic.LanConnectivityPolicy
-          - vnic.LanConnectivityPolicyInventory
-          - vnic.LanSettings
-          - vnic.LcpStatus
-          - vnic.SanConnectivityPolicy
-          - vnic.SanConnectivityPolicyInventory
-          - vnic.SanSettings
-          - vnic.ScpStatus
-          - vnic.ServiceEthIf
-          - vnic.ServiceEthIfInventory
-          - vnic.VhbaTemplate
-          - vnic.VifIdPool
-          - vnic.VnicTemplate
-          - vrf.Vrf
-          - webhook.Endpoint
-          - webhook.Schema
-          - workflow.AnsibleBatchExecutor
-          - workflow.BatchApiExecutor
-          - workflow.Catalog
-          - workflow.CatalogItemDefinition
-          - workflow.CatalogServiceRequest
-          - workflow.CustomDataTypeDefinition
-          - workflow.ErrorResponseHandler
-          - workflow.PowerShellBatchApiExecutor
-          - workflow.RollbackWorkflow
-          - workflow.ServiceItemActionDefinition
-          - workflow.ServiceItemActionInstance
-          - workflow.ServiceItemAttribute
-          - workflow.ServiceItemDefinition
-          - workflow.ServiceItemHealthCheckDefinition
-          - workflow.ServiceItemHealthCheckExecution
-          - workflow.ServiceItemInstance
-          - workflow.ServiceItemOutput
-          - workflow.SshBatchExecutor
-          - workflow.TaskDebugLog
-          - workflow.TaskDefinition
-          - workflow.TaskInfo
-          - workflow.TaskMetadata
-          - workflow.TemplateEvaluation
-          - workflow.TemplateFunctionMeta
-          - workflow.TemplateParser
-          - workflow.UiDisplayMetadata
-          - workflow.Variable
-          - workflow.WorkflowDefinition
-          - workflow.WorkflowInfo
-          - workflow.WorkflowMetadata
-          - workload.Blueprint
-          - workload.ClearWorkloadTag
-          - workload.DeploymentInput
-          - workload.WorkloadDefinition
-          - workload.WorkloadDeployment
-          - workload.WorkloadInstance
-          - workload.WorkloadMetadata
-          x-enum-as-string: true
-        Moid:
-          description: The Moid of the referenced REST resource.
-          type: string
-          x-omitempty: true
-        Selector:
-          description: 'An OData $filter expression which describes the REST resource to be referenced. This field may
-
-            be set instead of ''moid'' by clients.
-
-            1. If ''moid'' is set this field is ignored.
-
-            1. If ''selector'' is set and ''moid'' is empty/absent from the request, Intersight determines the Moid of the
-
-            resource matching the filter expression and populates it in the MoRef that is part of the object
-
-            instance being inserted/updated to fulfill the REST request.
-
-            An error is returned if the filter matches zero or more than one REST resource.
-
-            An example filter string is: Serial eq ''3AA8B7T11''.'
-          type: string
-          x-omitempty: true
-        link:
-          type: string
-          description: A URL to an instance of the 'mo.MoRef' class.
-    mo.TagSummary:
-      description: A document returned in a response body when the HTTP GET request specifies the 'tag' query parameter.
-      allOf:
-      - $ref: '#/components/schemas/mo.BaseResponse'
-      - type: object
-        properties:
-          ObjectType:
-            description: A discriminator value to disambiguate the schema of a HTTP GET response body.
-            type: string
-          Results:
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/mo.TagKeySummary'
-    ExcelFile:
-      description: The content is an Excel spreadsheet.
-      type: string
-      format: binary
-    mo.BaseResponse:
-      description: The base response schema.
-      type: object
-      discriminator:
-        propertyName: ObjectType
-      required:
-      - ObjectType
-      properties:
-        ObjectType:
-          description: A discriminator value to disambiguate the schema of a HTTP GET response body.
-          type: string
   headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
     Set-Cookie:
       description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
       schema:
@@ -6622,316 +6892,14 @@ components:
       description: Indicates the size of the entity-body, in bytes, sent to the recipient.
       schema:
         type: integer
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
     Content-Disposition:
       description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
       schema:
         type: string
-  responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
-    atParam:
-      name: at
-      in: query
-      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
-
-        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
-
-        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
-
-        expression specified by the query option.
-
-        The expression language that is used in at operators supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false) or any of the additional literal representations shown in the Abstract
-
-        Type System section.'
-      examples:
-        versiontype_equality:
-          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
-          value: at=VersionType eq 'Configured'
-        interestedmos_query:
-          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
-          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
-      required: false
-      schema:
-        type: string
-    applyParam:
-      name: $apply
-      in: query
-      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
-
-        are processed in order with the output from a transformation being used as input for the subsequent transformation.
-
-        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
-
-        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
-
-        Supported aggregation methods are "aggregate" and "groupby".
-
-        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
-
-        a result set with a single instance, representing the aggregated value for all instances in the input set.
-
-        The **groupby** transformation takes one or two parameters and
-
-        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
-
-        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
-
-        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
-
-        4. Concatenates the intermediate result sets into one result set.
-
-        A groupby transformation affects the structure of the result set.'
-      required: false
-      schema:
-        type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
   links:
     GetIamAccountByMoid:
       operationId: GetIamAccountByMoid

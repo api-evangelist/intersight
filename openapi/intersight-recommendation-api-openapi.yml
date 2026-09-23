@@ -2,39 +2,7 @@ openapi: 3.2.0
 info:
   description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
 
-    3rd party IT infrastructure. This platform offers an intelligent level of management that enables
-
-    IT organizations to analyze, simplify, and automate their environments in more advanced ways than the prior
-
-    generations of tools. Cisco Intersight provides an integrated and intuitive management experience for
-
-    resources in the traditional data center as well as at the edge. With flexible deployment options to address
-
-    complex security needs, getting started with Intersight is quick and easy.
-
-    Cisco Intersight has deep integration with Cisco UCS and HyperFlex systems allowing for remote deployment,
-
-    configuration, and ongoing maintenance. The model-based deployment works for a single system in a remote
-
-    location or hundreds of systems in a data center and enables rapid, standardized configuration and deployment.
-
-    It also streamlines maintaining those systems whether you are working with small or very large configurations.
-
-    The Intersight OpenAPI document defines the complete set of properties that are returned in the
-
-    HTTP response. From that perspective, a client can expect that no additional properties are returned,
-
-    unless these properties are explicitly defined in the OpenAPI document.
-
-    However, when a client uses an older version of the Intersight OpenAPI document, the server may
-
-    send additional properties because the software is more recent than the client. In that case, the client
-
-    may receive properties that it does not know about.
-
-    Some generated SDKs perform a strict validation of the HTTP response body against the OpenAPI document.
-
-    This document was created on 2026-08-07T06:46:04Z.'
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
   title: Cisco Intersight Hyperflex Recommendation API
   license:
@@ -65,13 +33,13 @@ servers:
       default: intersight.com
   description: The Intersight URL for the cloud-based infrastructure management APIs.
 tags:
-- name: recommendation
+- name: Recommendation
 paths:
   /api/v1/recommendation/CapacityRunways:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.CapacityRunway' resource.
+      - Recommendation
+      summary: Read a 'recommendation.CapacityRunway' resource
       operationId: GetRecommendationCapacityRunwayList
       security:
       - cookieAuth: []
@@ -132,8 +100,8 @@ paths:
   /api/v1/recommendation/CapacityRunways/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.CapacityRunway' resource.
+      - Recommendation
+      summary: Read a 'recommendation.CapacityRunway' resource
       operationId: GetRecommendationCapacityRunwayByMoid
       security:
       - cookieAuth: []
@@ -197,8 +165,8 @@ paths:
   /api/v1/recommendation/ClusterExpansions:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.ClusterExpansion' resource.
+      - Recommendation
+      summary: Read a 'recommendation.ClusterExpansion' resource
       operationId: GetRecommendationClusterExpansionList
       security:
       - cookieAuth: []
@@ -258,8 +226,8 @@ paths:
   /api/v1/recommendation/ClusterExpansions/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.ClusterExpansion' resource.
+      - Recommendation
+      summary: Read a 'recommendation.ClusterExpansion' resource
       operationId: GetRecommendationClusterExpansionByMoid
       security:
       - cookieAuth: []
@@ -322,8 +290,8 @@ paths:
   /api/v1/recommendation/HardwareExpansionRequests:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.HardwareExpansionRequest' resource.
+      - Recommendation
+      summary: Read a 'recommendation.HardwareExpansionRequest' resource
       operationId: GetRecommendationHardwareExpansionRequestList
       security:
       - cookieAuth: []
@@ -382,8 +350,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Create a 'recommendation.HardwareExpansionRequest' resource.
+      - Recommendation
+      summary: Create a 'recommendation.HardwareExpansionRequest' resource
       operationId: CreateRecommendationHardwareExpansionRequest
       security:
       - cookieAuth: []
@@ -437,8 +405,8 @@ paths:
   /api/v1/recommendation/HardwareExpansionRequests/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.HardwareExpansionRequest' resource.
+      - Recommendation
+      summary: Read a 'recommendation.HardwareExpansionRequest' resource
       operationId: GetRecommendationHardwareExpansionRequestByMoid
       security:
       - cookieAuth: []
@@ -500,8 +468,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.HardwareExpansionRequest' resource.
+      - Recommendation
+      summary: Update a 'recommendation.HardwareExpansionRequest' resource
       operationId: UpdateRecommendationHardwareExpansionRequest
       security:
       - cookieAuth: []
@@ -557,8 +525,8 @@ paths:
           $ref: '#/components/responses/default'
     patch:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.HardwareExpansionRequest' resource.
+      - Recommendation
+      summary: Update a 'recommendation.HardwareExpansionRequest' resource
       operationId: PatchRecommendationHardwareExpansionRequest
       security:
       - cookieAuth: []
@@ -615,8 +583,8 @@ paths:
   /api/v1/recommendation/HardwareExpansionRequestItems:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.HardwareExpansionRequestItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.HardwareExpansionRequestItem' resource
       operationId: GetRecommendationHardwareExpansionRequestItemList
       security:
       - cookieAuth: []
@@ -675,8 +643,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Create a 'recommendation.HardwareExpansionRequestItem' resource.
+      - Recommendation
+      summary: Create a 'recommendation.HardwareExpansionRequestItem' resource
       operationId: CreateRecommendationHardwareExpansionRequestItem
       security:
       - cookieAuth: []
@@ -730,8 +698,8 @@ paths:
   /api/v1/recommendation/HardwareExpansionRequestItems/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.HardwareExpansionRequestItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.HardwareExpansionRequestItem' resource
       operationId: GetRecommendationHardwareExpansionRequestItemByMoid
       security:
       - cookieAuth: []
@@ -793,8 +761,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.HardwareExpansionRequestItem' resource.
+      - Recommendation
+      summary: Update a 'recommendation.HardwareExpansionRequestItem' resource
       operationId: UpdateRecommendationHardwareExpansionRequestItem
       security:
       - cookieAuth: []
@@ -850,8 +818,8 @@ paths:
           $ref: '#/components/responses/default'
     patch:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.HardwareExpansionRequestItem' resource.
+      - Recommendation
+      summary: Update a 'recommendation.HardwareExpansionRequestItem' resource
       operationId: PatchRecommendationHardwareExpansionRequestItem
       security:
       - cookieAuth: []
@@ -908,8 +876,8 @@ paths:
   /api/v1/recommendation/PhysicalItems:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PhysicalItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PhysicalItem' resource
       operationId: GetRecommendationPhysicalItemList
       security:
       - cookieAuth: []
@@ -969,8 +937,8 @@ paths:
   /api/v1/recommendation/PhysicalItems/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PhysicalItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PhysicalItem' resource
       operationId: GetRecommendationPhysicalItemByMoid
       security:
       - cookieAuth: []
@@ -1033,8 +1001,8 @@ paths:
   /api/v1/recommendation/PurchaseOrderEstimates:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PurchaseOrderEstimate' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PurchaseOrderEstimate' resource
       operationId: GetRecommendationPurchaseOrderEstimateList
       deprecated: true
       x-sunset: '2027-08-07'
@@ -1095,8 +1063,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Create a 'recommendation.PurchaseOrderEstimate' resource.
+      - Recommendation
+      summary: Create a 'recommendation.PurchaseOrderEstimate' resource
       operationId: CreateRecommendationPurchaseOrderEstimate
       deprecated: true
       x-sunset: '2027-08-07'
@@ -1152,8 +1120,8 @@ paths:
   /api/v1/recommendation/PurchaseOrderEstimates/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PurchaseOrderEstimate' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PurchaseOrderEstimate' resource
       operationId: GetRecommendationPurchaseOrderEstimateByMoid
       deprecated: true
       x-sunset: '2027-08-07'
@@ -1217,8 +1185,8 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.PurchaseOrderEstimate' resource.
+      - Recommendation
+      summary: Update a 'recommendation.PurchaseOrderEstimate' resource
       operationId: UpdateRecommendationPurchaseOrderEstimate
       deprecated: true
       x-sunset: '2027-08-07'
@@ -1276,8 +1244,8 @@ paths:
           $ref: '#/components/responses/default'
     patch:
       tags:
-      - recommendation
-      summary: Update a 'recommendation.PurchaseOrderEstimate' resource.
+      - Recommendation
+      summary: Update a 'recommendation.PurchaseOrderEstimate' resource
       operationId: PatchRecommendationPurchaseOrderEstimate
       deprecated: true
       x-sunset: '2027-08-07'
@@ -1336,8 +1304,8 @@ paths:
   /api/v1/recommendation/PurchaseOrderLists:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PurchaseOrderList' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PurchaseOrderList' resource
       operationId: GetRecommendationPurchaseOrderListList
       security:
       - cookieAuth: []
@@ -1397,8 +1365,8 @@ paths:
   /api/v1/recommendation/PurchaseOrderLists/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.PurchaseOrderList' resource.
+      - Recommendation
+      summary: Read a 'recommendation.PurchaseOrderList' resource
       operationId: GetRecommendationPurchaseOrderListByMoid
       security:
       - cookieAuth: []
@@ -1461,8 +1429,8 @@ paths:
   /api/v1/recommendation/SoftwareItems:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.SoftwareItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.SoftwareItem' resource
       operationId: GetRecommendationSoftwareItemList
       security:
       - cookieAuth: []
@@ -1522,8 +1490,8 @@ paths:
   /api/v1/recommendation/SoftwareItems/{Moid}:
     get:
       tags:
-      - recommendation
-      summary: Read a 'recommendation.SoftwareItem' resource.
+      - Recommendation
+      summary: Read a 'recommendation.SoftwareItem' resource
       operationId: GetRecommendationSoftwareItemByMoid
       security:
       - cookieAuth: []
@@ -1584,7 +1552,276 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
+  responses:
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
     IfMatch:
       name: If-Match
       in: header
@@ -1610,47 +1847,6 @@ components:
       required: false
       schema:
         type: string
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
     atParam:
       name: at
       in: query
@@ -1710,253 +1906,254 @@ components:
       required: false
       schema:
         type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
-  responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   schemas:
+    recommendation.PhysicalItem.Relationship:
+      description: A relationship to the 'recommendation.PhysicalItem' resource, or the expanded 'recommendation.PhysicalItem' resource, or the 'null' value.
+      x-one-of-name: recommendation.PhysicalItem.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/recommendation.PhysicalItem'
+      discriminator:
+        propertyName: ClassId
+    recommendation.PhysicalItem.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.PhysicalItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PhysicalItem' resources."
+      x-one-of-name: recommendation.PhysicalItem.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.PhysicalItem.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    recommendation.SoftwareItem.Relationship:
+      description: A relationship to the 'recommendation.SoftwareItem' resource, or the expanded 'recommendation.SoftwareItem' resource, or the 'null' value.
+      x-one-of-name: recommendation.SoftwareItem.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/recommendation.SoftwareItem'
+      discriminator:
+        propertyName: ClassId
+    recommendation.CapacityRunway.Relationship:
+      description: A relationship to the 'recommendation.CapacityRunway' resource, or the expanded 'recommendation.CapacityRunway' resource, or the 'null' value.
+      x-one-of-name: recommendation.CapacityRunway.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/recommendation.CapacityRunway'
+      discriminator:
+        propertyName: ClassId
+    recommendation.AbstractItem:
+      title: Recommendation:Abstract Item
+      description: Abstract object representing the recommended physical item.
+      x-allOf-name: recommendation.AbstractItem
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.AbstractItem', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - recommendation.PhysicalItem
+            - recommendation.SoftwareItem
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - recommendation.PhysicalItem
+            - recommendation.SoftwareItem
+            x-enum-as-string: true
+          Name:
+            description: The name of the physical device recommended.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Personality:
+            description: The personality of the physical device recommended.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Type:
+            description: 'The type of physical device recommended.
+
+              * `None` - The Enum value None represents that no value was set for the item type.
+
+              * `Disk` - The Enum value Disk represents that the item type recommended is a Physical Disk.
+
+              * `Node` - The Enum value Node represents that the item type recommended is a Storage Node.
+
+              * `CPU` - The Enum value CPU represents that the item type recommended is a Processor.
+
+              * `Memory` - The Enum value Memory represents that the item type recommended is a memory unit.
+
+              * `Cluster` - The Enum value Cluster represents that the item type recommended is a HyperFlex Cluster.'
+            type: string
+            enum:
+            - None
+            - Disk
+            - Node
+            - CPU
+            - Memory
+            - Cluster
+            default: None
+            readOnly: true
+            x-omitempty: true
+    forecast.Definition.Relationship:
+      description: A relationship to the 'forecast.Definition' resource, or the expanded 'forecast.Definition' resource, or the 'null' value.
+      x-one-of-name: forecast.Definition.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/forecast.Definition'
+      discriminator:
+        propertyName: ClassId
+    recommendation.CapacityRunway.List:
+      title: List of 'recommendation.CapacityRunway' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.CapacityRunway'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.CapacityRunway' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.CapacityRunway'
+    recommendation.HardwareExpansionRequestItem:
+      title: Recommendation:Hardware Expansion Request Item
+      description: Entity representing the user request for expansion of each hardware item.
+      x-allOf-name: recommendation.HardwareExpansionRequestItem
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.HardwareExpansionRequestItem', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.HardwareExpansionRequestItem
+            default: recommendation.HardwareExpansionRequestItem
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.HardwareExpansionRequestItem
+            default: recommendation.HardwareExpansionRequestItem
+            x-enum-as-string: true
+          ItemType:
+            description: 'Type of hardware item for which the capacity increase is requested by the user. For example, CPU.
+
+              * `None` - The Enum value None represents that no value was set for the hardware type.
+
+              * `CPU` - The Enum value CPU represents that the hardware type requested for expansion is a physical CPU.
+
+              * `Memory` - The Enum value Memory represents that the hardware type requested for expansion is a memory unit.
+
+              * `Storage` - The Enum value Storage represents that the hardware type requested for expansion is a storage unit, ie, storage drives.'
+            type: string
+            enum:
+            - None
+            - CPU
+            - Memory
+            - Storage
+            default: None
+            x-omitempty: true
+          MaxValue:
+            description: The maximum value allowed for expansion for the hardware type on the referred registered device.
+            type: number
+            format: float
+            x-omitempty: true
+          MaxValueUnit:
+            description: 'Unit type for the maximum value of the resource. For example, TB, GB, MB.
+
+              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
+
+              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
+
+              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
+
+              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
+
+              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
+
+              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
+            type: string
+            enum:
+            - TB
+            - MB
+            - GB
+            - MHz
+            - GHz
+            - Percentage
+            default: TB
+            x-omitempty: true
+          UnitType:
+            description: 'Unit type for the expansion request, i.e., if the increase is requested as a raw value in TB, GB, etc., or in percentage increase.
+
+              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
+
+              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
+
+              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
+
+              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
+
+              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
+
+              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
+            type: string
+            enum:
+            - TB
+            - MB
+            - GB
+            - MHz
+            - GHz
+            - Percentage
+            default: TB
+            x-omitempty: true
+          Value:
+            description: Value of the expansion request which can be absolute value or percentage increase.
+            type: number
+            format: float
+            x-omitempty: true
+          ExpansionRequest:
+            $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.Relationship'
+            description: 'A reference to a recommendationHardwareExpansionRequest resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
     recommendation.HardwareExpansionRequest.Relationship:
       description: A relationship to the 'recommendation.HardwareExpansionRequest' resource, or the expanded 'recommendation.HardwareExpansionRequest' resource, or the 'null' value.
       x-one-of-name: recommendation.HardwareExpansionRequest.Relationship
@@ -1966,6 +2163,432 @@ components:
       - $ref: '#/components/schemas/recommendation.HardwareExpansionRequest'
       discriminator:
         propertyName: ClassId
+    forecast.Model:
+      title: Forecast:Model
+      description: Model encapsulates model type and the model generated based on the type for computing forecast. For example if linear regression predictive modeling is used then the model data contains slope, coefficient and RMSE.
+      x-allOf-name: forecast.Model
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+      - type: object
+        description: Definition of the list of properties defined in 'forecast.Model', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - forecast.Model
+            default: forecast.Model
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - forecast.Model
+            default: forecast.Model
+            x-enum-as-string: true
+          Accuracy:
+            description: The standard error of the estimate is a measure of the accuracy of predictions from predictive modeling.
+            type: number
+            format: float
+            readOnly: true
+            x-omitempty: true
+          ModelData:
+            type:
+            - array
+            - 'null'
+            items:
+              description: The collection of model data returned by running a predictive modeling. Data can range from slope, coefficient and more depending on the type of model used.
+              type: number
+              readOnly: true
+              x-omitempty: true
+          ModelType:
+            description: 'Model type indicating type of predictive model used for computing forecast.
+
+              * `Linear` - The Enum value Linear represents that the predictive model type used for forecast computation is linear regression.'
+            type: string
+            enum:
+            - Linear
+            default: Linear
+            readOnly: true
+            x-omitempty: true
+    recommendation.HardwareExpansionRequestItem.Relationship:
+      description: A relationship to the 'recommendation.HardwareExpansionRequestItem' resource, or the expanded 'recommendation.HardwareExpansionRequestItem' resource, or the 'null' value.
+      x-one-of-name: recommendation.HardwareExpansionRequestItem.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem'
+      discriminator:
+        propertyName: ClassId
+    recommendation.SoftwareItem.List:
+      title: List of 'recommendation.SoftwareItem' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.SoftwareItem'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.SoftwareItem' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.SoftwareItem'
+    forecast.Catalog:
+      title: Forecast:Catalog
+      description: A catalog for managing forecast settings.
+      x-allOf-name: forecast.Catalog
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'forecast.Catalog', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - forecast.Catalog
+            default: forecast.Catalog
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - forecast.Catalog
+            default: forecast.Catalog
+            x-enum-as-string: true
+          SchedTime:
+            description: The time at which the regression model needs to run for all the metrics specified in catalog.
+            type: string
+            pattern: ^$|^[0-9]{2}:[0-9]{2}:[0-9]{2}
+            readOnly: true
+            x-omitempty: true
+          Version:
+            description: The catalog version used in forecast configuration service.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Definition:
+            description: An array of relationships to forecastDefinition resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/forecast.Definition.Relationship'
+            readOnly: true
+    recommendation.SoftwareItem.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.SoftwareItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.SoftwareItem' resources."
+      x-one-of-name: recommendation.SoftwareItem.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.SoftwareItem.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    recommendation.PurchaseOrderList:
+      title: Recommendation:Purchase Order List
+      description: Entity representing the list of items in csv format for the current recommendation. This can be used to generate an estimate by uploading it to Cisco Commerce Workspace.
+      x-allOf-name: recommendation.PurchaseOrderList
+      allOf:
+      - $ref: '#/components/schemas/recommendation.Base'
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.PurchaseOrderList', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.PurchaseOrderList
+            default: recommendation.PurchaseOrderList
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.PurchaseOrderList
+            default: recommendation.PurchaseOrderList
+            x-enum-as-string: true
+          ItemList:
+            description: The comma seperated list of items for the current recommendation. This can be used to generate an estimate by uploading it to Cisco Commerce Workspace.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          ClusterExpansion:
+            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
+            description: 'A reference to a recommendationClusterExpansion resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    recommendation.CapacityRunway.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.CapacityRunway' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.CapacityRunway' resources."
+      x-one-of-name: recommendation.CapacityRunway.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.CapacityRunway.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    forecast.Instance.Relationship:
+      description: A relationship to the 'forecast.Instance' resource, or the expanded 'forecast.Instance' resource, or the 'null' value.
+      x-one-of-name: forecast.Instance.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/forecast.Instance'
+      discriminator:
+        propertyName: ClassId
+    recommendation.PurchaseOrderEstimate.List:
+      title: List of 'recommendation.PurchaseOrderEstimate' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.PurchaseOrderEstimate'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.PurchaseOrderEstimate' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.PurchaseOrderEstimate'
+    recommendation.HardwareExpansionRequest:
+      title: Recommendation:Hardware Expansion Request
+      description: Entity representing the user request for HyperFlex cluster expansion.
+      x-allOf-name: recommendation.HardwareExpansionRequest
+      allOf:
+      - $ref: '#/components/schemas/recommendation.ExpansionRequest'
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.HardwareExpansionRequest', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.HardwareExpansionRequest
+            default: recommendation.HardwareExpansionRequest
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.HardwareExpansionRequest
+            default: recommendation.HardwareExpansionRequest
+            x-enum-as-string: true
+          Action:
+            description: 'Action to be triggered for computing recommendation. Default value is None.
+
+              * `None` - The Enum value None represents that no action is triggered on the forecast Instance managed object.
+
+              * `Evaluate` - The Enum value Evaluate represents that a re-evaluation of the forecast needs to be triggered.'
+            type: string
+            enum:
+            - None
+            - Evaluate
+            default: None
+            x-omitempty: true
+          Message:
+            description: User visible error message for the Hardware Expansion request.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Status:
+            description: 'Status of the Hardware Expansion request.
+
+              * `None` - The Enum value None represents the default status value before any API call is made.
+
+              * `Success` - The Enum value Success represents that the API call returned with success.
+
+              * `Fail` - The Enum value Fail represents that the API call returned with a failure.'
+            type: string
+            enum:
+            - None
+            - Success
+            - Fail
+            default: None
+            readOnly: true
+            x-omitempty: true
+          HwExpansionRequestItems:
+            description: An array of relationships to recommendationHardwareExpansionRequestItem resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem.Relationship'
+            readOnly: true
+          RegisteredDevice:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
+            description: 'A reference to a assetDeviceRegistration resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    recommendation.ClusterExpansion.Relationship:
+      description: A relationship to the 'recommendation.ClusterExpansion' resource, or the expanded 'recommendation.ClusterExpansion' resource, or the 'null' value.
+      x-one-of-name: recommendation.ClusterExpansion.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/recommendation.ClusterExpansion'
+      discriminator:
+        propertyName: ClassId
+    forecast.Catalog.Relationship:
+      description: A relationship to the 'forecast.Catalog' resource, or the expanded 'forecast.Catalog' resource, or the 'null' value.
+      x-one-of-name: forecast.Catalog.Relationship
+      oneOf:
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/forecast.Catalog'
+      discriminator:
+        propertyName: ClassId
+    recommendation.PhysicalItem.List:
+      title: List of 'recommendation.PhysicalItem' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.PhysicalItem'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.PhysicalItem' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.PhysicalItem'
+    recommendation.PurchaseOrderEstimate:
+      title: Recommendation:Purchase Order Estimate
+      description: Entity representing the estimate for the purchase order for user requested expansion.
+      x-allOf-name: recommendation.PurchaseOrderEstimate
+      allOf:
+      - $ref: '#/components/schemas/recommendation.Base'
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.PurchaseOrderEstimate', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.PurchaseOrderEstimate
+            default: recommendation.PurchaseOrderEstimate
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.PurchaseOrderEstimate
+            default: recommendation.PurchaseOrderEstimate
+            x-enum-as-string: true
+          Action:
+            description: 'Action to be triggered for computing estimate. Default value is None.
+
+              * `None` - The Enum value None represents that no action is triggered on the forecast Instance managed object.
+
+              * `Evaluate` - The Enum value Evaluate represents that a re-evaluation of the forecast needs to be triggered.'
+            type: string
+            enum:
+            - None
+            - Evaluate
+            default: None
+            x-omitempty: true
+          EstimateId:
+            description: The unique identification generated by the Cisco commerce APIs portal to identify the recommended bill of materials.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Message:
+            description: The user visible message which indicates any errors encountered in making the external API call to get the estimate.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          Status:
+            description: 'The status of the external API call to get the estimate.
+
+              * `None` - The Enum value None represents the default status value before any API call is made.
+
+              * `Success` - The Enum value Success represents that the API call returned with success.
+
+              * `Fail` - The Enum value Fail represents that the API call returned with a failure.'
+            type: string
+            enum:
+            - None
+            - Success
+            - Fail
+            default: None
+            readOnly: true
+            x-omitempty: true
+          TotalCost:
+            description: The total cost of all the recommended hardware in the bill of materials for the corresponding estimate.
+            deprecated: true
+            x-sunset: '2027-08-07'
+            type: number
+            format: float
+            readOnly: true
+            x-omitempty: true
+          ClusterExpansion:
+            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
+            description: 'A reference to a recommendationClusterExpansion resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            x-createOnly: true
+          EstimateOwner:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.User.Relationship
+            description: 'A reference to a iamUser resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
     recommendation.ClusterExpansion.List:
       title: List of 'recommendation.ClusterExpansion' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
@@ -1986,36 +2609,26 @@ components:
             - 'null'
             items:
               $ref: '#/components/schemas/recommendation.ClusterExpansion'
-    recommendation.PurchaseOrderList.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.PurchaseOrderList' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PurchaseOrderList' resources."
-      x-one-of-name: recommendation.PurchaseOrderList.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.PurchaseOrderList.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    recommendation.CapacityRunway.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.CapacityRunway' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.CapacityRunway' resources."
-      x-one-of-name: recommendation.CapacityRunway.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.CapacityRunway.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    recommendation.HardwareExpansionRequestItem.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.HardwareExpansionRequestItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.HardwareExpansionRequestItem' resources."
-      x-one-of-name: recommendation.HardwareExpansionRequestItem.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
+    recommendation.PurchaseOrderList.List:
+      title: List of 'recommendation.PurchaseOrderList' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.PurchaseOrderList'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.PurchaseOrderList' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.PurchaseOrderList'
     recommendation.Base:
       title: Recommendation:Base
       description: Entity representing recommendation base properties like name and last updated time.
@@ -2070,6 +2683,151 @@ components:
             type: boolean
             readOnly: true
             x-omitempty: true
+    recommendation.HardwareExpansionRequestItem.List:
+      title: List of 'recommendation.HardwareExpansionRequestItem' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.HardwareExpansionRequestItem'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.HardwareExpansionRequestItem' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem'
+    recommendation.PurchaseOrderEstimate.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.PurchaseOrderEstimate' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PurchaseOrderEstimate' resources."
+      x-one-of-name: recommendation.PurchaseOrderEstimate.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.PurchaseOrderEstimate.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    recommendation.HardwareExpansionRequest.List:
+      title: List of 'recommendation.HardwareExpansionRequest' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''recommendation.HardwareExpansionRequest'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'recommendation.HardwareExpansionRequest' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.HardwareExpansionRequest'
+    recommendation.ClusterExpansion.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.ClusterExpansion' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.ClusterExpansion' resources."
+      x-one-of-name: recommendation.ClusterExpansion.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.ClusterExpansion.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    recommendation.HardwareExpansionRequest.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.HardwareExpansionRequest' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.HardwareExpansionRequest' resources."
+      x-one-of-name: recommendation.HardwareExpansionRequest.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    recommendation.SoftwareItem:
+      title: Recommendation:Software Item
+      description: Entity representing the software recommendation for the managed end point.
+      x-allOf-name: recommendation.SoftwareItem
+      allOf:
+      - $ref: '#/components/schemas/recommendation.AbstractItem'
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.SoftwareItem', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.SoftwareItem
+            default: recommendation.SoftwareItem
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.SoftwareItem
+            default: recommendation.SoftwareItem
+            x-enum-as-string: true
+          Message:
+            description: The user visible message which informs user of the type of software recommendation.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          RecommendationType:
+            description: 'The software-recommendation type, for example, HXDP version, HyperV or ESXi version, etc.
+
+              * `None` - The Enum value None represents the default software recommendation value.
+
+              * `HXDPVersion` - The Enum value HXDPVersion represents that the software recommendation is to upgrade the HyperFlex Data Platform build version.
+
+              * `NodeRatioLicense` - The Enum value NodeRatioLicense represents that the software recommendation is to upgrade the HyperFlex Data Platform license for using 1:2 converged to compute node ratio limits.
+
+              * `NodeRatioEvalLicense` - The Enum value NodeRatioEvalLicense represents that the software recommendation is to upgrade the Hyperflex Data Platform license to Data Center Premier, after the evaluation period ends.
+
+              * `DCNoFILicense` - The Enum value DCNoFILicense represents that the software recommendation is to upgrade the HyperFlex Data Platform license for using DC-No-FI limits.
+
+              * `DcNoFIEvalLicense` - The Enum value DcNoFIEvalLicense represents that the software recommendation is to upgrade the Hyperflex Data Platform license to Hyperflex Data Center Advantage or Data Center Premier license, after evaluation period ends.
+
+              * `LAZExistingStatus` - The Enum value LAZExistingStatus represents that the software recommendation is to indicate HyperFlex cluster might have LAZ enabled.
+
+              * `LAZNewStatus` - The Enum value LAZNewStatus represents that the software recommendation is to enable LAZ with expansion on the HyperFlex Cluster.
+
+              * `EVCStatus` - The Enum value EVCStatus represents that the software recommendation is to enable Enhanced VMotion on the HypeFlex Cluster.'
+            type: string
+            enum:
+            - None
+            - HXDPVersion
+            - NodeRatioLicense
+            - NodeRatioEvalLicense
+            - DCNoFILicense
+            - DcNoFIEvalLicense
+            - LAZExistingStatus
+            - LAZNewStatus
+            - EVCStatus
+            default: None
+            readOnly: true
+            x-omitempty: true
+          ClusterExpansion:
+            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
+            description: 'A reference to a recommendationClusterExpansion resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
     recommendation.PhysicalItem:
       title: Recommendation:Physical Item
       description: Entity representing the recommended physical device.
@@ -2193,72 +2951,59 @@ components:
             items:
               $ref: '#/components/schemas/recommendation.PhysicalItem.Relationship'
             readOnly: true
-    recommendation.SoftwareItem.Relationship:
-      description: A relationship to the 'recommendation.SoftwareItem' resource, or the expanded 'recommendation.SoftwareItem' resource, or the 'null' value.
-      x-one-of-name: recommendation.SoftwareItem.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/recommendation.SoftwareItem'
-      discriminator:
-        propertyName: ClassId
-    recommendation.HardwareExpansionRequestItem.List:
-      title: List of 'recommendation.HardwareExpansionRequestItem' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+    recommendation.ExpansionRequest:
+      title: Recommendation:Expansion Request
+      description: Entity representing hardware expansion request like name, requestTime, etc.
+      x-allOf-name: recommendation.ExpansionRequest
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
       - type: object
+        description: Definition of the list of properties defined in 'recommendation.ExpansionRequest', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
         properties:
-          Count:
-            description: 'The total number of ''recommendation.HardwareExpansionRequestItem'' resources matching the request, accross all pages.
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
 
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.HardwareExpansionRequestItem' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem'
-    recommendation.SoftwareItem.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.SoftwareItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.SoftwareItem' resources."
-      x-one-of-name: recommendation.SoftwareItem.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.SoftwareItem.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    recommendation.ClusterExpansion.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.ClusterExpansion' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.ClusterExpansion' resources."
-      x-one-of-name: recommendation.ClusterExpansion.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.ClusterExpansion.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    forecast.Definition.Relationship:
-      description: A relationship to the 'forecast.Definition' resource, or the expanded 'forecast.Definition' resource, or the 'null' value.
-      x-one-of-name: forecast.Definition.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/forecast.Definition'
-      discriminator:
-        propertyName: ClassId
-    recommendation.PurchaseOrderList:
-      title: Recommendation:Purchase Order List
-      description: Entity representing the list of items in csv format for the current recommendation. This can be used to generate an estimate by uploading it to Cisco Commerce Workspace.
-      x-allOf-name: recommendation.PurchaseOrderList
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - recommendation.HardwareExpansionRequest
+            default: recommendation.HardwareExpansionRequest
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - recommendation.HardwareExpansionRequest
+            default: recommendation.HardwareExpansionRequest
+            x-enum-as-string: true
+          Name:
+            description: The name of the expansion specification.
+            type: string
+            readOnly: true
+            x-omitempty: true
+          RequestTime:
+            description: The time when the expansion was requested.
+            type: string
+            format: date-time
+            readOnly: true
+            x-omitempty: true
+    recommendation.ClusterExpansion:
+      title: Recommendation:Cluster Expansion
+      description: Entity representing the cluster expansion recommendations.
+      x-allOf-name: recommendation.ClusterExpansion
       allOf:
       - $ref: '#/components/schemas/recommendation.Base'
       - type: object
-        description: Definition of the list of properties defined in 'recommendation.PurchaseOrderList', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'recommendation.ClusterExpansion', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -2270,226 +3015,159 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - recommendation.PurchaseOrderList
-            default: recommendation.PurchaseOrderList
+            - recommendation.ClusterExpansion
+            default: recommendation.ClusterExpansion
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - recommendation.PurchaseOrderList
-            default: recommendation.PurchaseOrderList
+            - recommendation.ClusterExpansion
+            default: recommendation.ClusterExpansion
             x-enum-as-string: true
-          ItemList:
-            description: The comma seperated list of items for the current recommendation. This can be used to generate an estimate by uploading it to Cisco Commerce Workspace.
+          ClusterName:
+            description: Name of the cluster for which the expansion recommendation is provided.
             type: string
             readOnly: true
             x-omitempty: true
-          ClusterExpansion:
-            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
-            description: 'A reference to a recommendationClusterExpansion resource.
+          HardwareExpansionRequest:
+            $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.Relationship'
+            description: 'A reference to a recommendationHardwareExpansionRequest resource.
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    recommendation.PurchaseOrderEstimate.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.PurchaseOrderEstimate' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PurchaseOrderEstimate' resources."
-      x-one-of-name: recommendation.PurchaseOrderEstimate.Response
+          PhysicalItem:
+            description: An array of relationships to recommendationPhysicalItem resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.PhysicalItem.Relationship'
+            readOnly: true
+          RegisteredDevice:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
+            description: 'A reference to a assetDeviceRegistration resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          SoftwareItem:
+            description: An array of relationships to recommendationSoftwareItem resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.SoftwareItem.Relationship'
+            readOnly: true
+    recommendation.CapacityRunway:
+      title: Recommendation:Capacity Runway
+      description: Entity representing the new capacity runway based on recommendations.
+      x-allOf-name: recommendation.CapacityRunway
+      allOf:
+      - $ref: '#/components/schemas/recommendation.Base'
+      - type: object
+        description: Definition of the list of properties defined in 'recommendation.CapacityRunway', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - recommendation.CapacityRunway
+            default: recommendation.CapacityRunway
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - recommendation.CapacityRunway
+            default: recommendation.CapacityRunway
+            x-enum-as-string: true
+          AdditionalCapacity:
+            description: Additional capacity is the capacity which is needed more after exhausting all hardware on current cluster.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          Period:
+            description: Number of months in future for which recommendation is provided for.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          Runway:
+            description: This represents the new runway, that is the number of days remaining before the cluster's storage utilization reaches the recommended capacity limit after the recommended hardware is added.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          TotalCapacity:
+            description: Total capacity of the cluster after the recommended hardware is added.
+            type: integer
+            format: int64
+            readOnly: true
+            x-omitempty: true
+          Unit:
+            description: 'Unit for the new capacity.
+
+              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
+
+              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
+
+              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
+
+              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
+
+              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
+
+              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
+            type: string
+            enum:
+            - TB
+            - MB
+            - GB
+            - MHz
+            - GHz
+            - Percentage
+            default: TB
+            readOnly: true
+            x-omitempty: true
+          ForecastInstance:
+            $ref: '#/components/schemas/forecast.Instance.Relationship'
+            description: 'A reference to a forecastInstance resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+          PhysicalItem:
+            description: An array of relationships to recommendationPhysicalItem resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/recommendation.PhysicalItem.Relationship'
+            readOnly: true
+          RegisteredDevice:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
+            description: 'A reference to a assetDeviceRegistration resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    recommendation.HardwareExpansionRequestItem.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.HardwareExpansionRequestItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.HardwareExpansionRequestItem' resources."
+      x-one-of-name: recommendation.HardwareExpansionRequestItem.Response
       oneOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.PurchaseOrderEstimate.List'
+      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem.List'
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-    recommendation.PhysicalItem.List:
-      title: List of 'recommendation.PhysicalItem' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.PhysicalItem'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.PhysicalItem' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.PhysicalItem'
-    forecast.Model:
-      title: Forecast:Model
-      description: Model encapsulates model type and the model generated based on the type for computing forecast. For example if linear regression predictive modeling is used then the model data contains slope, coefficient and RMSE.
-      x-allOf-name: forecast.Model
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'forecast.Model', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - forecast.Model
-            default: forecast.Model
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - forecast.Model
-            default: forecast.Model
-            x-enum-as-string: true
-          Accuracy:
-            description: The standard error of the estimate is a measure of the accuracy of predictions from predictive modeling.
-            type: number
-            format: float
-            readOnly: true
-            x-omitempty: true
-          ModelData:
-            type:
-            - array
-            - 'null'
-            items:
-              description: The collection of model data returned by running a predictive modeling. Data can range from slope, coefficient and more depending on the type of model used.
-              type: number
-              readOnly: true
-              x-omitempty: true
-          ModelType:
-            description: 'Model type indicating type of predictive model used for computing forecast.
-
-              * `Linear` - The Enum value Linear represents that the predictive model type used for forecast computation is linear regression.'
-            type: string
-            enum:
-            - Linear
-            default: Linear
-            readOnly: true
-            x-omitempty: true
-    recommendation.PurchaseOrderEstimate.List:
-      title: List of 'recommendation.PurchaseOrderEstimate' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.PurchaseOrderEstimate'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.PurchaseOrderEstimate' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.PurchaseOrderEstimate'
-    recommendation.ClusterExpansion.Relationship:
-      description: A relationship to the 'recommendation.ClusterExpansion' resource, or the expanded 'recommendation.ClusterExpansion' resource, or the 'null' value.
-      x-one-of-name: recommendation.ClusterExpansion.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/recommendation.ClusterExpansion'
-      discriminator:
-        propertyName: ClassId
-    recommendation.SoftwareItem:
-      title: Recommendation:Software Item
-      description: Entity representing the software recommendation for the managed end point.
-      x-allOf-name: recommendation.SoftwareItem
-      allOf:
-      - $ref: '#/components/schemas/recommendation.AbstractItem'
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.SoftwareItem', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.SoftwareItem
-            default: recommendation.SoftwareItem
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.SoftwareItem
-            default: recommendation.SoftwareItem
-            x-enum-as-string: true
-          Message:
-            description: The user visible message which informs user of the type of software recommendation.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          RecommendationType:
-            description: 'The software-recommendation type, for example, HXDP version, HyperV or ESXi version, etc.
-
-              * `None` - The Enum value None represents the default software recommendation value.
-
-              * `HXDPVersion` - The Enum value HXDPVersion represents that the software recommendation is to upgrade the HyperFlex Data Platform build version.
-
-              * `NodeRatioLicense` - The Enum value NodeRatioLicense represents that the software recommendation is to upgrade the HyperFlex Data Platform license for using 1:2 converged to compute node ratio limits.
-
-              * `NodeRatioEvalLicense` - The Enum value NodeRatioEvalLicense represents that the software recommendation is to upgrade the Hyperflex Data Platform license to Data Center Premier, after the evaluation period ends.
-
-              * `DCNoFILicense` - The Enum value DCNoFILicense represents that the software recommendation is to upgrade the HyperFlex Data Platform license for using DC-No-FI limits.
-
-              * `DcNoFIEvalLicense` - The Enum value DcNoFIEvalLicense represents that the software recommendation is to upgrade the Hyperflex Data Platform license to Hyperflex Data Center Advantage or Data Center Premier license, after evaluation period ends.
-
-              * `LAZExistingStatus` - The Enum value LAZExistingStatus represents that the software recommendation is to indicate HyperFlex cluster might have LAZ enabled.
-
-              * `LAZNewStatus` - The Enum value LAZNewStatus represents that the software recommendation is to enable LAZ with expansion on the HyperFlex Cluster.
-
-              * `EVCStatus` - The Enum value EVCStatus represents that the software recommendation is to enable Enhanced VMotion on the HypeFlex Cluster.'
-            type: string
-            enum:
-            - None
-            - HXDPVersion
-            - NodeRatioLicense
-            - NodeRatioEvalLicense
-            - DCNoFILicense
-            - DcNoFIEvalLicense
-            - LAZExistingStatus
-            - LAZNewStatus
-            - EVCStatus
-            default: None
-            readOnly: true
-            x-omitempty: true
-          ClusterExpansion:
-            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
-            description: 'A reference to a recommendationClusterExpansion resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    recommendation.CapacityRunway.Relationship:
-      description: A relationship to the 'recommendation.CapacityRunway' resource, or the expanded 'recommendation.CapacityRunway' resource, or the 'null' value.
-      x-one-of-name: recommendation.CapacityRunway.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/recommendation.CapacityRunway'
-      discriminator:
-        propertyName: ClassId
     forecast.Definition:
       title: Forecast:Definition
       description: Definition for forecast metric settings.
@@ -2562,181 +3240,6 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    recommendation.PhysicalItem.Relationship:
-      description: A relationship to the 'recommendation.PhysicalItem' resource, or the expanded 'recommendation.PhysicalItem' resource, or the 'null' value.
-      x-one-of-name: recommendation.PhysicalItem.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/recommendation.PhysicalItem'
-      discriminator:
-        propertyName: ClassId
-    recommendation.SoftwareItem.List:
-      title: List of 'recommendation.SoftwareItem' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.SoftwareItem'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.SoftwareItem' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.SoftwareItem'
-    recommendation.HardwareExpansionRequest:
-      title: Recommendation:Hardware Expansion Request
-      description: Entity representing the user request for HyperFlex cluster expansion.
-      x-allOf-name: recommendation.HardwareExpansionRequest
-      allOf:
-      - $ref: '#/components/schemas/recommendation.ExpansionRequest'
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.HardwareExpansionRequest', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.HardwareExpansionRequest
-            default: recommendation.HardwareExpansionRequest
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.HardwareExpansionRequest
-            default: recommendation.HardwareExpansionRequest
-            x-enum-as-string: true
-          Action:
-            description: 'Action to be triggered for computing recommendation. Default value is None.
-
-              * `None` - The Enum value None represents that no action is triggered on the forecast Instance managed object.
-
-              * `Evaluate` - The Enum value Evaluate represents that a re-evaluation of the forecast needs to be triggered.'
-            type: string
-            enum:
-            - None
-            - Evaluate
-            default: None
-            x-omitempty: true
-          Message:
-            description: User visible error message for the Hardware Expansion request.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Status:
-            description: 'Status of the Hardware Expansion request.
-
-              * `None` - The Enum value None represents the default status value before any API call is made.
-
-              * `Success` - The Enum value Success represents that the API call returned with success.
-
-              * `Fail` - The Enum value Fail represents that the API call returned with a failure.'
-            type: string
-            enum:
-            - None
-            - Success
-            - Fail
-            default: None
-            readOnly: true
-            x-omitempty: true
-          HwExpansionRequestItems:
-            description: An array of relationships to recommendationHardwareExpansionRequestItem resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem.Relationship'
-            readOnly: true
-          RegisteredDevice:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
-            description: 'A reference to a assetDeviceRegistration resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    recommendation.AbstractItem:
-      title: Recommendation:Abstract Item
-      description: Abstract object representing the recommended physical item.
-      x-allOf-name: recommendation.AbstractItem
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.AbstractItem', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - recommendation.PhysicalItem
-            - recommendation.SoftwareItem
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - recommendation.PhysicalItem
-            - recommendation.SoftwareItem
-            x-enum-as-string: true
-          Name:
-            description: The name of the physical device recommended.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Personality:
-            description: The personality of the physical device recommended.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Type:
-            description: 'The type of physical device recommended.
-
-              * `None` - The Enum value None represents that no value was set for the item type.
-
-              * `Disk` - The Enum value Disk represents that the item type recommended is a Physical Disk.
-
-              * `Node` - The Enum value Node represents that the item type recommended is a Storage Node.
-
-              * `CPU` - The Enum value CPU represents that the item type recommended is a Processor.
-
-              * `Memory` - The Enum value Memory represents that the item type recommended is a memory unit.
-
-              * `Cluster` - The Enum value Cluster represents that the item type recommended is a HyperFlex Cluster.'
-            type: string
-            enum:
-            - None
-            - Disk
-            - Node
-            - CPU
-            - Memory
-            - Cluster
-            default: None
-            readOnly: true
-            x-omitempty: true
     forecast.Instance:
       title: Forecast:Instance
       description: Entity representing forecast result for instance of managed object, ie, data source.
@@ -2853,569 +3356,34 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             readOnly: true
-    forecast.Catalog.Relationship:
-      description: A relationship to the 'forecast.Catalog' resource, or the expanded 'forecast.Catalog' resource, or the 'null' value.
-      x-one-of-name: forecast.Catalog.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/forecast.Catalog'
-      discriminator:
-        propertyName: ClassId
-    forecast.Catalog:
-      title: Forecast:Catalog
-      description: A catalog for managing forecast settings.
-      x-allOf-name: forecast.Catalog
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'forecast.Catalog', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - forecast.Catalog
-            default: forecast.Catalog
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - forecast.Catalog
-            default: forecast.Catalog
-            x-enum-as-string: true
-          SchedTime:
-            description: The time at which the regression model needs to run for all the metrics specified in catalog.
-            type: string
-            pattern: ^$|^[0-9]{2}:[0-9]{2}:[0-9]{2}
-            readOnly: true
-            x-omitempty: true
-          Version:
-            description: The catalog version used in forecast configuration service.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Definition:
-            description: An array of relationships to forecastDefinition resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/forecast.Definition.Relationship'
-            readOnly: true
-    recommendation.HardwareExpansionRequestItem:
-      title: Recommendation:Hardware Expansion Request Item
-      description: Entity representing the user request for expansion of each hardware item.
-      x-allOf-name: recommendation.HardwareExpansionRequestItem
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.HardwareExpansionRequestItem', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.HardwareExpansionRequestItem
-            default: recommendation.HardwareExpansionRequestItem
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.HardwareExpansionRequestItem
-            default: recommendation.HardwareExpansionRequestItem
-            x-enum-as-string: true
-          ItemType:
-            description: 'Type of hardware item for which the capacity increase is requested by the user. For example, CPU.
-
-              * `None` - The Enum value None represents that no value was set for the hardware type.
-
-              * `CPU` - The Enum value CPU represents that the hardware type requested for expansion is a physical CPU.
-
-              * `Memory` - The Enum value Memory represents that the hardware type requested for expansion is a memory unit.
-
-              * `Storage` - The Enum value Storage represents that the hardware type requested for expansion is a storage unit, ie, storage drives.'
-            type: string
-            enum:
-            - None
-            - CPU
-            - Memory
-            - Storage
-            default: None
-            x-omitempty: true
-          MaxValue:
-            description: The maximum value allowed for expansion for the hardware type on the referred registered device.
-            type: number
-            format: float
-            x-omitempty: true
-          MaxValueUnit:
-            description: 'Unit type for the maximum value of the resource. For example, TB, GB, MB.
-
-              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
-
-              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
-
-              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
-
-              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
-
-              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
-
-              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
-            type: string
-            enum:
-            - TB
-            - MB
-            - GB
-            - MHz
-            - GHz
-            - Percentage
-            default: TB
-            x-omitempty: true
-          UnitType:
-            description: 'Unit type for the expansion request, i.e., if the increase is requested as a raw value in TB, GB, etc., or in percentage increase.
-
-              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
-
-              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
-
-              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
-
-              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
-
-              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
-
-              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
-            type: string
-            enum:
-            - TB
-            - MB
-            - GB
-            - MHz
-            - GHz
-            - Percentage
-            default: TB
-            x-omitempty: true
-          Value:
-            description: Value of the expansion request which can be absolute value or percentage increase.
-            type: number
-            format: float
-            x-omitempty: true
-          ExpansionRequest:
-            $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.Relationship'
-            description: 'A reference to a recommendationHardwareExpansionRequest resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    recommendation.HardwareExpansionRequestItem.Relationship:
-      description: A relationship to the 'recommendation.HardwareExpansionRequestItem' resource, or the expanded 'recommendation.HardwareExpansionRequestItem' resource, or the 'null' value.
-      x-one-of-name: recommendation.HardwareExpansionRequestItem.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequestItem'
-      discriminator:
-        propertyName: ClassId
-    forecast.Instance.Relationship:
-      description: A relationship to the 'forecast.Instance' resource, or the expanded 'forecast.Instance' resource, or the 'null' value.
-      x-one-of-name: forecast.Instance.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/forecast.Instance'
-      discriminator:
-        propertyName: ClassId
-    recommendation.PurchaseOrderEstimate:
-      title: Recommendation:Purchase Order Estimate
-      description: Entity representing the estimate for the purchase order for user requested expansion.
-      x-allOf-name: recommendation.PurchaseOrderEstimate
-      allOf:
-      - $ref: '#/components/schemas/recommendation.Base'
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.PurchaseOrderEstimate', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.PurchaseOrderEstimate
-            default: recommendation.PurchaseOrderEstimate
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.PurchaseOrderEstimate
-            default: recommendation.PurchaseOrderEstimate
-            x-enum-as-string: true
-          Action:
-            description: 'Action to be triggered for computing estimate. Default value is None.
-
-              * `None` - The Enum value None represents that no action is triggered on the forecast Instance managed object.
-
-              * `Evaluate` - The Enum value Evaluate represents that a re-evaluation of the forecast needs to be triggered.'
-            type: string
-            enum:
-            - None
-            - Evaluate
-            default: None
-            x-omitempty: true
-          EstimateId:
-            description: The unique identification generated by the Cisco commerce APIs portal to identify the recommended bill of materials.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Message:
-            description: The user visible message which indicates any errors encountered in making the external API call to get the estimate.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          Status:
-            description: 'The status of the external API call to get the estimate.
-
-              * `None` - The Enum value None represents the default status value before any API call is made.
-
-              * `Success` - The Enum value Success represents that the API call returned with success.
-
-              * `Fail` - The Enum value Fail represents that the API call returned with a failure.'
-            type: string
-            enum:
-            - None
-            - Success
-            - Fail
-            default: None
-            readOnly: true
-            x-omitempty: true
-          TotalCost:
-            description: The total cost of all the recommended hardware in the bill of materials for the corresponding estimate.
-            deprecated: true
-            x-sunset: '2027-08-07'
-            type: number
-            format: float
-            readOnly: true
-            x-omitempty: true
-          ClusterExpansion:
-            $ref: '#/components/schemas/recommendation.ClusterExpansion.Relationship'
-            description: 'A reference to a recommendationClusterExpansion resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          EstimateOwner:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.User.Relationship
-            description: 'A reference to a iamUser resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    recommendation.CapacityRunway.List:
-      title: List of 'recommendation.CapacityRunway' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.CapacityRunway'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.CapacityRunway' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.CapacityRunway'
-    recommendation.HardwareExpansionRequest.List:
-      title: List of 'recommendation.HardwareExpansionRequest' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.HardwareExpansionRequest'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.HardwareExpansionRequest' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.HardwareExpansionRequest'
-    recommendation.PhysicalItem.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.PhysicalItem' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PhysicalItem' resources."
-      x-one-of-name: recommendation.PhysicalItem.Response
+    recommendation.PurchaseOrderList.Response:
+      description: "The response body of a HTTP GET request for the 'recommendation.PurchaseOrderList' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.PurchaseOrderList' resources."
+      x-one-of-name: recommendation.PurchaseOrderList.Response
       oneOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.PhysicalItem.List'
+      - $ref: '#/components/schemas/recommendation.PurchaseOrderList.List'
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-    recommendation.ExpansionRequest:
-      title: Recommendation:Expansion Request
-      description: Entity representing hardware expansion request like name, requestTime, etc.
-      x-allOf-name: recommendation.ExpansionRequest
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.ExpansionRequest', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - recommendation.HardwareExpansionRequest
-            default: recommendation.HardwareExpansionRequest
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - recommendation.HardwareExpansionRequest
-            default: recommendation.HardwareExpansionRequest
-            x-enum-as-string: true
-          Name:
-            description: The name of the expansion specification.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          RequestTime:
-            description: The time when the expansion was requested.
-            type: string
-            format: date-time
-            readOnly: true
-            x-omitempty: true
-    recommendation.ClusterExpansion:
-      title: Recommendation:Cluster Expansion
-      description: Entity representing the cluster expansion recommendations.
-      x-allOf-name: recommendation.ClusterExpansion
-      allOf:
-      - $ref: '#/components/schemas/recommendation.Base'
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.ClusterExpansion', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.ClusterExpansion
-            default: recommendation.ClusterExpansion
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.ClusterExpansion
-            default: recommendation.ClusterExpansion
-            x-enum-as-string: true
-          ClusterName:
-            description: Name of the cluster for which the expansion recommendation is provided.
-            type: string
-            readOnly: true
-            x-omitempty: true
-          HardwareExpansionRequest:
-            $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.Relationship'
-            description: 'A reference to a recommendationHardwareExpansionRequest resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          PhysicalItem:
-            description: An array of relationships to recommendationPhysicalItem resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.PhysicalItem.Relationship'
-            readOnly: true
-          RegisteredDevice:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
-            description: 'A reference to a assetDeviceRegistration resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          SoftwareItem:
-            description: An array of relationships to recommendationSoftwareItem resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.SoftwareItem.Relationship'
-            readOnly: true
-    recommendation.HardwareExpansionRequest.Response:
-      description: "The response body of a HTTP GET request for the 'recommendation.HardwareExpansionRequest' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'recommendation.HardwareExpansionRequest' resources."
-      x-one-of-name: recommendation.HardwareExpansionRequest.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/recommendation.HardwareExpansionRequest.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    recommendation.CapacityRunway:
-      title: Recommendation:Capacity Runway
-      description: Entity representing the new capacity runway based on recommendations.
-      x-allOf-name: recommendation.CapacityRunway
-      allOf:
-      - $ref: '#/components/schemas/recommendation.Base'
-      - type: object
-        description: Definition of the list of properties defined in 'recommendation.CapacityRunway', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - recommendation.CapacityRunway
-            default: recommendation.CapacityRunway
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - recommendation.CapacityRunway
-            default: recommendation.CapacityRunway
-            x-enum-as-string: true
-          AdditionalCapacity:
-            description: Additional capacity is the capacity which is needed more after exhausting all hardware on current cluster.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          Period:
-            description: Number of months in future for which recommendation is provided for.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          Runway:
-            description: This represents the new runway, that is the number of days remaining before the cluster's storage utilization reaches the recommended capacity limit after the recommended hardware is added.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          TotalCapacity:
-            description: Total capacity of the cluster after the recommended hardware is added.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          Unit:
-            description: 'Unit for the new capacity.
-
-              * `TB` - The Enum value TB represents that the measurement unit is in terabytes.
-
-              * `MB` - The Enum value MB represents that the measurement unit is in megabytes.
-
-              * `GB` - The Enum value GB represents that the measurement unit is in gigabytes.
-
-              * `MHz` - The Enum value MHz represents that the measurement unit is in megahertz.
-
-              * `GHz` - The Enum value GHz represents that the measurement unit is in gigahertz.
-
-              * `Percentage` - The Enum value Percentage represents that the expansion request is in the percentage of resource increase. For example, a 20% increase in CPU capacity.'
-            type: string
-            enum:
-            - TB
-            - MB
-            - GB
-            - MHz
-            - GHz
-            - Percentage
-            default: TB
-            readOnly: true
-            x-omitempty: true
-          ForecastInstance:
-            $ref: '#/components/schemas/forecast.Instance.Relationship'
-            description: 'A reference to a forecastInstance resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          PhysicalItem:
-            description: An array of relationships to recommendationPhysicalItem resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.PhysicalItem.Relationship'
-            readOnly: true
-          RegisteredDevice:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
-            description: 'A reference to a assetDeviceRegistration resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    recommendation.PurchaseOrderList.List:
-      title: List of 'recommendation.PurchaseOrderList' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''recommendation.PurchaseOrderList'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'recommendation.PurchaseOrderList' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/recommendation.PurchaseOrderList'
+  headers:
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
+      schema:
+        type: string
   links:
     GetIamAccountByMoid:
       operationId: GetIamAccountByMoid

@@ -2,41 +2,9 @@ openapi: 3.2.0
 info:
   description: 'Cisco Intersight is a management platform delivered as a service with embedded analytics for your Cisco and
 
-    3rd party IT infrastructure. This platform offers an intelligent level of management that enables
-
-    IT organizations to analyze, simplify, and automate their environments in more advanced ways than the prior
-
-    generations of tools. Cisco Intersight provides an integrated and intuitive management experience for
-
-    resources in the traditional data center as well as at the edge. With flexible deployment options to address
-
-    complex security needs, getting started with Intersight is quick and easy.
-
-    Cisco Intersight has deep integration with Cisco UCS and HyperFlex systems allowing for remote deployment,
-
-    configuration, and ongoing maintenance. The model-based deployment works for a single system in a remote
-
-    location or hundreds of systems in a data center and enables rapid, standardized configuration and deployment.
-
-    It also streamlines maintaining those systems whether you are working with small or very large configurations.
-
-    The Intersight OpenAPI document defines the complete set of properties that are returned in the
-
-    HTTP response. From that perspective, a client can expect that no additional properties are returned,
-
-    unless these properties are explicitly defined in the OpenAPI document.
-
-    However, when a client uses an older version of the Intersight OpenAPI document, the server may
-
-    send additional properties because the software is more recent than the client. In that case, the client
-
-    may receive properties that it does not know about.
-
-    Some generated SDKs perform a strict validation of the HTTP response body against the OpenAPI document.
-
-    This document was created on 2026-08-07T06:46:04Z.'
+    3rd party IT infrastructure.'
   version: 1.0.11-20260807064027971
-  title: Cisco Intersight Server Ippool API
+  title: Cisco Intersight Server Certificatemanagement API
   license:
     name: Apache License, Version 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -65,14 +33,14 @@ servers:
       default: intersight.com
   description: The Intersight URL for the cloud-based infrastructure management APIs.
 tags:
-- name: ippool
+- name: certificate management
 paths:
-  /api/v1/ippool/BlockLeases:
+  /api/v1/certificatemanagement/Policies:
     get:
       tags:
-      - ippool
-      summary: Read a 'ippool.BlockLease' resource.
-      operationId: GetIppoolBlockLeaseList
+      - certificate management
+      summary: Read a 'certificatemanagement.Policy' resource
+      operationId: GetCertificatemanagementPolicyList
       security:
       - cookieAuth: []
       - http_signature: []
@@ -81,10 +49,10 @@ paths:
         - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
         - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
+        - PRIVSET.Read-only Certificate Management policies
         - PRIVSET.View Server Profiles
         - PRIVSET.View Switch Profiles
-        - READ.ippool.BlockLease
+        - READ.certificatemanagement.Policy
         - ROLE.Account Administrator
         - ROLE.Read-Only
       parameters:
@@ -101,7 +69,7 @@ paths:
       - $ref: '#/components/parameters/tagsParam'
       responses:
         '200':
-          description: List of 'ippool.BlockLease' resources for the given filter criteria
+          description: List of 'certificatemanagement.Policy' resources for the given filter criteria
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -114,301 +82,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.BlockLease.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/BlockLeases/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.BlockLease' resource.
-      operationId: GetIppoolBlockLeaseByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.BlockLease
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.BlockLease' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.BlockLease'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolBlockLeaseByMoid:
-              operationId: GetIppoolBlockLeaseByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/BlockLeases/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/IpLeases:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.IpLease' resource.
-      operationId: GetIppoolIpLeaseList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.IpLease
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.IpLease' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.IpLease.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/IpLeases/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.IpLease' resource.
-      operationId: GetIppoolIpLeaseByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.IpLease
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.IpLease' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.IpLease'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolIpLeaseByMoid:
-              operationId: GetIppoolIpLeaseByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/IpLeases/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-    delete:
-      tags:
-      - ippool
-      summary: Delete a 'ippool.IpLease' resource.
-      operationId: DeleteIppoolIpLease
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - DELETE.ippool.IpLease
-        - PRIVSET.Account Administrator
-        - ROLE.Account Administrator
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      responses:
-        '200':
-          description: Resource has been deleted successfully.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/Pools:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.Pool' resource.
-      operationId: GetIppoolPoolList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.Pool
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.Pool' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Pool.Response'
+                $ref: '#/components/schemas/certificatemanagement.Policy.Response'
             text/csv:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
@@ -427,33 +101,32 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - ippool
-      summary: Create a 'ippool.Pool' resource.
-      operationId: CreateIppoolPool
+      - certificate management
+      summary: Create a 'certificatemanagement.Policy' resource
+      operationId: CreateCertificatemanagementPolicy
       security:
       - cookieAuth: []
       - http_signature: []
       - oAuth2:
-        - CREATE.ippool.Pool
+        - CREATE.certificatemanagement.Policy
         - PRIVSET.Account Administrator
-        - PRIVSET.Create IP pools
+        - PRIVSET.Create, clone and edit Certificate Management policies
+        - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Server Administrator
         - ROLE.Account Administrator
-        - ROLE.Server Administrator
       parameters:
       - $ref: '#/components/parameters/IfMatch'
       - $ref: '#/components/parameters/IfNoneMatch'
       requestBody:
-        description: The 'ippool.Pool' resource to create.
+        description: The 'certificatemanagement.Policy' resource to create.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ippool.Pool'
+              $ref: '#/components/schemas/certificatemanagement.Policy'
       responses:
         '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Pool' resource was created as requested. The 'ippool.Pool' resource is created before this response is sent back and the resource is returned in the body of the message.
+          description: The HTTP 200 status response code indicates that the request has succeeded and the 'certificatemanagement.Policy' resource was created as requested. The 'certificatemanagement.Policy' resource is created before this response is sent back and the resource is returned in the body of the message.
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -462,13 +135,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.Pool'
+                $ref: '#/components/schemas/certificatemanagement.Policy'
           links:
-            GetIppoolPoolByMoid:
-              operationId: GetIppoolPoolByMoid
+            GetCertificatemanagementPolicyByMoid:
+              operationId: GetCertificatemanagementPolicyByMoid
               parameters:
                 Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Pools/{Moid}'.
+              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/certificatemanagement/Policies/{Moid}'.
             GetIamAccountByMoid:
               $ref: '#/components/links/GetIamAccountByMoid'
             GetIamDomainGroupByMoid:
@@ -483,12 +156,12 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-  /api/v1/ippool/Pools/{Moid}:
+  /api/v1/certificatemanagement/Policies/{Moid}:
     get:
       tags:
-      - ippool
-      summary: Read a 'ippool.Pool' resource.
-      operationId: GetIppoolPoolByMoid
+      - certificate management
+      summary: Read a 'certificatemanagement.Policy' resource
+      operationId: GetCertificatemanagementPolicyByMoid
       security:
       - cookieAuth: []
       - http_signature: []
@@ -497,10 +170,10 @@ paths:
         - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
         - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
+        - PRIVSET.Read-only Certificate Management policies
         - PRIVSET.View Server Profiles
         - PRIVSET.View Switch Profiles
-        - READ.ippool.Pool
+        - READ.certificatemanagement.Policy
         - ROLE.Account Administrator
         - ROLE.Read-Only
       parameters:
@@ -510,7 +183,7 @@ paths:
       - $ref: '#/components/parameters/atParam'
       responses:
         '200':
-          description: An instance of the 'ippool.Pool' resource.
+          description: An instance of the 'certificatemanagement.Policy' resource.
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -523,7 +196,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.Pool'
+                $ref: '#/components/schemas/certificatemanagement.Policy'
             text/csv:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
@@ -531,11 +204,11 @@ paths:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
           links:
-            GetIppoolPoolByMoid:
-              operationId: GetIppoolPoolByMoid
+            GetCertificatemanagementPolicyByMoid:
+              operationId: GetCertificatemanagementPolicyByMoid
               parameters:
                 Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Pools/{Moid}'.
+              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/certificatemanagement/Policies/{Moid}'.
             GetIamAccountByMoid:
               $ref: '#/components/links/GetIamAccountByMoid'
             GetIamDomainGroupByMoid:
@@ -552,36 +225,35 @@ paths:
           $ref: '#/components/responses/default'
     post:
       tags:
-      - ippool
-      summary: Update a 'ippool.Pool' resource.
-      operationId: UpdateIppoolPool
+      - certificate management
+      summary: Update a 'certificatemanagement.Policy' resource
+      operationId: UpdateCertificatemanagementPolicy
       security:
       - cookieAuth: []
       - http_signature: []
       - oAuth2:
         - PRIVSET.Account Administrator
-        - PRIVSET.Edit IP pools
+        - PRIVSET.Edit Certificate Management policies
+        - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Server Administrator
         - ROLE.Account Administrator
-        - ROLE.Server Administrator
-        - UPDATE.ippool.Pool
+        - UPDATE.certificatemanagement.Policy
       parameters:
       - $ref: '#/components/parameters/moidParam'
       - $ref: '#/components/parameters/IfMatch'
       requestBody:
-        description: The 'ippool.Pool' resource to update.
+        description: The 'certificatemanagement.Policy' resource to update.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ippool.Pool'
+              $ref: '#/components/schemas/certificatemanagement.Policy'
           application/json-patch+json:
             schema:
               $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/PatchDocument
       responses:
         '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Pool' resource was modified as requested. The 'ippool.Pool' resource is modified before this response is sent back and the resource is returned in the body of the message.
+          description: The HTTP 200 status response code indicates that the request has succeeded and the 'certificatemanagement.Policy' resource was modified as requested. The 'certificatemanagement.Policy' resource is modified before this response is sent back and the resource is returned in the body of the message.
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -590,13 +262,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.Pool'
+                $ref: '#/components/schemas/certificatemanagement.Policy'
           links:
-            GetIppoolPoolByMoid:
-              operationId: GetIppoolPoolByMoid
+            GetCertificatemanagementPolicyByMoid:
+              operationId: GetCertificatemanagementPolicyByMoid
               parameters:
                 Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Pools/{Moid}'.
+              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/certificatemanagement/Policies/{Moid}'.
             GetIamAccountByMoid:
               $ref: '#/components/links/GetIamAccountByMoid'
             GetIamDomainGroupByMoid:
@@ -613,36 +285,35 @@ paths:
           $ref: '#/components/responses/default'
     patch:
       tags:
-      - ippool
-      summary: Update a 'ippool.Pool' resource.
-      operationId: PatchIppoolPool
+      - certificate management
+      summary: Update a 'certificatemanagement.Policy' resource
+      operationId: PatchCertificatemanagementPolicy
       security:
       - cookieAuth: []
       - http_signature: []
       - oAuth2:
         - PRIVSET.Account Administrator
-        - PRIVSET.Edit IP pools
+        - PRIVSET.Edit Certificate Management policies
+        - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Server Administrator
         - ROLE.Account Administrator
-        - ROLE.Server Administrator
-        - UPDATE.ippool.Pool
+        - UPDATE.certificatemanagement.Policy
       parameters:
       - $ref: '#/components/parameters/moidParam'
       - $ref: '#/components/parameters/IfMatch'
       requestBody:
-        description: The 'ippool.Pool' resource to update.
+        description: The 'certificatemanagement.Policy' resource to update.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ippool.Pool'
+              $ref: '#/components/schemas/certificatemanagement.Policy'
           application/json-patch+json:
             schema:
               $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/PatchDocument
       responses:
         '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Pool' resource was patched as requested. The 'ippool.Pool' resource is patched before this response is sent back and the resource is returned in the body of the message.
+          description: The HTTP 200 status response code indicates that the request has succeeded and the 'certificatemanagement.Policy' resource was patched as requested. The 'certificatemanagement.Policy' resource is patched before this response is sent back and the resource is returned in the body of the message.
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -651,13 +322,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.Pool'
+                $ref: '#/components/schemas/certificatemanagement.Policy'
           links:
-            GetIppoolPoolByMoid:
-              operationId: GetIppoolPoolByMoid
+            GetCertificatemanagementPolicyByMoid:
+              operationId: GetCertificatemanagementPolicyByMoid
               parameters:
                 Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Pools/{Moid}'.
+              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/certificatemanagement/Policies/{Moid}'.
             GetIamAccountByMoid:
               $ref: '#/components/links/GetIamAccountByMoid'
             GetIamDomainGroupByMoid:
@@ -674,374 +345,17 @@ paths:
           $ref: '#/components/responses/default'
     delete:
       tags:
-      - ippool
-      summary: Delete a 'ippool.Pool' resource.
-      operationId: DeleteIppoolPool
+      - certificate management
+      summary: Delete a 'certificatemanagement.Policy' resource
+      operationId: DeleteCertificatemanagementPolicy
       security:
       - cookieAuth: []
       - http_signature: []
       - oAuth2:
-        - DELETE.ippool.Pool
+        - DELETE.certificatemanagement.Policy
         - PRIVSET.Account Administrator
-        - PRIVSET.Delete IP pools
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Server Administrator
-        - ROLE.Account Administrator
-        - ROLE.Server Administrator
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      responses:
-        '200':
-          description: Resource has been deleted successfully.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/PoolMembers:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.PoolMember' resource.
-      operationId: GetIppoolPoolMemberList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
+        - PRIVSET.Delete Certificate Management policies
         - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.PoolMember
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.PoolMember' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.PoolMember.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/PoolMembers/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.PoolMember' resource.
-      operationId: GetIppoolPoolMemberByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.PoolMember
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.PoolMember' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.PoolMember'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolPoolMemberByMoid:
-              operationId: GetIppoolPoolMemberByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/PoolMembers/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/Reservations:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.Reservation' resource.
-      operationId: GetIppoolReservationList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Create IP pool address reservations
-        - PRIVSET.Delete IP pool address reservations
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.Reservation
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.Reservation' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Reservation.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-    post:
-      tags:
-      - ippool
-      summary: Create a 'ippool.Reservation' resource.
-      operationId: CreateIppoolReservation
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - CREATE.ippool.Reservation
-        - PRIVSET.Account Administrator
-        - PRIVSET.Create IP pool address reservations
-        - PRIVSET.Manage Switch Profiles
-        - ROLE.Account Administrator
-      parameters:
-      - $ref: '#/components/parameters/IfMatch'
-      - $ref: '#/components/parameters/IfNoneMatch'
-      requestBody:
-        description: The 'ippool.Reservation' resource to create.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ippool.Reservation'
-      responses:
-        '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Reservation' resource was created as requested. The 'ippool.Reservation' resource is created before this response is sent back and the resource is returned in the body of the message.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Reservation'
-          links:
-            GetIppoolReservationByMoid:
-              operationId: GetIppoolReservationByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Reservations/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/Reservations/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.Reservation' resource.
-      operationId: GetIppoolReservationByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Create IP pool address reservations
-        - PRIVSET.Delete IP pool address reservations
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.Reservation
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.Reservation' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Reservation'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolReservationByMoid:
-              operationId: GetIppoolReservationByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Reservations/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-    delete:
-      tags:
-      - ippool
-      summary: Delete a 'ippool.Reservation' resource.
-      operationId: DeleteIppoolReservation
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - DELETE.ippool.Reservation
-        - PRIVSET.Account Administrator
-        - PRIVSET.Delete IP pool address reservations
         - PRIVSET.Manage Switch Profiles
         - ROLE.Account Administrator
       parameters:
@@ -1064,126 +378,12 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-    post:
-      tags:
-      - ippool
-      summary: Update a 'ippool.Reservation' resource.
-      operationId: UpdateIppoolReservation
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - ROLE.Account Administrator
-        - UPDATE.ippool.Reservation
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/IfMatch'
-      requestBody:
-        description: The 'ippool.Reservation' resource to update.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ippool.Reservation'
-          application/json-patch+json:
-            schema:
-              $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/PatchDocument
-      responses:
-        '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Reservation' resource was modified as requested. The 'ippool.Reservation' resource is modified before this response is sent back and the resource is returned in the body of the message.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Reservation'
-          links:
-            GetIppoolReservationByMoid:
-              operationId: GetIppoolReservationByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Reservations/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-    patch:
-      tags:
-      - ippool
-      summary: Update a 'ippool.Reservation' resource.
-      operationId: PatchIppoolReservation
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - ROLE.Account Administrator
-        - UPDATE.ippool.Reservation
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/IfMatch'
-      requestBody:
-        description: The 'ippool.Reservation' resource to update.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ippool.Reservation'
-          application/json-patch+json:
-            schema:
-              $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/PatchDocument
-      responses:
-        '200':
-          description: The HTTP 200 status response code indicates that the request has succeeded and the 'ippool.Reservation' resource was patched as requested. The 'ippool.Reservation' resource is patched before this response is sent back and the resource is returned in the body of the message.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Reservation'
-          links:
-            GetIppoolReservationByMoid:
-              operationId: GetIppoolReservationByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Reservations/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/ShadowBlocks:
+  /api/v1/certificatemanagement/PolicyInventories:
     get:
       tags:
-      - ippool
-      summary: Read a 'ippool.ShadowBlock' resource.
-      operationId: GetIppoolShadowBlockList
+      - certificate management
+      summary: Read a 'certificatemanagement.PolicyInventory' resource
+      operationId: GetCertificatemanagementPolicyInventoryList
       security:
       - cookieAuth: []
       - http_signature: []
@@ -1192,10 +392,10 @@ paths:
         - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
         - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
+        - PRIVSET.Read-only Certificate Management policies
         - PRIVSET.View Server Profiles
         - PRIVSET.View Switch Profiles
-        - READ.ippool.ShadowBlock
+        - READ.certificatemanagement.PolicyInventory
         - ROLE.Account Administrator
         - ROLE.Read-Only
       parameters:
@@ -1212,7 +412,7 @@ paths:
       - $ref: '#/components/parameters/tagsParam'
       responses:
         '200':
-          description: List of 'ippool.ShadowBlock' resources for the given filter criteria
+          description: List of 'certificatemanagement.PolicyInventory' resources for the given filter criteria
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -1225,7 +425,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.ShadowBlock.Response'
+                $ref: '#/components/schemas/certificatemanagement.PolicyInventory.Response'
             text/csv:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
@@ -1242,12 +442,12 @@ paths:
           $ref: '#/components/responses/http_status_404'
         default:
           $ref: '#/components/responses/default'
-  /api/v1/ippool/ShadowBlocks/{Moid}:
+  /api/v1/certificatemanagement/PolicyInventories/{Moid}:
     get:
       tags:
-      - ippool
-      summary: Read a 'ippool.ShadowBlock' resource.
-      operationId: GetIppoolShadowBlockByMoid
+      - certificate management
+      summary: Read a 'certificatemanagement.PolicyInventory' resource
+      operationId: GetCertificatemanagementPolicyInventoryByMoid
       security:
       - cookieAuth: []
       - http_signature: []
@@ -1256,10 +456,10 @@ paths:
         - PRIVSET.Manage Server Profiles
         - PRIVSET.Manage Switch Profiles
         - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
+        - PRIVSET.Read-only Certificate Management policies
         - PRIVSET.View Server Profiles
         - PRIVSET.View Switch Profiles
-        - READ.ippool.ShadowBlock
+        - READ.certificatemanagement.PolicyInventory
         - ROLE.Account Administrator
         - ROLE.Read-Only
       parameters:
@@ -1269,7 +469,7 @@ paths:
       - $ref: '#/components/parameters/atParam'
       responses:
         '200':
-          description: An instance of the 'ippool.ShadowBlock' resource.
+          description: An instance of the 'certificatemanagement.PolicyInventory' resource.
           headers:
             Set-Cookie:
               $ref: '#/components/headers/Set-Cookie'
@@ -1282,7 +482,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ippool.ShadowBlock'
+                $ref: '#/components/schemas/certificatemanagement.PolicyInventory'
             text/csv:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
@@ -1290,273 +490,11 @@ paths:
               schema:
                 $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
           links:
-            GetIppoolShadowBlockByMoid:
-              operationId: GetIppoolShadowBlockByMoid
+            GetCertificatemanagementPolicyInventoryByMoid:
+              operationId: GetCertificatemanagementPolicyInventoryByMoid
               parameters:
                 Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/ShadowBlocks/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/ShadowPools:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.ShadowPool' resource.
-      operationId: GetIppoolShadowPoolList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.ShadowPool
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.ShadowPool' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.ShadowPool.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/ShadowPools/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.ShadowPool' resource.
-      operationId: GetIppoolShadowPoolByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.ShadowPool
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.ShadowPool' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.ShadowPool'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolShadowPoolByMoid:
-              operationId: GetIppoolShadowPoolByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/ShadowPools/{Moid}'.
-            GetIamAccountByMoid:
-              $ref: '#/components/links/GetIamAccountByMoid'
-            GetIamDomainGroupByMoid:
-              $ref: '#/components/links/GetIamDomainGroupByMoid'
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/Universes:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.Universe' resource.
-      operationId: GetIppoolUniverseList
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.Universe
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/filterParam'
-      - $ref: '#/components/parameters/orderbyParam'
-      - $ref: '#/components/parameters/topParam'
-      - $ref: '#/components/parameters/skipParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/applyParam'
-      - $ref: '#/components/parameters/countParam'
-      - $ref: '#/components/parameters/inlinecountParam'
-      - $ref: '#/components/parameters/atParam'
-      - $ref: '#/components/parameters/tagsParam'
-      responses:
-        '200':
-          description: List of 'ippool.Universe' resources for the given filter criteria
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Universe.Response'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-        '400':
-          $ref: '#/components/responses/http_status_400'
-        '401':
-          $ref: '#/components/responses/http_status_401'
-        '403':
-          $ref: '#/components/responses/http_status_403'
-        '404':
-          $ref: '#/components/responses/http_status_404'
-        default:
-          $ref: '#/components/responses/default'
-  /api/v1/ippool/Universes/{Moid}:
-    get:
-      tags:
-      - ippool
-      summary: Read a 'ippool.Universe' resource.
-      operationId: GetIppoolUniverseByMoid
-      security:
-      - cookieAuth: []
-      - http_signature: []
-      - oAuth2:
-        - PRIVSET.Account Administrator
-        - PRIVSET.Manage Server Profiles
-        - PRIVSET.Manage Switch Profiles
-        - PRIVSET.Read-Only
-        - PRIVSET.Read-only IP pools
-        - PRIVSET.View Server Profiles
-        - PRIVSET.View Switch Profiles
-        - READ.ippool.Universe
-        - ROLE.Account Administrator
-        - ROLE.Read-Only
-      parameters:
-      - $ref: '#/components/parameters/moidParam'
-      - $ref: '#/components/parameters/selectParam'
-      - $ref: '#/components/parameters/expandParam'
-      - $ref: '#/components/parameters/atParam'
-      responses:
-        '200':
-          description: An instance of the 'ippool.Universe' resource.
-          headers:
-            Set-Cookie:
-              $ref: '#/components/headers/Set-Cookie'
-            x-starship-traceid:
-              $ref: '#/components/headers/x-starship-traceid'
-            Content-Disposition:
-              $ref: '#/components/headers/Content-Disposition'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ippool.Universe'
-            text/csv:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/CsvFile
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
-              schema:
-                $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/ExcelFile
-          links:
-            GetIppoolUniverseByMoid:
-              operationId: GetIppoolUniverseByMoid
-              parameters:
-                Moid: $response.body#/Moid
-              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/ippool/Universes/{Moid}'.
+              description: The 'Moid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/certificatemanagement/PolicyInventories/{Moid}'.
             GetIamAccountByMoid:
               $ref: '#/components/links/GetIamAccountByMoid'
             GetIamDomainGroupByMoid:
@@ -1572,7 +510,276 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
+  responses:
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   parameters:
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
     IfMatch:
       name: If-Match
       in: header
@@ -1598,47 +805,6 @@ components:
       required: false
       schema:
         type: string
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
     atParam:
       name: at
       in: query
@@ -1698,175 +864,241 @@ components:
       required: false
       schema:
         type: string
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+  schemas:
+    certificatemanagement.PolicyInventory.List:
+      title: List of 'certificatemanagement.PolicyInventory' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''certificatemanagement.PolicyInventory'' resources matching the request, accross all pages.
 
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'certificatemanagement.PolicyInventory' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/certificatemanagement.PolicyInventory'
+    certificatemanagement.CertificateBase:
+      title: Certificatemanagement:Certificate Base
+      description: Lists properties that are common to all certificate types.
+      x-allOf-name: certificatemanagement.CertificateBase
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+      - type: object
+        description: Definition of the list of properties defined in 'certificatemanagement.CertificateBase', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
 
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
+              This property is used as a discriminator to identify the type of the payload
 
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+              when marshaling and unmarshaling data.
 
-        only the Entries that satisfy the predicate expression specified by the $filter option.
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - certificatemanagement.Imc
+            - certificatemanagement.RootCaCertificate
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
 
-        The expression language that is used in $filter queries supports references to properties and
+              The value should be the same as the ''ClassId'' property.
 
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - certificatemanagement.Imc
+            - certificatemanagement.RootCaCertificate
+            x-enum-as-string: true
+          Certificate:
+            description: Certificate that is used for verifying the authorization.
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/x509.Certificate
+            x-omitempty: true
+          Enabled:
+            description: Enable/Disable the certificate in Certificate Management policy.
+            type: boolean
+            default: true
+            x-omitempty: true
+    certificatemanagement.Policy:
+      title: Certificate Management
+      description: 'The Certificate Management Policy is a reusable policy for managing security certificates on endpoints such as servers and Fabric Interconnects. This provides a centralized way to deploy custom certificates and their corresponding private keys.
 
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+        #### Purpose
 
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
+        The main purpose of this policy is to replace the default, self-signed certificates on management controllers (like a server''s CIMC) with custom certificates signed by a trusted Certificate Authority (CA). This enhances security by ensuring that management interfaces are trusted and that communication is encrypted. It also supports the deployment of Root CA certificates for validating external services.
 
-            ''PT72H'' is a string value that represents 72 hours.
+        #### Key Concepts
 
-            See https://intersight.com/apidocs for more details about how to construct a duration.
+        - **Centralized Certificate Deployment:** Allows administrators to manage and deploy X.509 certificates and private keys from a single policy to multiple endpoints.
 
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
+        - **Reusable and Profile-Based:** As a policy object, it can be attached to Server or Chassis Profiles to ensure consistent certificate configuration across managed devices.
+
+        - **Supports Multiple Certificate Types:** The policy can manage different types of certificates, including IMC certificates (for the management controller itself) and Root CA certificates (for trusting external services like LDAP).
+
+        - **Secure Credential Handling:** The private key associated with a certificate is a write-only, encrypted property, ensuring it is handled securely within the system.'
+      x-allOf-name: certificatemanagement.Policy
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicy
+      - type: object
+        description: Definition of the list of properties defined in 'certificatemanagement.Policy', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - certificatemanagement.Policy
+            default: certificatemanagement.Policy
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - certificatemanagement.Policy
+            default: certificatemanagement.Policy
+            x-enum-as-string: true
+          Certificates:
+            type:
+            - array
+            - 'null'
+            items:
+              description: Set of certificates to be configured.
+              $ref: '#/components/schemas/certificatemanagement.CertificateBase'
+              x-omitempty: true
+            minItems: 0
+            maxItems: 2550
+          Organization:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
+            description: 'A reference to a organizationOrganization resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            x-createOnly: true
+          Profiles:
+            deprecated: true
+            x-sunset: '2028-03-01'
+            description: An array of relationships to policyAbstractConfigProfile resources.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractConfigProfile.Relationship
+    certificatemanagement.PolicyInventory:
+      title: Certificate Management
+      description: 'The Certificate Management Policy is a reusable policy for managing security certificates on endpoints such as servers and Fabric Interconnects. This provides a centralized way to deploy custom certificates and their corresponding private keys.
+
+        #### Purpose
+
+        The main purpose of this policy is to replace the default, self-signed certificates on management controllers (like a server''s CIMC) with custom certificates signed by a trusted Certificate Authority (CA). This enhances security by ensuring that management interfaces are trusted and that communication is encrypted. It also supports the deployment of Root CA certificates for validating external services.
+
+        #### Key Concepts
+
+        - **Centralized Certificate Deployment:** Allows administrators to manage and deploy X.509 certificates and private keys from a single policy to multiple endpoints.
+
+        - **Reusable and Profile-Based:** As a policy object, it can be attached to Server or Chassis Profiles to ensure consistent certificate configuration across managed devices.
+
+        - **Supports Multiple Certificate Types:** The policy can manage different types of certificates, including IMC certificates (for the management controller itself) and Root CA certificates (for trusting external services like LDAP).
+
+        - **Secure Credential Handling:** The private key associated with a certificate is a write-only, encrypted property, ensuring it is handled securely within the system.'
+      x-allOf-name: certificatemanagement.PolicyInventory
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicyInventory
+      - type: object
+        description: Definition of the list of properties defined in 'certificatemanagement.PolicyInventory', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - certificatemanagement.PolicyInventory
+            default: certificatemanagement.PolicyInventory
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - certificatemanagement.PolicyInventory
+            default: certificatemanagement.PolicyInventory
+            x-enum-as-string: true
+          Certificates:
+            type:
+            - array
+            - 'null'
+            items:
+              description: Set of certificates to be configured.
+              $ref: '#/components/schemas/certificatemanagement.CertificateBase'
+              readOnly: true
+              x-omitempty: true
+            minItems: 0
+            maxItems: 2550
+          TargetMo:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
+            description: 'A reference to a moBaseMo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    certificatemanagement.Policy.List:
+      title: List of 'certificatemanagement.Policy' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''certificatemanagement.Policy'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'certificatemanagement.Policy' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/certificatemanagement.Policy'
+    certificatemanagement.Policy.Response:
+      description: "The response body of a HTTP GET request for the 'certificatemanagement.Policy' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'certificatemanagement.Policy' resources."
+      x-one-of-name: certificatemanagement.Policy.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/certificatemanagement.Policy.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    certificatemanagement.PolicyInventory.Response:
+      description: "The response body of a HTTP GET request for the 'certificatemanagement.PolicyInventory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'certificatemanagement.PolicyInventory' resources."
+      x-one-of-name: certificatemanagement.PolicyInventory.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/certificatemanagement.PolicyInventory.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
   headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
     Set-Cookie:
       description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
       schema:
@@ -1876,1395 +1108,14 @@ components:
       description: Indicates the size of the entity-body, in bytes, sent to the recipient.
       schema:
         type: integer
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
     Content-Disposition:
       description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
       schema:
         type: string
-  responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-  schemas:
-    ippool.ShadowBlock.Relationship:
-      description: A relationship to the 'ippool.ShadowBlock' resource, or the expanded 'ippool.ShadowBlock' resource, or the 'null' value.
-      x-one-of-name: ippool.ShadowBlock.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.ShadowBlock'
-      discriminator:
-        propertyName: ClassId
-    ippool.BlockLease.List:
-      title: List of 'ippool.BlockLease' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.BlockLease'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.BlockLease' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.BlockLease'
-    vrf.Vrf.Relationship:
-      description: A relationship to the 'vrf.Vrf' resource, or the expanded 'vrf.Vrf' resource, or the 'null' value.
-      x-one-of-name: vrf.Vrf.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/vrf.Vrf'
-      discriminator:
-        propertyName: ClassId
-    ippool.PoolMember.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.PoolMember' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.PoolMember' resources."
-      x-one-of-name: ippool.PoolMember.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.PoolMember.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.Universe.List:
-      title: List of 'ippool.Universe' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.Universe'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.Universe' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Universe'
-    ippool.ShadowPool:
-      title: Ippool:Shadow Pool
-      description: Shadow Pool is a tracking object created on behalf of an IP pool, for each VRF.
-      x-allOf-name: ippool.ShadowPool
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractPool
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.ShadowPool', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.ShadowPool
-            default: ippool.ShadowPool
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.ShadowPool
-            default: ippool.ShadowPool
-            x-enum-as-string: true
-          IpV4Blocks:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Collection of IPv4 Blocks.
-              $ref: '#/components/schemas/ippool.IpV4Block'
-              x-omitempty: true
-          IpV4Config:
-            description: Netmask, Gateway and DNS settings for IPv4 addresses.
-            $ref: '#/components/schemas/ippool.IpV4Config'
-            x-omitempty: true
-          IpV6Blocks:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Collection of IPv6 blocks.
-              $ref: '#/components/schemas/ippool.IpV6Block'
-              x-omitempty: true
-          IpV6Config:
-            description: Netmask, Gateway and DNS settings for IPv6 addresses.
-            $ref: '#/components/schemas/ippool.IpV6Config'
-            x-omitempty: true
-          V4Assigned:
-            description: Number of IPv4 addresses currently in use.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V4Size:
-            description: Number of IPv4 addresses in this pool.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V6Assigned:
-            description: Number of IPv6 addresses currently in use.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V6Size:
-            description: Number of IPv6 addresses in this pool.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          IpBlockHeads:
-            description: An array of relationships to ippoolShadowBlock resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.ShadowBlock.Relationship'
-            readOnly: true
-          Pool:
-            $ref: '#/components/schemas/ippool.Pool.Relationship'
-            description: 'A reference to a ippoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Reservations:
-            description: An array of relationships to ippoolReservation resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Reservation.Relationship'
-            readOnly: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.Reservation.Relationship:
-      description: A relationship to the 'ippool.Reservation' resource, or the expanded 'ippool.Reservation' resource, or the 'null' value.
-      x-one-of-name: ippool.Reservation.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.Reservation'
-      discriminator:
-        propertyName: ClassId
-    ippool.Universe.Relationship:
-      description: A relationship to the 'ippool.Universe' resource, or the expanded 'ippool.Universe' resource, or the 'null' value.
-      x-one-of-name: ippool.Universe.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.Universe'
-      discriminator:
-        propertyName: ClassId
-    ippool.ShadowBlock:
-      title: Ippool:Shadow Block
-      description: A block of Contiguous IP addresses that are part of a shadow pool.
-      x-allOf-name: ippool.ShadowBlock
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlock
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.ShadowBlock', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.ShadowBlock
-            default: ippool.ShadowBlock
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.ShadowBlock
-            default: ippool.ShadowBlock
-            x-enum-as-string: true
-          IpType:
-            description: 'Type of this IP addresses blocks.
-
-              * `IPv4` - IP V4 address type requested.
-
-              * `IPv6` - IP V6 address type requested.'
-            type: string
-            enum:
-            - IPv4
-            - IPv6
-            default: IPv4
-            x-omitempty: true
-          IpV4Block:
-            description: A Block of IPv4 addresses.
-            $ref: '#/components/schemas/ippool.IpV4Block'
-            x-omitempty: true
-          IpV6Block:
-            description: A Block of IPv6 addresses.
-            $ref: '#/components/schemas/ippool.IpV6Block'
-            x-omitempty: true
-          Pool:
-            $ref: '#/components/schemas/ippool.ShadowPool.Relationship'
-            description: 'A reference to a ippoolShadowPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Reservations:
-            description: An array of relationships to ippoolReservation resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Reservation.Relationship'
-            readOnly: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.Pool:
-      title: Ippool:Pool
-      description: Pool represents a collection of IPv4 and/or IPv6 addresses that can be allocated to other configuration entities like server profiles.
-      x-allOf-name: ippool.Pool
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractPool
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.Pool', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.Pool
-            default: ippool.Pool
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.Pool
-            default: ippool.Pool
-            x-enum-as-string: true
-          EnableBlockLevelSubnetConfig:
-            description: Enables subnet configuration at the block level.
-            type: boolean
-            x-omitempty: true
-          IpV4Blocks:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Collection of IPv4 blocks.
-              $ref: '#/components/schemas/ippool.IpV4Block'
-              x-omitempty: true
-          IpV4Config:
-            description: Netmask, Gateway and DNS settings for IPv4 addresses.
-            $ref: '#/components/schemas/ippool.IpV4Config'
-            x-omitempty: true
-          IpV6Blocks:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Collection of IPv6 blocks.
-              $ref: '#/components/schemas/ippool.IpV6Block'
-              x-omitempty: true
-          IpV6Config:
-            description: Netmask, Gateway and DNS settings for IPv6 addresses.
-            $ref: '#/components/schemas/ippool.IpV6Config'
-            x-omitempty: true
-          V4Assigned:
-            description: Number of IPv4 addresses currently in use.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V4Size:
-            description: Number of IPv4 addresses in this pool.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V6Assigned:
-            description: Number of IPv6 addresses currently in use.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          V6Size:
-            description: Number of IPv6 addresses in this pool.
-            type: integer
-            format: int64
-            readOnly: true
-            x-omitempty: true
-          Organization:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
-            description: 'A reference to a organizationOrganization resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          Reservations:
-            description: An array of relationships to ippoolReservation resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Reservation.Relationship'
-          ShadowPools:
-            description: An array of relationships to ippoolShadowPool resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.ShadowPool.Relationship'
-            readOnly: true
-    ippool.Universe:
-      title: Ippool:Universe
-      description: Universe represents a book keeping container to keep track of all IP Addresses for a given VRF.
-      x-allOf-name: ippool.Universe
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.Universe', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.Universe
-            default: ippool.Universe
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.Universe
-            default: ippool.Universe
-            x-enum-as-string: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.ShadowBlock.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.ShadowBlock' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.ShadowBlock' resources."
-      x-one-of-name: ippool.ShadowBlock.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.ShadowBlock.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.BlockLease:
-      title: Ippool:Block Lease
-      description: BlockLease represents an IP address that is allocated from a pool to a specific entity like server profile.
-      x-allOf-name: ippool.BlockLease
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlockLease
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.BlockLease', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.BlockLease
-            default: ippool.BlockLease
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.BlockLease
-            default: ippool.BlockLease
-            x-enum-as-string: true
-          IpType:
-            description: 'Type of the IP address requested.
-
-              * `IPv4` - IP V4 address type requested.
-
-              * `IPv6` - IP V6 address type requested.'
-            type: string
-            enum:
-            - IPv4
-            - IPv6
-            default: IPv4
-            x-omitempty: true
-          AssignedToEntity:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          IpLeases:
-            description: An array of relationships to ippoolIpLease resources.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.IpLease.Relationship'
-          Pool:
-            $ref: '#/components/schemas/ippool.Pool.Relationship'
-            description: 'A reference to a ippoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          Universe:
-            $ref: '#/components/schemas/ippool.Universe.Relationship'
-            description: 'A reference to a ippoolUniverse resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-    ippool.IpV4Block:
-      title: Ippool:Ip V4 Block
-      description: A block of IPv4 addresses.
-      x-allOf-name: ippool.IpV4Block
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlockType
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.IpV4Block', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.IpV4Block
-            default: ippool.IpV4Block
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.IpV4Block
-            default: ippool.IpV4Block
-            x-enum-as-string: true
-          From:
-            description: First IPv4 address of the block.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-omitempty: true
-          IdMappingPolicyMoid:
-            description: The managed object ID of the ID mapping policy.
-            type: string
-            x-omitempty: true
-          IpV4Config:
-            description: Netmask, Gateway and DNS settings for IPv4 addresses.
-            $ref: '#/components/schemas/ippool.IpV4Config'
-            x-omitempty: true
-          To:
-            description: Last IPv4 address of the block.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-omitempty: true
-    ippool.Pool.Relationship:
-      description: A relationship to the 'ippool.Pool' resource, or the expanded 'ippool.Pool' resource, or the 'null' value.
-      x-one-of-name: ippool.Pool.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.Pool'
-      discriminator:
-        propertyName: ClassId
-    ippool.IpLease:
-      title: Ippool:Ip Lease
-      description: IpLease represents an IP address that is allocated from a pool to a specific entity like server profile.
-      x-allOf-name: ippool.IpLease
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractLease
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.IpLease', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.IpLease
-            default: ippool.IpLease
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.IpLease
-            default: ippool.IpLease
-            x-enum-as-string: true
-          IpType:
-            description: 'Type of the IP address requested.
-
-              * `IPv4` - IP V4 address type requested.
-
-              * `IPv6` - IP V6 address type requested.'
-            type: string
-            enum:
-            - IPv4
-            - IPv6
-            default: IPv4
-            x-createOnly: true
-            x-omitempty: true
-          IpV4Address:
-            description: IPv4 Address given as a lease to an external entity like server profiles.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-createOnly: true
-            x-omitempty: true
-          IpV4Config:
-            description: Netmask, Gateway and DNS settings for IPv4 addresses.
-            $ref: '#/components/schemas/ippool.IpV4Config'
-            x-createOnly: true
-            x-omitempty: true
-          IpV6Address:
-            description: IPv6 Address given as a lease to an external entity like server profiles.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-createOnly: true
-            x-omitempty: true
-          IpV6Config:
-            description: Netmask, Gateway and DNS settings for IPv6 addresses.
-            $ref: '#/components/schemas/ippool.IpV6Config'
-            x-createOnly: true
-            x-omitempty: true
-          PreferredIpV4Address:
-            description: The preferred IPv4 address can be specified only for dynamic lease requests. Intersight will make its best effort to allocate that IPv4 address if it is available in the pool. If the specified preferred IPv4 address is not in the range of the pool or if it is already leased or reserved, then the next available IPv4 address from the pool will be leased. Since this feature is specific to dynamic lease requests only, static lease request will fail if it specifies the preferred IPv4 address property. When the preferred IPv4 address property is specified in conjunction with 'migrate' property, existing static or dynamic lease will be replaced by the new lease. Migration also supported only for dynamic lease requests.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-createOnly: true
-            x-omitempty: true
-          PreferredIpV6Address:
-            description: The preferred IPv6 address can be specified only for dynamic lease requests. Intersight will make its best effort to allocate that IPv6 address if it is available in the pool. If the specified preferred IPv6 address is not in the range of the pool or if it is already leased or reserved, then the next available IPv6 address from the pool will be leased. Since this feature is specific to dynamic lease requests only, static lease request will fail if it specifies the preferred IPv6 address property. When the preferred IPv6 address property is specified in conjunction with 'migrate' property, existing static or dynamic lease will be replaced by the new lease. Migration also supported only for dynamic lease requests.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-createOnly: true
-            x-omitempty: true
-          Reservation:
-            description: The holder of a reference to reservation Moid and the specific details on lease condition for this reservation. Specified to allocate already reserved identities.
-            $ref: '#/components/schemas/ippool.ReservationReference'
-            x-createOnly: true
-            x-omitempty: true
-          AssignedToEntity:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          BlockLease:
-            $ref: '#/components/schemas/ippool.BlockLease.Relationship'
-            description: 'A reference to a ippoolBlockLease resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          Pool:
-            $ref: '#/components/schemas/ippool.Pool.Relationship'
-            description: 'A reference to a ippoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          PoolMember:
-            $ref: '#/components/schemas/ippool.PoolMember.Relationship'
-            description: 'A reference to a ippoolPoolMember resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Universe:
-            $ref: '#/components/schemas/ippool.Universe.Relationship'
-            description: 'A reference to a ippoolUniverse resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-    ippool.PoolMember:
-      title: Ippool:Pool Member
-      description: PoolMember represents a single IPv4 and or IPv6 address that is part of a pool.
-      x-allOf-name: ippool.PoolMember
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractIdPoolMember
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.PoolMember', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.PoolMember
-            default: ippool.PoolMember
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.PoolMember
-            default: ippool.PoolMember
-            x-enum-as-string: true
-          IpType:
-            description: 'Type of the IP address requested.
-
-              * `IPv4` - IP V4 address type requested.
-
-              * `IPv6` - IP V6 address type requested.'
-            type: string
-            enum:
-            - IPv4
-            - IPv6
-            default: IPv4
-            readOnly: true
-            x-omitempty: true
-          IpV4Address:
-            description: IPv4 Address of this pool member.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            readOnly: true
-            x-omitempty: true
-          IpV6Address:
-            description: IPv6 Address of this pool member.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            readOnly: true
-            x-omitempty: true
-          AssignedToEntity:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          IpBlock:
-            $ref: '#/components/schemas/ippool.ShadowBlock.Relationship'
-            description: 'A reference to a ippoolShadowBlock resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Peer:
-            $ref: '#/components/schemas/ippool.IpLease.Relationship'
-            description: 'A reference to a ippoolIpLease resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Pool:
-            $ref: '#/components/schemas/ippool.ShadowPool.Relationship'
-            description: 'A reference to a ippoolShadowPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Reservation:
-            $ref: '#/components/schemas/ippool.Reservation.Relationship'
-            description: 'A reference to a ippoolReservation resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.ShadowPool.Relationship:
-      description: A relationship to the 'ippool.ShadowPool' resource, or the expanded 'ippool.ShadowPool' resource, or the 'null' value.
-      x-one-of-name: ippool.ShadowPool.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.ShadowPool'
-      discriminator:
-        propertyName: ClassId
-    ippool.Pool.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.Pool' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.Pool' resources."
-      x-one-of-name: ippool.Pool.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.Pool.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.ShadowBlock.List:
-      title: List of 'ippool.ShadowBlock' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.ShadowBlock'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.ShadowBlock' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.ShadowBlock'
-    ippool.IpV6Config:
-      title: Ippool:Ip V6 Config
-      description: Network interface configuration data for IPv6 interfaces. Netmask, Gateway and DNS settings.
-      x-allOf-name: ippool.IpV6Config
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.IpV6Config', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.IpV6Config
-            default: ippool.IpV6Config
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.IpV6Config
-            default: ippool.IpV6Config
-            x-enum-as-string: true
-          Gateway:
-            description: IP address of the default IPv6 gateway.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-omitempty: true
-          Prefix:
-            description: A prefix length which masks the  IP address and divides the IP address into network address and host address.
-            type: integer
-            format: int64
-            minimum: 0
-            maximum: 127
-            x-omitempty: true
-          PrimaryDns:
-            description: IP Address of the primary Domain Name System (DNS) server.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-omitempty: true
-          SecondaryDns:
-            description: IP Address of the secondary Domain Name System (DNS) server.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-omitempty: true
-    ippool.Reservation:
-      title: Ippool:Reservation
-      description: The IP reservation object, used to hold reserved addresses.
-      x-allOf-name: ippool.Reservation
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.Reservation
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.Reservation', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.Reservation
-            default: ippool.Reservation
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.Reservation
-            default: ippool.Reservation
-            x-enum-as-string: true
-          Identity:
-            description: IP identity to be reserved.
-            type: string
-            x-createOnly: true
-            x-omitempty: true
-          IpType:
-            description: 'Type of the IP address that needs to be reserved.
-
-              * `IPv4` - IP V4 address type requested.
-
-              * `IPv6` - IP V6 address type requested.'
-            type: string
-            enum:
-            - IPv4
-            - IPv6
-            default: IPv4
-            x-createOnly: true
-            x-omitempty: true
-          IpV4Address:
-            description: IPv4 Address to be reserved.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            readOnly: true
-            x-omitempty: true
-          IpV6Address:
-            description: IPv6 Address to be reserved.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            readOnly: true
-            x-omitempty: true
-          VrfMoid:
-            description: The moid of the Virtual Routing and Forwarding MO.
-            type: string
-            x-createOnly: true
-            x-omitempty: true
-          BlockHead:
-            $ref: '#/components/schemas/ippool.ShadowBlock.Relationship'
-            description: 'A reference to a ippoolShadowBlock resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Organization:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/organization.Organization.Relationship
-            description: 'A reference to a organizationOrganization resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            x-createOnly: true
-          Pool:
-            $ref: '#/components/schemas/ippool.Pool.Relationship'
-            description: 'A reference to a ippoolPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          PoolMember:
-            $ref: '#/components/schemas/ippool.PoolMember.Relationship'
-            description: 'A reference to a ippoolPoolMember resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          ShadowPool:
-            $ref: '#/components/schemas/ippool.ShadowPool.Relationship'
-            description: 'A reference to a ippoolShadowPool resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Universe:
-            $ref: '#/components/schemas/ippool.Universe.Relationship'
-            description: 'A reference to a ippoolUniverse resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-          Vrf:
-            $ref: '#/components/schemas/vrf.Vrf.Relationship'
-            description: 'A reference to a vrfVrf resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.Universe.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.Universe' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.Universe' resources."
-      x-one-of-name: ippool.Universe.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.Universe.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.IpV6Block:
-      title: Ippool:Ip V6 Block
-      description: A block of IPv6 addresses.
-      x-allOf-name: ippool.IpV6Block
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.AbstractBlockType
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.IpV6Block', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.IpV6Block
-            default: ippool.IpV6Block
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.IpV6Block
-            default: ippool.IpV6Block
-            x-enum-as-string: true
-          From:
-            description: First IPv6 address of the block.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-omitempty: true
-          IdMappingPolicyMoid:
-            description: The managed object ID of the ID mapping policy.
-            type: string
-            x-omitempty: true
-          IpV6Config:
-            description: Netmask, Gateway and DNS settings for IPv6 addresses.
-            $ref: '#/components/schemas/ippool.IpV6Config'
-            x-omitempty: true
-          To:
-            description: Last IPv6 address of the block.
-            type: string
-            pattern: ^$|^(([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:([0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{0,4}|:[0-9A-Fa-f]{1,4})?|(:[0-9A-Fa-f]{1,4}){0,2})|(:[0-9A-Fa-f]{1,4}){0,3})|(:[0-9A-Fa-f]{1,4}){0,4})|:(:[0-9A-Fa-f]{1,4}){0,5})((:[0-9A-Fa-f]{1,4}){2}|:(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])(\.(25[0-5]|(2[0-4]|1[0-9]|[1-9])?[0-9])){3})|(([0-9A-Fa-f]{1,4}:){1,6}|:):[0-9A-Fa-f]{0,4}|([0-9A-Fa-f]{1,4}:){7}:)$
-            x-omitempty: true
-    ippool.Pool.List:
-      title: List of 'ippool.Pool' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.Pool'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.Pool' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Pool'
-    ippool.Reservation.List:
-      title: List of 'ippool.Reservation' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.Reservation'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.Reservation' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.Reservation'
-    ippool.ReservationReference:
-      title: Ippool:Reservation Reference
-      description: The reference to the reservation object.
-      x-allOf-name: ippool.ReservationReference
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/pool.ReservationReference
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.ReservationReference', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.ReservationReference
-            default: ippool.ReservationReference
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.ReservationReference
-            default: ippool.ReservationReference
-            x-enum-as-string: true
-          ConsumerName:
-            description: The consumer name for which the reserved IP would be used.
-            type: string
-            x-omitempty: true
-          ConsumerType:
-            description: 'The consumer type for which the reserved IP would be used.
-
-              * `OutofbandIpv4-Access` - IP reservation would be used for out of band management.
-
-              * `InbandIpv4-Access` - IP reservation would be used for inband management.
-
-              * `InbandIpv6-Access` - IP reservation would be used for inband management.
-
-              * `ISCSI` - IP reservation would be used for ISCSI management.'
-            type: string
-            enum:
-            - OutofbandIpv4-Access
-            - InbandIpv4-Access
-            - InbandIpv6-Access
-            - ISCSI
-            default: OutofbandIpv4-Access
-            x-omitempty: true
-    ippool.BlockLease.Relationship:
-      description: A relationship to the 'ippool.BlockLease' resource, or the expanded 'ippool.BlockLease' resource, or the 'null' value.
-      x-one-of-name: ippool.BlockLease.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.BlockLease'
-      discriminator:
-        propertyName: ClassId
-    ippool.IpLease.List:
-      title: List of 'ippool.IpLease' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.IpLease'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.IpLease' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.IpLease'
-    ippool.IpLease.Relationship:
-      description: A relationship to the 'ippool.IpLease' resource, or the expanded 'ippool.IpLease' resource, or the 'null' value.
-      x-one-of-name: ippool.IpLease.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.IpLease'
-      discriminator:
-        propertyName: ClassId
-    ippool.ShadowPool.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.ShadowPool' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.ShadowPool' resources."
-      x-one-of-name: ippool.ShadowPool.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.ShadowPool.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.PoolMember.Relationship:
-      description: A relationship to the 'ippool.PoolMember' resource, or the expanded 'ippool.PoolMember' resource, or the 'null' value.
-      x-one-of-name: ippool.PoolMember.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/ippool.PoolMember'
-      discriminator:
-        propertyName: ClassId
-    ippool.IpLease.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.IpLease' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.IpLease' resources."
-      x-one-of-name: ippool.IpLease.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.IpLease.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.BlockLease.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.BlockLease' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.BlockLease' resources."
-      x-one-of-name: ippool.BlockLease.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.BlockLease.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.Reservation.Response:
-      description: "The response body of a HTTP GET request for the 'ippool.Reservation' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ippool.Reservation' resources."
-      x-one-of-name: ippool.Reservation.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ippool.Reservation.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ippool.IpV4Config:
-      title: Ippool:Ip V4 Config
-      description: Network interface configuration data for IPv4 interfaces. Netmask, Gateway and DNS settings.
-      x-allOf-name: ippool.IpV4Config
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'ippool.IpV4Config', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ippool.IpV4Config
-            default: ippool.IpV4Config
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ippool.IpV4Config
-            default: ippool.IpV4Config
-            x-enum-as-string: true
-          Gateway:
-            description: IP address of the default IPv4 gateway.
-            type: string
-            pattern: ^$|^([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-omitempty: true
-          Netmask:
-            description: A subnet mask is a 32-bit number that masks an IP address and divides the IP address into network address and host address.
-            type: string
-            pattern: ^$|^(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))$
-            x-omitempty: true
-          PrimaryDns:
-            description: IP Address of the primary Domain Name System (DNS) server.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-omitempty: true
-          SecondaryDns:
-            description: IP Address of the secondary Domain Name System (DNS) server.
-            type: string
-            pattern: ^$|^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$
-            x-omitempty: true
-    ippool.ShadowPool.List:
-      title: List of 'ippool.ShadowPool' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.ShadowPool'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.ShadowPool' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.ShadowPool'
-    vrf.Vrf:
-      title: Vrf:Vrf
-      description: 'The Vrf object implements an isolated Layer 3 domain, enabling advanced networking configurations and routing.
-
-        #### Purpose
-
-        The Vrf object provides a framework for creating isolated networking domains, facilitating advanced routing and network management within systems.
-
-        #### Key Concepts
-
-        - **Layer 3 Isolation:** Implements isolated Layer 3 domains, supporting advanced network configurations and management.
-
-        - **Network Management:** Facilitates structured management of routing and forwarding, ensuring efficient network operations.
-
-        - **Access Control:** Enables secure configuration and management of VRFs, ensuring authorized access and operations.'
-      x-allOf-name: vrf.Vrf
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'vrf.Vrf', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - vrf.Vrf
-            default: vrf.Vrf
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - vrf.Vrf
-            default: vrf.Vrf
-            x-enum-as-string: true
-          Description:
-            description: Description to help identify or describe this VRF.
-            type: string
-            x-omitempty: true
-          Name:
-            description: Name of the Virtual Routing and Forwarding Instance.
-            type: string
-            x-omitempty: true
-          Account:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.Account.Relationship
-            description: 'A reference to a iamAccount resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ippool.PoolMember.List:
-      title: List of 'ippool.PoolMember' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ippool.PoolMember'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ippool.PoolMember' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ippool.PoolMember'
   links:
     GetIamAccountByMoid:
       operationId: GetIamAccountByMoid
