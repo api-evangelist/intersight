@@ -130,7 +130,7 @@
     "intersight-workflow-api-openapi.yml"
   ],
   "archived": [
-    "deleted 6 superseded output(s) from the previous generation"
+    "deleted 5 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -161,8 +161,8 @@
     "tag 'organization' spans 2 source specs (intersight-system-openapi.json, intersight-workflows-openapi.json): per-path servers applied",
     "tag 'resource' spans 2 source specs (intersight-system-openapi.json, intersight-workflows-openapi.json): per-path servers applied",
     "tag 'task' spans 2 source specs (intersight-system-openapi.json, intersight-workflows-openapi.json): per-path servers applied",
-    "superseded outputs removed: intersight-certificate-management-api-openapi.yml, intersight-ip-pool-api-openapi.yml, intersight-o-auth-api-openapi.yml, intersight-on-prem-api-openapi.yml, intersight-open-api-api-openapi.yml \u2026",
-    "apis.yml register: written (+6 apis, 117 total)"
+    "superseded outputs removed: intersight-certificate-management-api-openapi.yml, intersight-ip-pool-api-openapi.yml, intersight-on-prem-api-openapi.yml, intersight-open-api-api-openapi.yml, intersight-partner-integration-api-openapi.yml",
+    "apis.yml register: written (+5 apis, 117 total)"
   ],
   "skipped": [
     "_original/intersight-telemetry-openapi.json: archived document superseded by a larger archived document",
@@ -234,7 +234,7 @@
     "intersight-niatelemetry-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "intersight-notification-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "intersight-ntp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "intersight-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "intersight-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "intersight-on-prem-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "intersight-open-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "intersight-oprs-api-openapi.yml: previously refined output, superseded by openapi/_original/",

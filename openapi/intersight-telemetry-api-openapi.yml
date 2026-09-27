@@ -413,23 +413,41 @@ paths:
                 $ref: '#/components/schemas/telemetry.DruidError'
 components:
   schemas:
-    telemetry.DruidOrFilter:
-      description: A logical OR expression filter.
+    telemetry.DruidGreatestLeastPostAggregator:
+      description: 'doubleGreatest and longGreatest computes the maximum of all fields and Double.NEGATIVE_INFINITY.
+
+        doubleLeast and longLeast computes the minimum of all fields and Double.POSITIVE_INFINITY.
+
+        The difference between the doubleMax aggregator and the doubleGreatest post-aggregator
+
+        is that doubleMax returns the highest value of all rows for one specific column while
+
+        doubleGreatest returns the highest value of multiple columns in one row.
+
+        These are similar to the SQL MAX and GREATEST functions.'
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
+      - type: object
+        properties:
+          name:
+            description: Output name for the post-aggregator.
+            type: string
+    telemetry.DruidQuerySpecInsensitiveContains:
+      description: A 'insensitive_contains' query spec. Note that an "insensitive_contains" search is equivalent to a "contains" search with "caseSensitive" false (or not provided).
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseQuerySpec'
       - type: object
         required:
-        - fields
         - type
+        - value
         properties:
           type:
             type: string
             enum:
-            - or
-          fields:
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidFilter'
+            - insensitive_contains
+          value:
+            description: A String value to search.
+            type: string
     telemetry.DruidAggregator:
       oneOf:
       - $ref: '#/components/schemas/telemetry.DruidCountAggregator'
@@ -468,6 +486,75 @@ components:
           stringAny: '#/components/schemas/telemetry.DruidStringAnyAggregator'
           thetaSketch: '#/components/schemas/telemetry.DruidThetaSketchAggregator'
           filtered: '#/components/schemas/telemetry.DruidFilteredAggregator'
+    telemetry.DruidTimeSeriesRequest:
+      description: These types of queries take a timeseries query object and return an array of JSON objects where each object represents a value asked for by the timeseries query.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
+      - type: object
+        required:
+        - dataSource
+        - intervals
+        - granularity
+        properties:
+          dataSource:
+            description: 'A String or Object defining the data source to query, very similar to a table in
+
+              a relational database. However, a query can also masquerade as a data source,
+
+              providing subquery-like functionality. Query data sources are currently supported
+
+              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
+            $ref: '#/components/schemas/telemetry.DruidDataSource'
+          descending:
+            description: Whether to make descending ordered result. Default is false(ascending).
+            type: boolean
+          intervals:
+            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
+            type: array
+            items:
+              description: A ISO-8601 time interval. The ISO 8601 interval is a representation of a time interval with optional UTC offset.
+              type: string
+            example:
+            - 2020-01-01T00:00:00.000/2020-01-03T00:00:00.000
+            - 2020-01-01T00:00:00.000Z/2020-01-03T00:00:00.000Z
+            - 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z
+            - 2007-03-01T13:00:00Z/P1Y2M10DT2H30M
+            - P1Y2M10DT2H30M/2008-05-11T15:30:00Z
+          granularity:
+            $ref: '#/components/schemas/telemetry.DruidGranularity'
+          filter:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+          aggregations:
+            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidAggregator'
+          postAggregations:
+            description: Post-aggregations are specifications of processing that should happen on aggregated values as they come out of Apache Druid. If you include a post aggregation as part of a query, make sure to include all aggregators the post-aggregator requires.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidPostAggregator'
+          virtualColumns:
+            description: Virtual columns are columns that are computed on the fly during query execution. It can potentially draw from multiple underlying columns, although a virtual column always presents itself as a single column. Virtual columns can be referenced by their output names to be used as dimensions or as inputs to filters and aggregators.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidVirtualColumn'
+          limit:
+            description: An integer that limits the number of results. The default is unlimited.
+            type: integer
+            format: int32
+          context:
+            $ref: '#/components/schemas/telemetry.DruidQueryContext'
+    telemetry.DruidInvertedTopNMetricSpec:
+      description: Sort dimension values in inverted order, i.e inverts the order of the delegate metric spec. It can be used to sort the values in ascending order.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseTopNMetricSpec'
+      - type: object
+        required:
+        - metric
+        properties:
+          metric:
+            $ref: '#/components/schemas/telemetry.DruidTopNMetricSpec'
     telemetry.DruidSearchResult:
       description: Dimension value matching the search query.
       type: object
@@ -482,73 +569,311 @@ components:
           items:
             description: A dimension value matching search query
             type: object
-    telemetry.DruidDefaultLimitSpec:
-      description: The default limit spec takes a limit and the list of columns to do an orderBy operation over.
+    telemetry.DruidBaseTopNMetricSpec:
+      description: A Druid TopN metric spec.
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          description: The dimension spec type.
+          type: string
+          enum:
+          - numeric
+          - dimension
+          - inverted
+    telemetry.DruidCountAggregator:
+      description: Computes the count of Druid rows that match the filters. The count aggregator counts the number of Druid rows, which does not always reflect the number of raw events ingested. This is because Druid can be configured to roll up data at ingestion time To count the number of ingested rows of data, include a count aggregator at ingestion time, and a longSum aggregator at query time.
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseLimitSpec'
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - type: object
+        properties:
+          name:
+            description: the output name
+            type: string
+    telemetry.DruidFirstLastAggregator:
+      description: '(Double/Float/Long) First and Last aggregator cannot be used in ingestion spec, and should
+
+        only be specified as part of queries.
+
+        Note that queries with first/last aggregators on a segment created with rollup enabled will
+
+        return the rolled up value, and not the last value within the raw ingested data.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
       - type: object
         required:
-        - limit
-        - columns
+        - name
+        - fieldName
         properties:
-          limit:
-            description: How many rows to return. If not specified, all rows will be returned.
-            type: integer
-          columns:
-            description: Optional list of columns to order by.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidOrderByColumnSpec'
-    telemetry.DruidRegexFilter:
-      description: 'The regular expression filter is similar to the selector filter, but using regular expressions.
+          name:
+            description: Output name for the first/last value.
+            type: string
+          fieldName:
+            description: Name of the metric column.
+            type: string
+    telemetry.DruidExtractionFunctionTimeFormat:
+      description: 'Returns the dimension value formatted according to the given format string, time zone, and locale.
 
-        It matches the specified dimension with the given pattern.
+        For __time dimension values, this formats the time value bucketed by the aggregation granularity
 
-        Note that it is often more optimal to use a like filter instead of a regex for simple matching of prefixes.'
+        For a regular dimension, it assumes the string is formatted in ISO-8601 date and time format.'
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
       - type: object
         required:
         - type
-        - dimension
-        - pattern
         properties:
           type:
             type: string
             enum:
-            - regex
-          dimension:
-            description: Input column or virtual column name to filter.
+            - timeFormat
+          format:
+            description: Date time format for the resulting dimension value, in Joda Time DateTimeFormat, or null to use the default ISO8601 format.
             type: string
-          pattern:
-            description: String pattern to match - any standard Java regular expression.
+          locale:
+            description: Locale (language and country) to use, given as a IETF BCP 47 language tag, e.g. en-US, en-GB, fr-FR, fr-CA, etc.
             type: string
-          extractionFn:
-            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidDefaultDimensionSpec:
-      description: Returns dimension values as is and optionally renames the dimension.
+          timeZone:
+            description: Time zone to use in IANA tz database format, e.g. Europe/Berlin (this can possibly be different than the aggregation time-zone)
+            type: string
+          granularity:
+            $ref: '#/components/schemas/telemetry.DruidGranularity'
+          asMillis:
+            description: boolean value, set to true to treat input strings as millis rather than ISO8601 strings. Additionally, if format is null or not specified, output will be in millis rather than ISO8601.
+            type: boolean
+    telemetry.DruidBaseHavingFilter:
+      type: object
+      description: 'A having clause is a JSON object identifying which rows from a groupBy query should be returned,
+
+        by specifying conditions on aggregated values.
+
+        It is essentially the equivalent of the HAVING clause in SQL.'
+      required:
+      - type
+      properties:
+        type:
+          description: The having filter type.
+          type: string
+          enum:
+          - filter
+          - greaterThan
+          - equalTo
+          - lessThan
+          - dimSelector
+    telemetry.DruidThetaSketchOperationsPostAggregator:
+      description: ''
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDimensionSpec'
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
       - type: object
-        required:
-        - dimension
-        - outputName
-        - outputType
         properties:
-          dimension:
-            description: Attributes or fields that provide context for metrics.
+          name:
+            description: Output name for the post-aggregator.
             type: string
-          outputName:
-            description: Name of the output dimension.
-            type: string
-          outputType:
-            description: Type of the output dimension.
+          func:
             type: string
             enum:
-            - STRING
+            - UNION
+            - INTERSECT
+            - NOT
+          size:
+            description: must be max of size from sketches in fields input.
+            type: integer
+            default: 16384
+    telemetry.DruidStringAnyAggregator:
+      description: 'Returns any value including null. This aggregator can simplify and optimize
+
+        the performance by returning the first encountered value (including null).'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - type: object
+        required:
+        - name
+        - fieldName
+        properties:
+          name:
+            description: Output name for the 'any' value.
+            type: string
+          fieldName:
+            description: Name of the metric column.
+            type: string
+          maxStringBytes:
+            description: Size in bytes limit on aggregation size.
+            type: integer
+            default: 1024
+    telemetry.DruidExtractionFunctionSubstring:
+      description: 'Returns a substring of the dimension value starting from the supplied index and of the desired length.
+
+        Both index and length are measured in the number of Unicode code units present in the string as if it were encoded in UTF-16.
+
+        Note that some Unicode characters may be represented by two code units.
+
+        If the desired length exceeds the length of the dimension value, the remainder of the string starting at index will be returned.
+
+        If index is greater than the length of the dimension value, null will be returned.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        - index
+        properties:
+          type:
+            type: string
+            enum:
+            - substring
+          index:
+            type: integer
+            format: int32
+          length:
+            description: The length may be omitted for substring to return the remainder of the dimension value starting from index, or null if index greater than the length of the dimension value.
+            type: integer
+            format: int32
+    telemetry.DruidSegmentMetadataResult:
+      description: Metadata about a Druid segment
+      type: object
+      properties:
+        id:
+          description: An identifier for the metadata
+          type: string
+        intervals:
+          description: String representation of the interval queried
+          type: string
+        columns:
+          description: A map of columns and their properties
+          type: object
+        aggregators:
+          description: A map of metrics and their properties
+          type: object
+        queryGranularity:
+          description: query granularity of data stored in segments, may be 'null'
+          type: object
+        size:
+          description: estimated total segment byte size as if stored as text
+          type: integer
+        numRows:
+          description: number of rows stored in segment
+          type: integer
+    telemetry.DruidDataSourceMetadataRequest:
+      description: 'Data Source Metadata queries return metadata information for a dataSource.
+
+        These queries return information about the timestamp of latest ingested event for the dataSource.
+
+        This is the ingested event without any consideration of rollup.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
+      - type: object
+        required:
+        - dataSource
+        properties:
+          dataSource:
+            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
+            $ref: '#/components/schemas/telemetry.DruidDataSource'
+          context:
+            $ref: '#/components/schemas/telemetry.DruidQueryContext'
+    telemetry.DruidVirtualColumn:
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidExpressionVirtualColumn'
+      - $ref: '#/components/schemas/telemetry.NestedFieldVirtualColumn'
+      - $ref: '#/components/schemas/telemetry.DruidListFilteredVirtualColumn'
+      discriminator:
+        propertyName: type
+        mapping:
+          expression: '#/components/schemas/telemetry.DruidExpressionVirtualColumn'
+          nested-field: '#/components/schemas/telemetry.NestedFieldVirtualColumn'
+          mv-filtered: '#/components/schemas/telemetry.DruidListFilteredVirtualColumn'
+    telemetry.DruidOrderByColumnSpec:
+      description: OrderByColumnSpecs indicate how to do order by operations. Each order-by condition can be a jsonString or a map.
+      type: object
+      properties:
+        dimension:
+          description: Any dimension or metric name.
+          type: string
+        direction:
+          description: Direction of sorting. The default value is ascending.
+          type: string
+          enum:
+          - ascending
+          - descending
+        dimensionOrder:
+          description: Collation function for sorting. The default value is lexicographic.
+          type: string
+          enum:
+          - lexicographic
+          - alphanumeric
+          - strlen
+          - numeric
+    telemetry.DruidScanResult:
+      description: Druid Scan row result.
+      type: object
+      properties:
+        segmentId:
+          description: The identifier for the row(s)' segment.
+          type: string
+        columns:
+          description: A list of columns returned in the row(s).
+          type: array
+          items:
+            description: A column name.
+            type: string
+        events:
+          description: Row results.
+          type: array
+          items:
+            description: A scan row result. If the formatResult is 'list', the value is an object. If the formatResult is 'compactedList, the value is an array that contains dimension or metrics value. A dimension may be a string, number, array, object, or the null value. Metrics are numbers (float or integer).
+    telemetry.DruidAggregateSearchSpec:
+      description: Generic search specification descriptor
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidInsensitiveContainsSearchSpec'
+      - $ref: '#/components/schemas/telemetry.DruidFragmentSearchSpec'
+      - $ref: '#/components/schemas/telemetry.DruidContainsSearchSpec'
+      - $ref: '#/components/schemas/telemetry.DruidRegexSearchSpec'
+      discriminator:
+        propertyName: type
+        mapping:
+          insensitive_contains: '#/components/schemas/telemetry.DruidInsensitiveContainsSearchSpec'
+          fragment: '#/components/schemas/telemetry.DruidFragmentSearchSpec'
+          contains: '#/components/schemas/telemetry.DruidContainsSearchSpec'
+          regex: '#/components/schemas/telemetry.DruidRegexSearchSpec'
+    telemetry.DruidExpressionVirtualColumn:
+      description: 'A virtual column defined as a Druid expression. Supported Druid expressions are documented at
+
+        https://druid.apache.org/docs/latest/misc/math-expr.html.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseVirtualColumn'
+      - type: object
+        properties:
+          name:
+            description: Name of the virtual column.
+            type: string
+          expression:
+            description: The Druid expression.
+            type: string
+          outputType:
+            description: Type of the resulting column.
+            type: string
+            enum:
             - LONG
             - FLOAT
-            default: STRING
+            - DOUBLE
+            - STRING
+            - ARRAY
+            - COMPLEX
+            default: FLOAT
+    telemetry.DruidGroupByResult:
+      description: A time series result based on a provided groupBy query. Result can contain multiple dimensions and values.
+      type: object
+      properties:
+        timestamp:
+          description: The ISO 8601 timestamp.
+          type: string
+          format: date-time
+        version:
+          description: The version of the Druid GroupBy Engine used in query.
+          type: string
+        event:
+          description: Grouped aggregate dimension(s) with values.
+          type: object
     telemetry.DruidArithmeticPostAggregator:
       description: 'The arithmetic post-aggregator applies the provided function to the given fields from left to right.
 
@@ -584,30 +909,131 @@ components:
 
               numericFirst ordering always returns finite values first, followed by NaN, and infinite values last.'
             type: string
-    telemetry.DruidHavingFilter:
+    telemetry.DruidFieldAccessorPostAggregator:
+      description: 'These post-aggregators return the value produced by the specified aggregator.
+
+        ''fieldName'' refers to the output name of the aggregator given in the aggregations portion of the query.
+
+        For complex aggregators, like "cardinality" and "hyperUnique", the type of the post-aggregator
+
+        determines what the post-aggregator will return. Use type "fieldAccess" to return the raw aggregation
+
+        object, or use type "finalizingFieldAccess" to return a finalized value, such as an estimated cardinality.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
+      - type: object
+        properties:
+          name:
+            description: Output name for the post-aggregator.
+            type: string
+          fieldName:
+            description: Name of the metric column.
+            type: string
+    telemetry.DruidQueryContext:
+      description: 'The query context is used for various query configuration parameters.
+
+        Can be used to modify query behavior, including grand totals and zero-filling.'
+      type: object
+      properties:
+        grandTotal:
+          description: Druid can include an extra "grand totals" row as the last row of a timeseries result set. To enable this, set "grandTotal" to true. The grand totals row will appear as the last row in the result array, and will have no timestamp. It will be the last row even if the query is run in "descending" mode. Post-aggregations in the grand totals row will be computed based upon the grand total aggregations.
+          type: boolean
+        skipEmptyBuckets:
+          description: Timeseries queries normally fill empty interior time buckets with zeroes. Time buckets that lie completely outside the data interval are not zero-filled. You can disable all zero-filling with this flag. In this mode, the data point for empty buckets are omitted from the results.
+          type: boolean
+        timeout:
+          description: 'Query timeout in milliseconds, beyond which unfinished queries will be cancelled.
+
+            0 timeout means no timeout.'
+          type: integer
+        priority:
+          description: Query Priority. Queries with higher priority get precedence for computational resources.
+          type: integer
+        queryId:
+          description: Unique identifier given to this query. If a query ID is set or known, this can be used to cancel the query.
+          type: string
+        useCache:
+          description: Flag indicating whether to leverage the query cache for this query. When set to false, it disables reading from the query cache for this query. When set to true, Apache Druid uses druid.broker.cache.useCache or druid.historical.cache.useCache to determine whether or not to read from the query cache.
+          type: boolean
+        populateCache:
+          description: Flag indicating whether to save the results of the query to the query cache. Primarily used for debugging. When set to false, it disables saving the results of this query to the query cache. When set to true, Druid uses druid.broker.cache.populateCache or druid.historical.cache.populateCache to determine whether or not to save the results of this query to the query cache.
+          type: boolean
+        useResultLevelCache:
+          description: Flag indicating whether to leverage the result level cache for this query. When set to false, it disables reading from the query cache for this query. When set to true, Druid uses druid.broker.cache.useResultLevelCache to determine whether or not to read from the result-level query cache.
+          type: boolean
+        populateResultLevelCache:
+          description: Flag indicating whether to save the results of the query to the result level cache. Primarily used for debugging. When set to false, it disables saving the results of this query to the query cache. When set to true, Druid uses druid.broker.cache.populateResultLevelCache to determine whether or not to save the results of this query to the result-level query cache.
+          type: boolean
+        bySegment:
+          description: Return "by segment" results. Primarily used for debugging, setting it to true returns results associated with the data segment they came from.
+          type: boolean
+        finalize:
+          description: Flag indicating whether to "finalize" aggregation results. Primarily used for debugging. For instance, the hyperUnique aggregator will return the full HyperLogLog sketch instead of the estimated cardinality when this flag is set to false.
+          type: boolean
+        chunkPeriod:
+          description: At the Broker process level, long interval queries (of any type) may be broken into shorter interval queries to parallelize merging more than normal. Broken up queries will use a larger share of cluster resources, but, if you use groupBy "v1, it may be able to complete faster as a result. Use ISO 8601 periods. For example, if this property is set to P1M (one month), then a query covering a year would be broken into 12 smaller queries. The broker uses its query processing executor service to initiate processing for query chunks, so make sure druid.processing.numThreads is configured appropriately on the broker. groupBy queries do not support chunkPeriod by default, although they do if using the legacy "v1" engine. This context is deprecated since it's only useful for groupBy "v1", and will be removed in the future releases.
+          type: string
+        maxScatterGatherBytes:
+          description: Maximum number of bytes gathered from data processes such as Historicals and realtime processes to execute a query. This parameter can be used to further reduce maxScatterGatherBytes limit at query time.
+          type: integer
+        maxQueuedBytes:
+          description: Maximum number of bytes queued per query before exerting backpressure on the channel to the data server. Similar to maxScatterGatherBytes, except unlike that configuration, this one will trigger backpressure rather than query failure. Zero means disabled.
+          type: integer
+        serializeDateTimeAsLong:
+          description: If true, DateTime is serialized as long in the result returned by Broker and the data transportation between Broker and compute process.
+          type: boolean
+        serializeDateTimeAsLongInner:
+          description: If true, DateTime is serialized as long in the data transportation between Broker and compute process.
+          type: boolean
+        enableParallelMerge:
+          description: Enable parallel result merging on the Broker. Note that druid.processing.merge.useParallelMergePool must be enabled for this setting to be set to true.
+          type: boolean
+        parallelMergeParallelism:
+          description: Maximum number of parallel threads to use for parallel result merging on the Broker.
+          type: integer
+        parallelMergeInitialYieldRows:
+          description: Number of rows to yield per ForkJoinPool merge task for parallel result merging on the Broker, before forking off a new task to continue merging sequences.
+          type: integer
+        parallelMergeSmallBatchRows:
+          description: Size of result batches to operate on in ForkJoinPool merge tasks for parallel result merging on the Broker.
+          type: integer
+    telemetry.DruidExtractionFunctionPartial:
+      description: Returns the dimension value unchanged if the regular expression matches, otherwise returns null.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        - expr
+        properties:
+          type:
+            type: string
+            enum:
+            - partial
+          expr:
+            type: string
+    telemetry.DruidHavingQueryFilter:
+      description: Query filter HavingSpecs allow all Druid query filters to be used in the Having part of the query.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
+      - type: object
+        required:
+        - filter
+        properties:
+          filter:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+    telemetry.DruidTopNMetricSpec:
+      description: A Druid TopN metric spec.
       oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidHavingQueryFilter'
-      - $ref: '#/components/schemas/telemetry.DruidHavingNumericFilter'
-      - $ref: '#/components/schemas/telemetry.DruidHavingDimensionSelectorFilter'
+      - $ref: '#/components/schemas/telemetry.DruidNumericTopNMetricSpec'
+      - $ref: '#/components/schemas/telemetry.DruidDimensionTopNMetricSpec'
+      - $ref: '#/components/schemas/telemetry.DruidInvertedTopNMetricSpec'
       discriminator:
         propertyName: type
         mapping:
-          having: '#/components/schemas/telemetry.DruidHavingQueryFilter'
-          greaterThan: '#/components/schemas/telemetry.DruidHavingNumericFilter'
-          equalTo: '#/components/schemas/telemetry.DruidHavingNumericFilter'
-          lessThan: '#/components/schemas/telemetry.DruidHavingNumericFilter'
-          dimSelector: '#/components/schemas/telemetry.DruidHavingDimensionSelectorFilter'
-    telemetry.DruidLookupDataSource:
-      description: Lookup datasources correspond to Druid's key-value lookup objects. In Druid SQL, they reside in the the lookup schema. They are preloaded in memory on all servers, so they can be accessed rapidly. They can be joined onto regular tables using the join operator. Lookup datasources are key-value oriented and always have exactly two columns, k (the key) and v (the value), and both are always strings. Lookups can be joined with a base table either using an explicit join, or by using the SQL LOOKUP function. However, the join operator must evaluate the condition on each row, whereas the LOOKUP function can defer evaluation until after an aggregation phase. This means that the LOOKUP function is usually faster than joining to a lookup datasource.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
-      - type: object
-        required:
-        - lookup
-        properties:
-          lookup:
-            description: the name of the lookup object.
-            type: string
+          numeric: '#/components/schemas/telemetry.DruidNumericTopNMetricSpec'
+          dimension: '#/components/schemas/telemetry.DruidDimensionTopNMetricSpec'
+          inverted: '#/components/schemas/telemetry.DruidInvertedTopNMetricSpec'
     telemetry.DruidSearchFilter:
       description: You can use search filters to filter on partial string matches.
       allOf:
@@ -627,6 +1053,689 @@ components:
             type: string
           query:
             $ref: '#/components/schemas/telemetry.DruidQuerySpec'
+          extractionFn:
+            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidDefaultLimitSpec:
+      description: The default limit spec takes a limit and the list of columns to do an orderBy operation over.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseLimitSpec'
+      - type: object
+        required:
+        - limit
+        - columns
+        properties:
+          limit:
+            description: How many rows to return. If not specified, all rows will be returned.
+            type: integer
+          columns:
+            description: Optional list of columns to order by.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidOrderByColumnSpec'
+    telemetry.DruidDataSource:
+      description: 'A data source is the Apache Druid equivalent of a database table. However, a query can also
+
+        masquerade as a data source, providing subquery-like functionality. Query data sources are
+
+        currently supported only by GroupBy queries.'
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidTableDataSource'
+      - $ref: '#/components/schemas/telemetry.DruidUnionDataSource'
+      - $ref: '#/components/schemas/telemetry.DruidQueryDataSource'
+      - $ref: '#/components/schemas/telemetry.DruidLookupDataSource'
+      - $ref: '#/components/schemas/telemetry.DruidJoinDataSource'
+      - $ref: '#/components/schemas/telemetry.DruidInlineDataSource'
+      discriminator:
+        propertyName: type
+        mapping:
+          table: '#/components/schemas/telemetry.DruidTableDataSource'
+          union: '#/components/schemas/telemetry.DruidUnionDataSource'
+          query: '#/components/schemas/telemetry.DruidQueryDataSource'
+          lookup: '#/components/schemas/telemetry.DruidLookupDataSource'
+          join: '#/components/schemas/telemetry.DruidJoinDataSource'
+          scan: '#/components/schemas/telemetry.DruidInlineDataSource'
+    telemetry.DruidExtractionFunctionStringFormat:
+      description: Returns the dimension value formatted according to the given format string.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        - format
+        properties:
+          type:
+            type: string
+            enum:
+            - stringFormat
+          format:
+            description: A sprintf expression. For example if you want to concat "[" and "]" before and after the actual dimension value, you need to specify "[%s]" as format string.
+            type: string
+          nullHandling:
+            type: string
+            enum:
+            - nullString
+            - emptyString
+            - returnNull
+    telemetry.DruidGranularity:
+      description: 'The granularity field determines how data gets bucketed across the time dimension,
+
+        or how it gets aggregated by hour, day, minute, etc.
+
+        It can be specified either as a string for simple granularities or as an object for arbitrary granularities.
+
+        See [Granularities](https://druid.apache.org/docs/latest/querying/granularities.html).'
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidDurationGranularity'
+      - $ref: '#/components/schemas/telemetry.DruidPeriodGranularity'
+      discriminator:
+        propertyName: type
+        mapping:
+          duration: '#/components/schemas/telemetry.DruidDurationGranularity'
+          period: '#/components/schemas/telemetry.DruidPeriodGranularity'
+    telemetry.DruidTopNResult:
+      description: Sorted time series results for a particular interval based on some criteria
+      type: object
+      properties:
+        timestamp:
+          description: The ISO 8601 timestamp.
+          type: string
+          format: date-time
+        result:
+          description: A sorted list of dimension values
+          type: array
+          items:
+            description: A dimension value matching criteria
+            type: object
+    telemetry.DruidLookupDataSource:
+      description: Lookup datasources correspond to Druid's key-value lookup objects. In Druid SQL, they reside in the the lookup schema. They are preloaded in memory on all servers, so they can be accessed rapidly. They can be joined onto regular tables using the join operator. Lookup datasources are key-value oriented and always have exactly two columns, k (the key) and v (the value), and both are always strings. Lookups can be joined with a base table either using an explicit join, or by using the SQL LOOKUP function. However, the join operator must evaluate the condition on each row, whereas the LOOKUP function can defer evaluation until after an aggregation phase. This means that the LOOKUP function is usually faster than joining to a lookup datasource.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
+      - type: object
+        required:
+        - lookup
+        properties:
+          lookup:
+            description: the name of the lookup object.
+            type: string
+    telemetry.DruidSearchRequest:
+      description: These types of queries returns dimension values that match the search specification
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
+      - type: object
+        required:
+        - dataSource
+        - intervals
+        - granularity
+        properties:
+          dataSource:
+            description: 'A String or Object defining the data source to query, very similar to a table in
+
+              a relational database. However, a query can also masquerade as a data source,
+
+              providing subquery-like functionality. Query data sources are currently supported
+
+              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
+            $ref: '#/components/schemas/telemetry.DruidDataSource'
+          intervals:
+            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
+            type: array
+            items:
+              description: A ISO-8601 time interval. The ISO 8601 interval is a representation of a time interval with optional UTC offset.
+              type: string
+            example:
+            - 2020-01-01T00:00:00.000/2020-01-03T00:00:00.000
+            - 2020-01-01T00:00:00.000Z/2020-01-03T00:00:00.000Z
+            - 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z
+            - 2007-03-01T13:00:00Z/P1Y2M10DT2H30M
+            - P1Y2M10DT2H30M/2008-05-11T15:30:00Z
+          granularity:
+            $ref: '#/components/schemas/telemetry.DruidGranularity'
+          filter:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+          aggregations:
+            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidAggregator'
+          searchDimensions:
+            description: The list of dimensions to run the search over. Excluding this means the search is run over all dimensions.
+            type: array
+            items:
+              description: Dimension name
+              type: string
+          query:
+            $ref: '#/components/schemas/telemetry.DruidAggregateSearchSpec'
+          limit:
+            description: An integer that limits the number of results. The default is unlimited.
+            type: integer
+            format: int32
+          context:
+            $ref: '#/components/schemas/telemetry.DruidQueryContext'
+    telemetry.DruidPeriodGranularity:
+      description: 'Period granularities are specified as arbitrary period combinations of years, months, weeks, hours,
+
+        minutes and seconds (e.g., P2W, P3M, PT1H30M, PT0.750S) in ISO8601 format.
+
+        They support specifying a time zone which determines where period boundaries start as well as the
+
+        timezone of the returned timestamps. By default, years start on the first of January, months start
+
+        on the first of the month and weeks start on Mondays unless an origin is specified.
+
+        Time zone is optional (defaults to UTC). Origin is optional (defaults to 1970-01-01T00:00:00 in the given time zone).'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseGranularity'
+      - type: object
+        required:
+        - period
+        properties:
+          period:
+            description: The period in ISO 8601 format. Examples are P2W, P3M, PT1H30M, PT0.750S.
+            type: string
+          timeZone:
+            description: An optional value specifying the time zone. Standard [IANA time zones](http://joda-time.sourceforge.net/timezones.html) are supported.
+            type: string
+    telemetry.DruidDimensionSpec:
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidDefaultDimensionSpec'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionDimensionSpec'
+      discriminator:
+        propertyName: type
+        mapping:
+          default: '#/components/schemas/telemetry.DruidDefaultDimensionSpec'
+          extraction: '#/components/schemas/telemetry.DruidExtractionDimensionSpec'
+    telemetry.DruidTimeBoundaryResult:
+      description: The earliest and latest timestamps for a dataset
+      type: object
+      properties:
+        timestamp:
+          description: The ISO 8601 timestamp.
+          type: string
+          format: date-time
+        result:
+          description: The corresponding timestamps for query. May contain maxTime, minTime, or both (default).
+          type: object
+    telemetry.DruidHyperUniquePostAggregator:
+      description: 'The hyperUniqueCardinality post aggregator is used to wrap a hyperUnique object such that
+
+        it can be used in post aggregations.
+
+        This post-aggregator will inherit the rounding behavior of the aggregator it references.
+
+        Note that this inheritance is only effective if you directly reference an aggregator.
+
+        Going through another post-aggregator, for example, will cause the user-specified rounding
+
+        behavior to get lost and default to "no rounding".'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
+      - type: object
+        properties:
+          name:
+            description: Output name for the post-aggregator.
+            type: string
+          fieldName:
+            description: The name field value of the hyperUnique aggregator.
+            type: string
+    telemetry.DruidExtractionFunctionCascade:
+      description: 'Provides chained execution of extraction functions.
+
+        A property of extractionFns contains an array of any extraction functions, which is executed in the array index order.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - cascade
+          extractionFns:
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidTimeBoundaryRequest:
+      description: Time boundary queries return the earliest and latest data points of a data set.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
+      - type: object
+        required:
+        - dataSource
+        properties:
+          dataSource:
+            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
+            $ref: '#/components/schemas/telemetry.DruidDataSource'
+          bound:
+            description: Optional, set to maxTime or minTime to return only the latest or earliest timestamp. Default to returning both if not set.
+            type: string
+            enum:
+            - maxTime
+            - minTime
+          filter:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+          context:
+            $ref: '#/components/schemas/telemetry.DruidQueryContext'
+    telemetry.DruidIntervalResult:
+      description: The time series results for a particular interval
+      type: object
+      properties:
+        timestamp:
+          description: The ISO 8601 timestamp.
+          type: string
+          format: date-time
+        result:
+          description: A map of output field names to metric values (long or double).
+          type: object
+    telemetry.DruidDimensionTopNMetricSpec:
+      description: This metric specification sorts TopN results by dimension value, using one of the sorting orders.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseTopNMetricSpec'
+      - type: object
+        properties:
+          ordering:
+            description: Specifies the sorting order. It can be one of the following values. "lexicographic", "alphanumeric", "numeric", "strlen". * lexicographic - Sorts values by converting Strings to their UTF-8 byte array representations and comparing lexicographically, byte-by-byte. * alphanumeric - Suitable for strings with both numeric and non-numeric content, e.g., "file12 sorts after file2". See https://github.com/amjjd/java-alphanum for more details on how this ordering sorts values. This ordering is not suitable for numbers with decimal points or negative numbers. * numeric - Sorts values as numbers, supports integers and floating point values. Negative values are supported. This sorting order will try to parse all string values as numbers. Unparseable values are treated as nulls, and nulls precede numbers. When comparing two unparseable values (e.g., "hello" and "world"), this ordering will sort by comparing the unparsed strings lexicographically. * strlen - Sorts values by the their string lengths. When there is a tie, this comparator falls back to using the String compareTo method. * version - Sorts values as versions, e.g., "10.0 sorts after 9.0", "1.0.0-SNAPSHOT sorts after 1.0.0".
+            type: string
+            enum:
+            - lexicographic
+            - alphanumeric
+            - numeric
+            - strlen
+            - version
+            default: lexicographic
+          previousStop:
+            description: The starting point of the sort. For example, if a previousStop value is 'b', all values before 'b' are discarded. This field can be used to paginate through all the dimension values.
+            type: string
+    telemetry.DruidHavingNumericFilter:
+      description: 'The simplest having clause is a numeric filter. Numeric filters can be used as the base filters
+
+        for more complex boolean expressions of filters.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
+      - type: object
+        required:
+        - aggregation
+        - value
+        properties:
+          aggregation:
+            description: aggregate metric
+            type: string
+          value:
+            description: Value for the filter to match.
+            type: number
+            format: double
+    telemetry.DruidExtractionFunctionTimeParsing:
+      description: 'Parses dimension values as timestamps using the given input format, and returns them formatted using the given output format.
+
+        Note, if you are working with the __time dimension, you should consider using the time extraction function instead instead,
+
+        which works on time value directly as opposed to string values.
+
+        If "joda" is true, time formats are described in the Joda DateTimeFormat documentation.
+
+        If "joda" is false (or unspecified) then formats are described in the SimpleDateFormat documentation.
+
+        In general, we recommend setting "joda" to true since Joda format strings are more common in Druid APIs
+
+        and since Joda handles certain edge cases (like weeks and weekyears near the start and end of calendar years) in a more ISO8601 compliant way.
+
+        If a value cannot be parsed using the provided timeFormat, it will be returned as-is.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - time
+          timeFormat:
+            type: string
+          resultFormat:
+            type: string
+          joda:
+            type: boolean
+    telemetry.DruidExtractionFunctionBucket:
+      description: Bucket extraction function is used to bucket numerical values in each range of the given size by converting them to the same base value. Non numeric values are converted to null.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - bucket
+          size:
+            description: The size of the buckets (optional, default 1).
+            type: integer
+            format: int32
+          offset:
+            description: The offset for the buckets (optional, default 0).
+            type: integer
+            format: int32
+    telemetry.DruidExtractionFunctionStrlen:
+      description: 'Returns the length of dimension values, as measured in the number of Unicode code units present in the string as if it were encoded in UTF-16.
+
+        Note that some Unicode characters may be represented by two code units.
+
+        null strings are considered as having zero length.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - strlen
+    telemetry.DruidRegexSearchSpec:
+      description: The specification for a Druid 'insensitive_contains' search
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
+      - required:
+        - regex
+        type: object
+        properties:
+          regex:
+            description: The regular expression to match.  If any part of a dimension value contains the pattern specified in this search query a "match" occurs.
+            type: string
+    telemetry.DruidExtractionFunctionLowerCase:
+      description: Returns the dimension values as all lower case. Optionally user can specify the language to use in order to perform lower transformation.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - lower
+          locale:
+            type: string
+    telemetry.DruidLikeFilter:
+      description: 'Like filters can be used for basic wildcard searches.
+
+        They are equivalent to the SQL LIKE operator.
+
+        Special characters supported are "%" (matches any number of characters) and "_" (matches any one character).'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - dimension
+        - pattern
+        properties:
+          type:
+            type: string
+            enum:
+            - like
+          dimension:
+            description: Input column or virtual column name to filter.
+            type: string
+          pattern:
+            description: String LIKE pattern, such as "foo%" or "___bar".
+            type: string
+          escape:
+            description: A string escape character that can be used to escape special characters.
+            type: string
+          extractionFn:
+            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidThetaSketchEstimatePostAggregator:
+      description: 'Post aggregator of type fieldAccess that refers to a thetaSketch aggregator or
+
+        that of type thetaSketchSetOp.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
+      - type: object
+        properties:
+          name:
+            description: Output name for the post-aggregator.
+            type: string
+          field:
+            description: Post aggregator of type fieldAccess that refers to a thetaSketch aggregator or that of type thetaSketchSetOp.
+            type: string
+    telemetry.DruidNotFilter:
+      description: A logical NOT expression filter.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - field
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - not
+          field:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+    telemetry.DruidHavingDimensionSelectorFilter:
+      description: The dimSelector filter will match rows with dimension values equal to the specified value.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
+      - type: object
+        required:
+        - dimension
+        - value
+        properties:
+          dimension:
+            description: dimension
+            type: string
+          value:
+            description: Value for the filter to match.
+            type: number
+            format: double
+    telemetry.DruidExtractionFunctionRegex:
+      description: Returns the first matching group for the given regular expression. If there is no match, it returns the dimension value as is.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        - expr
+        properties:
+          type:
+            type: string
+            enum:
+            - regex
+          expr:
+            type: string
+          index:
+            description: group to extract, default 1. If "index" is set, it will control which group from the match to extract. Index zero extracts the string matching the entire pattern.
+          replaceMissingValue:
+            description: If the replaceMissingValue property is true, the extraction function will transform dimension values that do not match the regex pattern to a user-specified String. Default value is false.
+            type: boolean
+          replaceMissingValueWith:
+            description: The replaceMissingValueWith property sets the String that unmatched dimension values will be replaced with, if replaceMissingValue is true. If replaceMissingValueWith is not specified, unmatched dimension values will be replaced with nulls.
+            type: string
+    telemetry.DruidInsensitiveContainsSearchSpec:
+      description: The specification for a Druid 'insensitive_contains' search
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
+      - required:
+        - value
+        type: object
+        properties:
+          value:
+            description: The value to match.  If any part of a dimension value contains the value specified in this search query spec, regardless of case, a "match" occurs.
+            type: string
+    telemetry.DruidEqualityFilter:
+      description: 'The equality filter is a replacement for the selector filter with the ability to match against any type of column.
+
+        The equality filter is designed to have more SQL compatible behavior than the selector filter and so can not match null values.
+
+        To match null values use the null filter.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - column
+        - matchValueType
+        - matchValue
+        properties:
+          type:
+            type: string
+            enum:
+            - equality
+          column:
+            description: Input column or virtual column name to filter.
+            type: string
+          matchValueType:
+            description: String specifying the type of value to match. For example STRING, LONG, DOUBLE, FLOAT, ARRAY<STRING>, ARRAY<LONG>, or any other Druid type. The matchValueType determines how Druid interprets the matchValue to assist in converting to the type of the matched column.
+            type: string
+          matchValue:
+            description: Value to match, must not be null.
+    telemetry.DruidBaseExtractionFunction:
+      type: object
+      description: 'Extraction functions define the transformation applied to each dimension value.
+
+        Transformations can be applied to both regular (string) dimensions, as well as the special __time dimension,
+
+        which represents the current time bucket according to the query aggregation granularity.'
+      required:
+      - type
+      properties:
+        type:
+          description: The type of extraction function.
+          type: string
+          enum:
+          - regex
+          - partial
+          - searchQuery
+          - substring
+          - strlen
+          - timeFormat
+          - time
+          - lookup
+          - cascade
+          - stringFormat
+          - upper
+          - lower
+          - bucket
+    telemetry.DruidExtractionDimensionSpec:
+      description: Returns dimension values transformed using the given extraction function.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseDimensionSpec'
+      - type: object
+        required:
+        - dimension
+        - outputName
+        - outputType
+        - extractionFn
+        properties:
+          dimension:
+            description: Attributes or fields that provide context for metrics.
+            type: string
+          outputName:
+            description: Name of the output dimension.
+            type: string
+          outputType:
+            description: Type of the output dimension.
+            type: string
+            enum:
+            - STRING
+            - LONG
+            - FLOAT
+            default: STRING
+          extractionFn:
+            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidThetaSketchAggregator:
+      description: 'Theta sketch aggregation provides a class of specialized algorithms, called streaming algorithms,
+
+        or sketches that can produce results orders-of magnitude faster and with mathematically proven
+
+        error bounds. For interactive queries there may not be other viable alternatives, and in the
+
+        case of real-time analysis, sketches are the only known solution.
+
+        In the analysis of big data there are often problem queries that don''t scale because
+
+        they require huge compute resources and time to generate exact results. Examples include
+
+        count distinct, quantiles, most-frequent items, joins, matrix computations, and graph analysis.
+
+        If approximate results are acceptable, theta sketch aggregation can be used.
+
+        Logically speaking, a Theta sketch object can be thought of as a set data structure.
+
+        Sketches are read and aggregated (set unioned) together. A theta sketch query returns
+
+        the estimate of the number of unique entries in the sketch object.
+
+        You can use post aggregators to do union, intersection or difference on sketch columns
+
+        in the same row.
+
+        You can use thetaSketch aggregator on columns which were not ingested using the same.
+
+        It will return estimated cardinality of the column.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - type: object
+        required:
+        - name
+        - fieldName
+        properties:
+          name:
+            description: A String for the output (result) name of the calculation.
+            type: string
+          fieldName:
+            description: A String for the name of the aggregator used at ingestion time.
+            type: string
+          size:
+            description: Must be a power of 2. Internally, size refers to the maximum number of entries sketch object will retain. Higher size means higher accuracy but more space to store sketches. Note that after you index with a particular size, druid will persist sketch in segments and you will use size greater or equal to that at query time. In general, We recommend just sticking to default size.
+            type: integer
+            default: 16384
+    telemetry.DruidAndFilter:
+      description: A logical AND expression filter.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - fields
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - and
+          fields:
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidFilter'
+    telemetry.DruidSelectorFilter:
+      description: 'The selector filter matches a specific dimension with a specific value.
+
+        Selector filters can be used as the base filters for more complex Boolean expressions of filters.
+
+        The selector filter supports the use of extraction functions.
+
+        See [Filtering with Extraction Functions](https://druid.apache.org/docs/latest/querying/filters.html#filtering-with-extraction-functions) for details.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - dimension
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - selector
+          dimension:
+            description: The name of a dimension.
+            type: string
+          value:
+            description: The value of a dimension.
+            type: string
           extractionFn:
             $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
     telemetry.DruidScanRequest:
@@ -705,321 +1814,23 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/telemetry.DruidVirtualColumn'
-    telemetry.DruidTopNRequest:
-      description: 'TopN queries return a sorted set of results for the values in a given dimension according
-
-        to some criteria. Conceptually, they can be thought of as an approximate GroupByQuery over
-
-        a single dimension with an Ordering spec. TopNs are much faster and resource efficient than
-
-        GroupBys for this use case. These types of queries take a topN query object and return an
-
-        array of JSON objects where each object represents a value asked for by the topN query.
-
-        TopNs are approximate in that each data process will rank their top K results and only return
-
-        those top K results to the Broker. K, by default in Druid, is max(1000, threshold).
-
-        In practice, this means that if you ask for the top 1000 items ordered, the correctness of the
-
-        first ~900 items will be 100%, and the ordering of the results after that is not guaranteed.
-
-        TopNs can be made more accurate by increasing the threshold.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
-      - type: object
-        required:
-        - dataSource
-        - intervals
-        - granularity
-        - dimension
-        - threshold
-        - metric
-        properties:
-          dataSource:
-            description: 'A String or Object defining the data source to query, very similar to a table in
-
-              a relational database. However, a query can also masquerade as a data source,
-
-              providing subquery-like functionality. Query data sources are currently supported
-
-              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
-            $ref: '#/components/schemas/telemetry.DruidDataSource'
-          intervals:
-            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
-            type: array
-            items:
-              type: string
-          granularity:
-            $ref: '#/components/schemas/telemetry.DruidGranularity'
-          filter:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-          aggregations:
-            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidAggregator'
-          postAggregations:
-            description: Post-aggregations are specifications of processing that should happen on aggregated values as they come out of Apache Druid. If you include a post aggregation as part of a query, make sure to include all aggregators the post-aggregator requires.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidPostAggregator'
-          virtualColumns:
-            description: Virtual columns are columns that are computed on the fly during query execution. It can potentially draw from multiple underlying columns, although a virtual column always presents itself as a single column. Virtual columns can be referenced by their output names to be used as dimensions or as inputs to filters and aggregators.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidVirtualColumn'
-          dimension:
-            description: A String or JSON object defining the dimension that you want the top taken for.
-            $ref: '#/components/schemas/telemetry.DruidDimensionSpec'
-          threshold:
-            description: An integer defining the N in the topN (i.e., how many results you want in the top list).
-            type: integer
-          metric:
-            description: A String or JSON object specifying the metric to sort by for the top list.
-            $ref: '#/components/schemas/telemetry.DruidTopNMetricSpec'
-          context:
-            $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidQuerySpecContains:
-      description: A 'contains' query spec.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseQuerySpec'
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - contains
-          value:
-            description: A String value to search.
-            type: string
-          caseSensitive:
-            description: Whether the string comparison is case-sensitive or not.
-            type: boolean
-    telemetry.DruidTableDataSource:
-      description: The table data source is the most common datasource type. They are split up into segments, distributed around the cluster, and queried in parallel.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
-      - type: object
-        required:
-        - name
-        properties:
-          name:
-            description: The name of a data source.
-            type: string
-    telemetry.DruidUnionDataSource:
-      description: This data source unions two or more table data sources. Note that the data sources being unioned should have the same schema.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
-      - type: object
-        required:
-        - dataSources
-        properties:
-          dataSources:
-            description: A list of data sources.
-            type: array
-            items:
-              description: The name of a data source.
-              type: string
-    telemetry.DruidExtractionFunctionTimeParsing:
-      description: 'Parses dimension values as timestamps using the given input format, and returns them formatted using the given output format.
-
-        Note, if you are working with the __time dimension, you should consider using the time extraction function instead instead,
-
-        which works on time value directly as opposed to string values.
-
-        If "joda" is true, time formats are described in the Joda DateTimeFormat documentation.
-
-        If "joda" is false (or unspecified) then formats are described in the SimpleDateFormat documentation.
-
-        In general, we recommend setting "joda" to true since Joda format strings are more common in Druid APIs
-
-        and since Joda handles certain edge cases (like weeks and weekyears near the start and end of calendar years) in a more ISO8601 compliant way.
-
-        If a value cannot be parsed using the provided timeFormat, it will be returned as-is.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - time
-          timeFormat:
-            type: string
-          resultFormat:
-            type: string
-          joda:
-            type: boolean
-    telemetry.DruidSearchRequest:
-      description: These types of queries returns dimension values that match the search specification
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
-      - type: object
-        required:
-        - dataSource
-        - intervals
-        - granularity
-        properties:
-          dataSource:
-            description: 'A String or Object defining the data source to query, very similar to a table in
-
-              a relational database. However, a query can also masquerade as a data source,
-
-              providing subquery-like functionality. Query data sources are currently supported
-
-              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
-            $ref: '#/components/schemas/telemetry.DruidDataSource'
-          intervals:
-            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
-            type: array
-            items:
-              description: A ISO-8601 time interval. The ISO 8601 interval is a representation of a time interval with optional UTC offset.
-              type: string
-            example:
-            - 2020-01-01T00:00:00.000/2020-01-03T00:00:00.000
-            - 2020-01-01T00:00:00.000Z/2020-01-03T00:00:00.000Z
-            - 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z
-            - 2007-03-01T13:00:00Z/P1Y2M10DT2H30M
-            - P1Y2M10DT2H30M/2008-05-11T15:30:00Z
-          granularity:
-            $ref: '#/components/schemas/telemetry.DruidGranularity'
-          filter:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-          aggregations:
-            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidAggregator'
-          searchDimensions:
-            description: The list of dimensions to run the search over. Excluding this means the search is run over all dimensions.
-            type: array
-            items:
-              description: Dimension name
-              type: string
-          query:
-            $ref: '#/components/schemas/telemetry.DruidAggregateSearchSpec'
-          limit:
-            description: An integer that limits the number of results. The default is unlimited.
-            type: integer
-            format: int32
-          context:
-            $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidRegexSearchSpec:
+    telemetry.DruidFragmentSearchSpec:
       description: The specification for a Druid 'insensitive_contains' search
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
       - required:
-        - regex
+        - values
         type: object
         properties:
-          regex:
-            description: The regular expression to match.  If any part of a dimension value contains the pattern specified in this search query a "match" occurs.
-            type: string
-    telemetry.DruidExtractionFunctionUpperCase:
-      description: Returns the dimension values as all upper case. Optionally user can specify the language to use in order to perform upper transformation.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - upper
-          locale:
-            type: string
-    telemetry.DruidOrderByColumnSpec:
-      description: OrderByColumnSpecs indicate how to do order by operations. Each order-by condition can be a jsonString or a map.
-      type: object
-      properties:
-        dimension:
-          description: Any dimension or metric name.
-          type: string
-        direction:
-          description: Direction of sorting. The default value is ascending.
-          type: string
-          enum:
-          - ascending
-          - descending
-        dimensionOrder:
-          description: Collation function for sorting. The default value is lexicographic.
-          type: string
-          enum:
-          - lexicographic
-          - alphanumeric
-          - strlen
-          - numeric
-    telemetry.DruidExtractionFunctionLowerCase:
-      description: Returns the dimension values as all lower case. Optionally user can specify the language to use in order to perform lower transformation.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - lower
-          locale:
-            type: string
-    telemetry.DruidHavingDimensionSelectorFilter:
-      description: The dimSelector filter will match rows with dimension values equal to the specified value.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
-      - type: object
-        required:
-        - dimension
-        - value
-        properties:
-          dimension:
-            description: dimension
-            type: string
-          value:
-            description: Value for the filter to match.
-            type: number
-            format: double
-    telemetry.DruidContainsSearchSpec:
-      description: The specification for a Druid 'insensitive_contains' search
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
-      - required:
-        - value
-        type: object
-        properties:
-          value:
-            description: The value to match.  If any part of a dimension value contains the value specified in this search query spec, regardless of case, a "match" occurs.
-            type: string
+          values:
+            description: The value to match.  If any part of a dimension value contains all of the values specified in this search query spec a "match" occurs.
+            type: array
+            items:
+              description: Values to match
+              type: string
           case_sensitive:
             description: Whether or not search is case sensitive
             type: boolean
-    telemetry.DruidFieldAccessorPostAggregator:
-      description: 'These post-aggregators return the value produced by the specified aggregator.
-
-        ''fieldName'' refers to the output name of the aggregator given in the aggregations portion of the query.
-
-        For complex aggregators, like "cardinality" and "hyperUnique", the type of the post-aggregator
-
-        determines what the post-aggregator will return. Use type "fieldAccess" to return the raw aggregation
-
-        object, or use type "finalizingFieldAccess" to return a finalized value, such as an estimated cardinality.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-          fieldName:
-            description: Name of the metric column.
-            type: string
     telemetry.DruidQuerySpecFragment:
       description: A 'fragment' query spec.
       allOf:
@@ -1041,86 +1852,8 @@ components:
           caseSensitive:
             description: Whether the string comparison is case-sensitive or not.
             type: boolean
-    telemetry.DruidQuerySpecInsensitiveContains:
-      description: A 'insensitive_contains' query spec. Note that an "insensitive_contains" search is equivalent to a "contains" search with "caseSensitive" false (or not provided).
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseQuerySpec'
-      - type: object
-        required:
-        - type
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - insensitive_contains
-          value:
-            description: A String value to search.
-            type: string
-    telemetry.DruidBaseLimitSpec:
-      description: The limitSpec field provides the functionality to sort and limit the set of results from a groupBy query. If you group by a single dimension and are ordering by a single metric, we highly recommend using TopN Queries instead. The performance will be substantially better.
-      required:
-      - type
-      properties:
-        type:
-          description: The limit spec type.
-          type: string
-          enum:
-          - default
-    telemetry.DruidTopNMetricSpec:
-      description: A Druid TopN metric spec.
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidNumericTopNMetricSpec'
-      - $ref: '#/components/schemas/telemetry.DruidDimensionTopNMetricSpec'
-      - $ref: '#/components/schemas/telemetry.DruidInvertedTopNMetricSpec'
-      discriminator:
-        propertyName: type
-        mapping:
-          numeric: '#/components/schemas/telemetry.DruidNumericTopNMetricSpec'
-          dimension: '#/components/schemas/telemetry.DruidDimensionTopNMetricSpec'
-          inverted: '#/components/schemas/telemetry.DruidInvertedTopNMetricSpec'
-    telemetry.DruidPostAggregator:
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidArithmeticPostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidExpressionPostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidConstantPostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidHyperUniquePostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidThetaSketchEstimatePostAggregator'
-      - $ref: '#/components/schemas/telemetry.DruidThetaSketchOperationsPostAggregator'
-      discriminator:
-        propertyName: type
-        mapping:
-          arithmetic: '#/components/schemas/telemetry.DruidArithmeticPostAggregator'
-          expression: '#/components/schemas/telemetry.DruidExpressionPostAggregator'
-          fieldAccess: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
-          finalizingFieldAccess: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
-          constant: '#/components/schemas/telemetry.DruidConstantPostAggregator'
-          doubleGreatest: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
-          longGreatest: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
-          doubleLeast: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
-          longLeast: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
-          hyperUniqueCardinality: '#/components/schemas/telemetry.DruidHyperUniquePostAggregator'
-          thetaSketchEstimate: '#/components/schemas/telemetry.DruidThetaSketchEstimatePostAggregator'
-          thetaSketchSetOp: '#/components/schemas/telemetry.DruidThetaSketchOperationsPostAggregator'
-    telemetry.DruidConstantPostAggregator:
-      description: The constant post-aggregator always returns the specified value.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-          value:
-            description: The numerical value.
-            type: number
-            format: double
-    telemetry.DruidAnyAggregator:
-      description: 'Returns any value including null. This aggregator can simplify and optimize
-
-        the performance by returning the first encountered value (including null).'
+    telemetry.DruidMinMaxAggregator:
+      description: Computes the min or max of values.
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
       - type: object
@@ -1129,277 +1862,42 @@ components:
         - fieldName
         properties:
           name:
-            description: Output name for the 'any' value.
+            description: Output name for the min/max value.
             type: string
           fieldName:
             description: Name of the metric column.
             type: string
-    telemetry.DruidEqualityFilter:
-      description: 'The equality filter is a replacement for the selector filter with the ability to match against any type of column.
-
-        The equality filter is designed to have more SQL compatible behavior than the selector filter and so can not match null values.
-
-        To match null values use the null filter.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - column
-        - matchValueType
-        - matchValue
-        properties:
-          type:
-            type: string
-            enum:
-            - equality
-          column:
-            description: Input column or virtual column name to filter.
-            type: string
-          matchValueType:
-            description: String specifying the type of value to match. For example STRING, LONG, DOUBLE, FLOAT, ARRAY<STRING>, ARRAY<LONG>, or any other Druid type. The matchValueType determines how Druid interprets the matchValue to assist in converting to the type of the matched column.
-            type: string
-          matchValue:
-            description: Value to match, must not be null.
-    telemetry.DruidHyperUniquePostAggregator:
-      description: 'The hyperUniqueCardinality post aggregator is used to wrap a hyperUnique object such that
-
-        it can be used in post aggregations.
-
-        This post-aggregator will inherit the rounding behavior of the aggregator it references.
-
-        Note that this inheritance is only effective if you directly reference an aggregator.
-
-        Going through another post-aggregator, for example, will cause the user-specified rounding
-
-        behavior to get lost and default to "no rounding".'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-          fieldName:
-            description: The name field value of the hyperUnique aggregator.
-            type: string
-    telemetry.DruidLikeFilter:
-      description: 'Like filters can be used for basic wildcard searches.
-
-        They are equivalent to the SQL LIKE operator.
-
-        Special characters supported are "%" (matches any number of characters) and "_" (matches any one character).'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - dimension
-        - pattern
-        properties:
-          type:
-            type: string
-            enum:
-            - like
-          dimension:
-            description: Input column or virtual column name to filter.
-            type: string
-          pattern:
-            description: String LIKE pattern, such as "foo%" or "___bar".
-            type: string
-          escape:
-            description: A string escape character that can be used to escape special characters.
-            type: string
-          extractionFn:
-            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidQueryDataSource:
-      description: This is used for nested groupBys and is only currently supported for groupBys.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
-      - type: object
-        required:
-        - query
-        properties:
-          query:
-            $ref: '#/components/schemas/telemetry.DruidGroupByRequest'
-    telemetry.DruidGroupByResult:
-      description: A time series result based on a provided groupBy query. Result can contain multiple dimensions and values.
+    telemetry.DruidBasePostAggregator:
       type: object
-      properties:
-        timestamp:
-          description: The ISO 8601 timestamp.
-          type: string
-          format: date-time
-        version:
-          description: The version of the Druid GroupBy Engine used in query.
-          type: string
-        event:
-          description: Grouped aggregate dimension(s) with values.
-          type: object
-    telemetry.DruidExtractionFunctionRegex:
-      description: Returns the first matching group for the given regular expression. If there is no match, it returns the dimension value as is.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        - expr
-        properties:
-          type:
-            type: string
-            enum:
-            - regex
-          expr:
-            type: string
-          index:
-            description: group to extract, default 1. If "index" is set, it will control which group from the match to extract. Index zero extracts the string matching the entire pattern.
-          replaceMissingValue:
-            description: If the replaceMissingValue property is true, the extraction function will transform dimension values that do not match the regex pattern to a user-specified String. Default value is false.
-            type: boolean
-          replaceMissingValueWith:
-            description: The replaceMissingValueWith property sets the String that unmatched dimension values will be replaced with, if replaceMissingValue is true. If replaceMissingValueWith is not specified, unmatched dimension values will be replaced with nulls.
-            type: string
-    telemetry.DruidDurationGranularity:
-      description: 'Duration granularities are specified as an exact duration in milliseconds and timestamps are returned as UTC.
+      description: 'Post-aggregations are specifications of processing that should happen on aggregated values as
 
-        Duration granularity values are in milliseconds.
+        they come out of Apache Druid. If you include a post aggregation as part of a query, make sure
 
-        They also support specifying an optional origin, which defines where to start counting
-
-        time buckets from (defaults to 1970-01-01T00:00:00Z).'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseGranularity'
-      - type: object
-        required:
-        - duration
-        properties:
-          duration:
-            description: The duration in milliseconds.
-            type: integer
-            format: int64
-          origin:
-            description: 'An optional value specifying when to start counting time buckets from.
-
-              The default value is 1970-01-01T00:00:00Z.'
-            type: string
-            format: date-time
-    telemetry.DruidBaseRequest:
-      type: object
-      description: The base structure for all Druid requests.
-      required:
-      - queryType
-      properties:
-        queryType:
-          description: The type of druid query.
-          type: string
-          enum:
-          - timeseries
-          - topN
-          - groupBy
-          - scan
-          - timeBoundary
-          - segmentMetadata
-          - dataSourceMetadata
-          - search
-    telemetry.DruidExtractionFunctionSubstring:
-      description: 'Returns a substring of the dimension value starting from the supplied index and of the desired length.
-
-        Both index and length are measured in the number of Unicode code units present in the string as if it were encoded in UTF-16.
-
-        Note that some Unicode characters may be represented by two code units.
-
-        If the desired length exceeds the length of the dimension value, the remainder of the string starting at index will be returned.
-
-        If index is greater than the length of the dimension value, null will be returned.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        - index
-        properties:
-          type:
-            type: string
-            enum:
-            - substring
-          index:
-            type: integer
-            format: int32
-          length:
-            description: The length may be omitted for substring to return the remainder of the dimension value starting from index, or null if index greater than the length of the dimension value.
-            type: integer
-            format: int32
-    telemetry.DruidBaseGranularity:
-      type: object
-      description: The base structure for a Druid granularity.
+        to include all aggregators the post-aggregator requires.'
       required:
       - type
       properties:
         type:
-          description: the type of granularity.
+          description: The post-aggregator type.
           type: string
           enum:
-          - duration
-          - period
-    telemetry.DruidScanResult:
-      description: Druid Scan row result.
-      type: object
-      properties:
-        segmentId:
-          description: The identifier for the row(s)' segment.
-          type: string
-        columns:
-          description: A list of columns returned in the row(s).
+          - arithmetic
+          - expression
+          - fieldAccess
+          - finalizingFieldAccess
+          - constant
+          - doubleGreatest
+          - longGreatest
+          - doubleLeast
+          - longLeast
+          - hyperUniqueCardinality
+          - thetaSketchEstimate
+          - thetaSketchSetOp
+        fields:
+          description: Fields processed by post aggregator
           type: array
           items:
-            description: A column name.
-            type: string
-        events:
-          description: Row results.
-          type: array
-          items:
-            description: A scan row result. If the formatResult is 'list', the value is an object. If the formatResult is 'compactedList, the value is an array that contains dimension or metrics value. A dimension may be a string, number, array, object, or the null value. Metrics are numbers (float or integer).
-    telemetry.DruidExtractionFunctionStringFormat:
-      description: Returns the dimension value formatted according to the given format string.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        - format
-        properties:
-          type:
-            type: string
-            enum:
-            - stringFormat
-          format:
-            description: A sprintf expression. For example if you want to concat "[" and "]" before and after the actual dimension value, you need to specify "[%s]" as format string.
-            type: string
-          nullHandling:
-            type: string
-            enum:
-            - nullString
-            - emptyString
-            - returnNull
-    telemetry.DruidThetaSketchOperationsPostAggregator:
-      description: ''
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-          func:
-            type: string
-            enum:
-            - UNION
-            - INTERSECT
-            - NOT
-          size:
-            description: must be max of size from sketches in fields input.
-            type: integer
-            default: 16384
+            $ref: '#/components/schemas/telemetry.DruidPostAggregator'
     telemetry.DruidFilter:
       oneOf:
       - $ref: '#/components/schemas/telemetry.DruidSelectorFilter'
@@ -1439,6 +1937,141 @@ components:
           'false': '#/components/schemas/telemetry.DruidFalseFilter'
           search: '#/components/schemas/telemetry.DruidSearchFilter'
           expression: '#/components/schemas/telemetry.DruidExpressionFilter'
+    telemetry.DruidRegexFilter:
+      description: 'The regular expression filter is similar to the selector filter, but using regular expressions.
+
+        It matches the specified dimension with the given pattern.
+
+        Note that it is often more optimal to use a like filter instead of a regex for simple matching of prefixes.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - dimension
+        - pattern
+        properties:
+          type:
+            type: string
+            enum:
+            - regex
+          dimension:
+            description: Input column or virtual column name to filter.
+            type: string
+          pattern:
+            description: String pattern to match - any standard Java regular expression.
+            type: string
+          extractionFn:
+            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidSegmentMetadataRequest:
+      description: Time boundary queries return the earliest and latest data points of a data set.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
+      - type: object
+        required:
+        - dataSource
+        properties:
+          dataSource:
+            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
+            $ref: '#/components/schemas/telemetry.DruidDataSource'
+          intervals:
+            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over. If an interval is not specified, the query will use a default interval that spans a configurable period before the end time of the most recent segment.
+            type: array
+            items:
+              type: string
+          toInclude:
+            description: A JSON Object representing what columns should be included in the result. Defaults to "all".
+            type: object
+          merge:
+            description: Merge all individual segment metadata results into a single result.
+            type: boolean
+          context:
+            $ref: '#/components/schemas/telemetry.DruidQueryContext'
+          analysisTypes:
+            description: A list of Strings specifying what column properties (e.g., cardinality, size) should be calculated and returned in the result. Defaults to ["cardinality", "interval", "minmax"], but can be overridden with using the segment metadata query config. * cardinality - in the result will return the estimated floor of cardinality for each column. Only relevant for dimension columns. * minmax - Estimated min/max values for each column. Only relevant for dimension columns. * size - in the result will contain the estimated total segment byte size as if the data were stored in text format. * intervals - in the result will contain the list of intervals associated with the queried segments. * timestampSpec - in the result will contain timestampSpec of data stored in segments. This can be null if timestampSpec of segments was unknown or unmergeable (if merging is enabled). * queryGranularity - in the result will contain query granularity of data stored in segments. This can be null if query granularity of segments was unknown or unmergeable (if merging is enabled). * aggregators - in the result will contain the list of aggregators usable for querying metric columns. This may be null if the aggregators are unknown or unmergeable (if merging is enabled). Merging can be strict or lenient. The form of the result is a map of column name to aggregator. * rollup - in the result is true/false/null. When merging is enabled, if some are rollup, others are not, result is null.
+            type: array
+            items:
+              type: string
+          lenientAggregatorMerge:
+            description: If true, and if the "aggregators" analysisType is enabled, aggregators will be merged leniently.
+            type: boolean
+    telemetry.DruidBaseGranularity:
+      type: object
+      description: The base structure for a Druid granularity.
+      required:
+      - type
+      properties:
+        type:
+          description: the type of granularity.
+          type: string
+          enum:
+          - duration
+          - period
+    telemetry.DruidStringFirstLastAggregator:
+      description: Computes the metric value with the minimum/maximum timestamp or null if no row exist.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - type: object
+        required:
+        - name
+        - fieldName
+        properties:
+          name:
+            description: Output name for the first or last value.
+            type: string
+          fieldName:
+            description: Name of the metric column.
+            type: string
+          maxStringBytes:
+            description: Size in bytes limit on aggregation size.
+            type: integer
+            default: 1024
+    telemetry.DruidInFilter:
+      description: 'The in filter can match input rows against a set of values, where a match occurs if the value is contained in the set.
+
+        If an empty values array is passed to the "in" filter, it will simply return an empty result.
+
+        If the values array contains null, the "in" filter matches null values.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - dimension
+        - values
+        properties:
+          type:
+            type: string
+            enum:
+            - in
+          dimension:
+            description: Input column or virtual column name to filter.
+            type: string
+          values:
+            description: List of string value to match.
+            type: array
+            items:
+              type: string
+          extractionFn:
+            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
+    telemetry.DruidColumnComparisonFilter:
+      description: The column comparison filter compares dimensions to each other.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - dimensions
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - columnComparison
+          dimensions:
+            description: A list of DimensionSpecs, making it possible to apply an extraction function if needed.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidDimensionSpec'
     telemetry.NestedFieldVirtualColumn:
       description: 'A virtual column defined as a nested field. The nested field virtual column is an optimized
 
@@ -1516,97 +2149,8 @@ components:
             description: If set to true, the virtual column will use jq syntax instead of JSONPath.
             type: boolean
             default: false
-    telemetry.DruidTimeBoundaryRequest:
-      description: Time boundary queries return the earliest and latest data points of a data set.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
-      - type: object
-        required:
-        - dataSource
-        properties:
-          dataSource:
-            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
-            $ref: '#/components/schemas/telemetry.DruidDataSource'
-          bound:
-            description: Optional, set to maxTime or minTime to return only the latest or earliest timestamp. Default to returning both if not set.
-            type: string
-            enum:
-            - maxTime
-            - minTime
-          filter:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-          context:
-            $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidInsensitiveContainsSearchSpec:
-      description: The specification for a Druid 'insensitive_contains' search
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
-      - required:
-        - value
-        type: object
-        properties:
-          value:
-            description: The value to match.  If any part of a dimension value contains the value specified in this search query spec, regardless of case, a "match" occurs.
-            type: string
-    telemetry.DruidBaseTopNMetricSpec:
-      description: A Druid TopN metric spec.
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          description: The dimension spec type.
-          type: string
-          enum:
-          - numeric
-          - dimension
-          - inverted
-    telemetry.DruidGranularity:
-      description: 'The granularity field determines how data gets bucketed across the time dimension,
-
-        or how it gets aggregated by hour, day, minute, etc.
-
-        It can be specified either as a string for simple granularities or as an object for arbitrary granularities.
-
-        See [Granularities](https://druid.apache.org/docs/latest/querying/granularities.html).'
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidDurationGranularity'
-      - $ref: '#/components/schemas/telemetry.DruidPeriodGranularity'
-      discriminator:
-        propertyName: type
-        mapping:
-          duration: '#/components/schemas/telemetry.DruidDurationGranularity'
-          period: '#/components/schemas/telemetry.DruidPeriodGranularity'
-    telemetry.DruidThetaSketchAggregator:
-      description: 'Theta sketch aggregation provides a class of specialized algorithms, called streaming algorithms,
-
-        or sketches that can produce results orders-of magnitude faster and with mathematically proven
-
-        error bounds. For interactive queries there may not be other viable alternatives, and in the
-
-        case of real-time analysis, sketches are the only known solution.
-
-        In the analysis of big data there are often problem queries that don''t scale because
-
-        they require huge compute resources and time to generate exact results. Examples include
-
-        count distinct, quantiles, most-frequent items, joins, matrix computations, and graph analysis.
-
-        If approximate results are acceptable, theta sketch aggregation can be used.
-
-        Logically speaking, a Theta sketch object can be thought of as a set data structure.
-
-        Sketches are read and aggregated (set unioned) together. A theta sketch query returns
-
-        the estimate of the number of unique entries in the sketch object.
-
-        You can use post aggregators to do union, intersection or difference on sketch columns
-
-        in the same row.
-
-        You can use thetaSketch aggregator on columns which were not ingested using the same.
-
-        It will return estimated cardinality of the column.'
+    telemetry.DruidSumAggregator:
+      description: Computes the sum of values.
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
       - type: object
@@ -1615,310 +2159,56 @@ components:
         - fieldName
         properties:
           name:
-            description: A String for the output (result) name of the calculation.
+            description: Output name for the summed value.
             type: string
           fieldName:
-            description: A String for the name of the aggregator used at ingestion time.
+            description: Name of the metric column to sum over.
             type: string
-          size:
-            description: Must be a power of 2. Internally, size refers to the maximum number of entries sketch object will retain. Higher size means higher accuracy but more space to store sketches. Note that after you index with a particular size, druid will persist sketch in segments and you will use size greater or equal to that at query time. In general, We recommend just sticking to default size.
-            type: integer
-            default: 16384
-    telemetry.DruidExtractionFunctionTimeFormat:
-      description: 'Returns the dimension value formatted according to the given format string, time zone, and locale.
-
-        For __time dimension values, this formats the time value bucketed by the aggregation granularity
-
-        For a regular dimension, it assumes the string is formatted in ISO-8601 date and time format.'
+    telemetry.DruidTableDataSource:
+      description: The table data source is the most common datasource type. They are split up into segments, distributed around the cluster, and queried in parallel.
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - timeFormat
-          format:
-            description: Date time format for the resulting dimension value, in Joda Time DateTimeFormat, or null to use the default ISO8601 format.
-            type: string
-          locale:
-            description: Locale (language and country) to use, given as a IETF BCP 47 language tag, e.g. en-US, en-GB, fr-FR, fr-CA, etc.
-            type: string
-          timeZone:
-            description: Time zone to use in IANA tz database format, e.g. Europe/Berlin (this can possibly be different than the aggregation time-zone)
-            type: string
-          granularity:
-            $ref: '#/components/schemas/telemetry.DruidGranularity'
-          asMillis:
-            description: boolean value, set to true to treat input strings as millis rather than ISO8601 strings. Additionally, if format is null or not specified, output will be in millis rather than ISO8601.
-            type: boolean
-    telemetry.DruidNotFilter:
-      description: A logical NOT expression filter.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - field
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - not
-          field:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-    telemetry.DruidExtractionDimensionSpec:
-      description: Returns dimension values transformed using the given extraction function.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDimensionSpec'
-      - type: object
-        required:
-        - dimension
-        - outputName
-        - outputType
-        - extractionFn
-        properties:
-          dimension:
-            description: Attributes or fields that provide context for metrics.
-            type: string
-          outputName:
-            description: Name of the output dimension.
-            type: string
-          outputType:
-            description: Type of the output dimension.
-            type: string
-            enum:
-            - STRING
-            - LONG
-            - FLOAT
-            default: STRING
-          extractionFn:
-            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidInFilter:
-      description: 'The in filter can match input rows against a set of values, where a match occurs if the value is contained in the set.
-
-        If an empty values array is passed to the "in" filter, it will simply return an empty result.
-
-        If the values array contains null, the "in" filter matches null values.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - dimension
-        - values
-        properties:
-          type:
-            type: string
-            enum:
-            - in
-          dimension:
-            description: Input column or virtual column name to filter.
-            type: string
-          values:
-            description: List of string value to match.
-            type: array
-            items:
-              type: string
-          extractionFn:
-            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidExtractionFunctionCascade:
-      description: 'Provides chained execution of extraction functions.
-
-        A property of extractionFns contains an array of any extraction functions, which is executed in the array index order.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - cascade
-          extractionFns:
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidBaseDimensionSpec:
-      description: A dimension spec is used in a query to operate on dimension values.
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          description: the dimension spec type.
-          type: string
-          enum:
-          - default
-          - extraction
-          - listFiltered
-          - regexFiltered
-          - prefixFiltered
-          - lookup
-    telemetry.DruidBaseHavingFilter:
-      type: object
-      description: 'A having clause is a JSON object identifying which rows from a groupBy query should be returned,
-
-        by specifying conditions on aggregated values.
-
-        It is essentially the equivalent of the HAVING clause in SQL.'
-      required:
-      - type
-      properties:
-        type:
-          description: The having filter type.
-          type: string
-          enum:
-          - filter
-          - greaterThan
-          - equalTo
-          - lessThan
-          - dimSelector
-    telemetry.DruidThetaSketchEstimatePostAggregator:
-      description: 'Post aggregator of type fieldAccess that refers to a thetaSketch aggregator or
-
-        that of type thetaSketchSetOp.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-          field:
-            description: Post aggregator of type fieldAccess that refers to a thetaSketch aggregator or that of type thetaSketchSetOp.
-            type: string
-    telemetry.DruidFalseFilter:
-      description: A filter matches no values. You can use it to force a query to match no values.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - 'false'
-    telemetry.DruidStringFirstLastAggregator:
-      description: Computes the metric value with the minimum/maximum timestamp or null if no row exist.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
       - type: object
         required:
         - name
-        - fieldName
         properties:
           name:
-            description: Output name for the first or last value.
+            description: The name of a data source.
             type: string
-          fieldName:
-            description: Name of the metric column.
-            type: string
-          maxStringBytes:
-            description: Size in bytes limit on aggregation size.
-            type: integer
-            default: 1024
-    telemetry.DruidHavingNumericFilter:
-      description: 'The simplest having clause is a numeric filter. Numeric filters can be used as the base filters
-
-        for more complex boolean expressions of filters.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
-      - type: object
-        required:
-        - aggregation
-        - value
-        properties:
-          aggregation:
-            description: aggregate metric
-            type: string
-          value:
-            description: Value for the filter to match.
-            type: number
-            format: double
-    telemetry.DruidInvertedTopNMetricSpec:
-      description: Sort dimension values in inverted order, i.e inverts the order of the delegate metric spec. It can be used to sort the values in ascending order.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseTopNMetricSpec'
-      - type: object
-        required:
-        - metric
-        properties:
-          metric:
-            $ref: '#/components/schemas/telemetry.DruidTopNMetricSpec'
-    telemetry.DruidSegmentMetadataResult:
-      description: Metadata about a Druid segment
+    telemetry.DruidBaseAggregator:
       type: object
-      properties:
-        id:
-          description: An identifier for the metadata
-          type: string
-        intervals:
-          description: String representation of the interval queried
-          type: string
-        columns:
-          description: A map of columns and their properties
-          type: object
-        aggregators:
-          description: A map of metrics and their properties
-          type: object
-        queryGranularity:
-          description: query granularity of data stored in segments, may be 'null'
-          type: object
-        size:
-          description: estimated total segment byte size as if stored as text
-          type: integer
-        numRows:
-          description: number of rows stored in segment
-          type: integer
-    telemetry.DruidBaseExtractionFunction:
-      type: object
-      description: 'Extraction functions define the transformation applied to each dimension value.
-
-        Transformations can be applied to both regular (string) dimensions, as well as the special __time dimension,
-
-        which represents the current time bucket according to the query aggregation granularity.'
+      description: A Druid aggregator.
       required:
       - type
       properties:
         type:
-          description: The type of extraction function.
+          description: The aggregator type.
           type: string
           enum:
-          - regex
-          - partial
-          - searchQuery
-          - substring
-          - strlen
-          - timeFormat
-          - time
-          - lookup
-          - cascade
-          - stringFormat
-          - upper
-          - lower
-          - bucket
-    telemetry.DruidAndFilter:
-      description: A logical AND expression filter.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - fields
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - and
-          fields:
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidFilter'
+          - count
+          - longSum
+          - doubleSum
+          - floatSum
+          - doubleMin
+          - doubleMax
+          - floatMin
+          - floatMax
+          - longMin
+          - longMax
+          - doubleFirst
+          - doubleLast
+          - floatFirst
+          - floatLast
+          - longFirst
+          - longLast
+          - stringFirst
+          - stringLast
+          - doubleAny
+          - floatAny
+          - longAny
+          - stringAny
+          - thetaSketch
+          - filtered
     telemetry.DruidBoundFilter:
       description: 'Bound filters can be used to filter on ranges of dimension values.
 
@@ -1980,14 +2270,145 @@ components:
             - version
           extractionFn:
             $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidExtractionFunctionStrlen:
-      description: 'Returns the length of dimension values, as measured in the number of Unicode code units present in the string as if it were encoded in UTF-16.
-
-        Note that some Unicode characters may be represented by two code units.
-
-        null strings are considered as having zero length.'
+    telemetry.DruidDefaultDimensionSpec:
+      description: Returns dimension values as is and optionally renames the dimension.
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - $ref: '#/components/schemas/telemetry.DruidBaseDimensionSpec'
+      - type: object
+        required:
+        - dimension
+        - outputName
+        - outputType
+        properties:
+          dimension:
+            description: Attributes or fields that provide context for metrics.
+            type: string
+          outputName:
+            description: Name of the output dimension.
+            type: string
+          outputType:
+            description: Type of the output dimension.
+            type: string
+            enum:
+            - STRING
+            - LONG
+            - FLOAT
+            default: STRING
+    telemetry.DruidQuerySpec:
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidQuerySpecContains'
+      - $ref: '#/components/schemas/telemetry.DruidQuerySpecInsensitiveContains'
+      - $ref: '#/components/schemas/telemetry.DruidQuerySpecFragment'
+      discriminator:
+        propertyName: type
+        mapping:
+          contains: '#/components/schemas/telemetry.DruidQuerySpecContains'
+          insensitive_contains: '#/components/schemas/telemetry.DruidQuerySpecInsensitiveContains'
+          fragment: '#/components/schemas/telemetry.DruidQuerySpecFragment'
+    telemetry.DruidBaseVirtualColumn:
+      type: object
+      description: 'Virtual columns are columns that are computed on the fly during query execution.
+
+        If you include a virtual column as part of a query, make sure to include all attributes
+
+        the virtual column requires.
+
+        Refer https://druid.apache.org/docs/latest/querying/virtual-columns/ for more details.'
+      required:
+      - type
+      properties:
+        type:
+          description: The virtual-column type.
+          type: string
+          enum:
+          - expression
+          - nested-field
+          - mv-filtered
+    telemetry.DruidExtractionFunction:
+      description: 'The extraction function is used to transform input values before the filter is applied.
+
+        Transformations can be applied to both regular (string) dimensions, as well as the special __time dimension,
+
+        which represents the current time bucket according to the query aggregation granularity.
+
+        For functions taking string values (such as regular expressions), __time dimension values will be formatted
+
+        in ISO-8601 format before getting passed to the extraction function.
+
+        The example below shows a selector filter combined with an extraction function. This filter will transform
+
+        input values according to the values defined in the lookup map; transformed values will then be matched
+
+        with the string "bar_1".'
+      example:
+        type: lookup
+        lookup:
+          type: map
+          map:
+            product_1: bar_1
+            product_5: bar_1
+            product_3: bar_1
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionRegex'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionPartial'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionSearchQuery'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionSubstring'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionStrlen'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionTimeFormat'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionTimeParsing'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionInlineLookup'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionCascade'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionStringFormat'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionUpperCase'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionLowerCase'
+      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionBucket'
+      discriminator:
+        propertyName: type
+        mapping:
+          regex: '#/components/schemas/telemetry.DruidExtractionFunctionRegex'
+          partial: '#/components/schemas/telemetry.DruidExtractionFunctionPartial'
+          searchQuery: '#/components/schemas/telemetry.DruidExtractionFunctionSearchQuery'
+          substring: '#/components/schemas/telemetry.DruidExtractionFunctionSubstring'
+          strlen: '#/components/schemas/telemetry.DruidExtractionFunctionStrlen'
+          timeFormat: '#/components/schemas/telemetry.DruidExtractionFunctionTimeFormat'
+          time: '#/components/schemas/telemetry.DruidExtractionFunctionTimeParsing'
+          lookup: '#/components/schemas/telemetry.DruidExtractionFunctionInlineLookup'
+          cascade: '#/components/schemas/telemetry.DruidExtractionFunctionCascade'
+          stringFormat: '#/components/schemas/telemetry.DruidExtractionFunctionStringFormat'
+          upper: '#/components/schemas/telemetry.DruidExtractionFunctionUpperCase'
+          lower: '#/components/schemas/telemetry.DruidExtractionFunctionLowerCase'
+          bucket: '#/components/schemas/telemetry.DruidExtractionFunctionBucket'
+    telemetry.DruidNullFilter:
+      description: The null filter is a partial replacement for the selector filter. It is dedicated to matching NULL values.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - column
+        properties:
+          type:
+            type: string
+            enum:
+            - 'null'
+          column:
+            description: Input column or virtual column name to filter.
+            type: string
+    telemetry.DruidDataSourceMetadataResult:
+      description: Metadata about a Druid datasource
+      type: object
+      properties:
+        timestamp:
+          description: The ISO 8601 timestamp.
+          type: string
+          format: date-time
+        result:
+          description: The metadata for the specified datasource
+          type: object
+    telemetry.DruidFalseFilter:
+      description: A filter matches no values. You can use it to force a query to match no values.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
       - type: object
         required:
         - type
@@ -1995,7 +2416,31 @@ components:
           type:
             type: string
             enum:
-            - strlen
+            - 'false'
+    telemetry.DruidInlineDataSource:
+      description: Inline datasources allow you to query a small amount of data that is embedded in the query itself. They are useful when you want to write a query on a small amount of data without loading it first. They are also useful as inputs into a join. Druid also uses them internally to handle subqueries that need to be inlined on the Broker. There are two fields in an inline datasource, an array of columnNames and an array of rows. Each row is an array that must be exactly as long as the list of columnNames. The first element in each row corresponds to the first column in columnNames, and so on.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
+      - type: object
+        required:
+        - columnNames
+        - rows
+        properties:
+          columnNames:
+            description: the column names.
+            type: array
+            items:
+              description: the name of a column.
+              type: string
+          rows:
+            description: an array of rows.
+            type: array
+            items:
+              description: a row. Each row is an array that must be exactly as long as the list of columnNames.
+              type: array
+              items:
+                description: a column/row cell value.
+                type: string
     telemetry.DruidError:
       description: The error response when a Druid query fails.
       type: object
@@ -2008,56 +2453,164 @@ components:
           type: string
         errorClass:
           description: The class of the exception that caused this error. May be null.
-    telemetry.DruidJoinDataSource:
-      description: Join datasources allow you to do a SQL-style join of two datasources. Stacking joins on top of each other allows you to join arbitrarily many datasources. Joins are implemented with a broadcast hash-join algorithm. This means that all tables other than the leftmost "base" table must fit in memory. It also means that the join condition must be an equality. This feature is intended mainly to allow joining regular Druid tables with lookup, inline, and query datasources.
+    telemetry.DruidBaseLimitSpec:
+      description: The limitSpec field provides the functionality to sort and limit the set of results from a groupBy query. If you group by a single dimension and are ordering by a single metric, we highly recommend using TopN Queries instead. The performance will be substantially better.
+      required:
+      - type
+      properties:
+        type:
+          description: The limit spec type.
+          type: string
+          enum:
+          - default
+    telemetry.DruidUnionDataSource:
+      description: This data source unions two or more table data sources. Note that the data sources being unioned should have the same schema.
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
       - type: object
         required:
-        - left
-        - right
-        - rightPrefix
-        - condition
-        - joinType
+        - dataSources
         properties:
-          left:
-            description: Left-hand datasource. Must be of type table, join, lookup, query, or inline. Placing another join as the left datasource allows you to join arbitrarily many datasources.
-            type: string
-          right:
-            description: Right-hand datasource. Must be of type lookup, query, or inline.
-            type: string
-          rightPrefix:
-            description: String prefix that will be applied to all columns from the right-hand datasource, to prevent them from colliding with columns from the left-hand datasource. Can be any string, so long as it is nonempty and is not be a prefix of the string __time. Any columns from the left-hand side that start with your rightPrefix will be shadowed. It is up to you to provide a prefix that will not shadow any important columns from the left side.
-            type: string
-          condition:
-            description: Expression that must be an equality where one side is an expression of the left-hand side, and the other side is a simple column reference to the right-hand side. The right-hand reference must be a simple column reference.
-            type: string
-          joinType:
-            type: string
-            enum:
-            - INNER
-            - LEFT
-    telemetry.DruidFirstLastAggregator:
-      description: '(Double/Float/Long) First and Last aggregator cannot be used in ingestion spec, and should
+          dataSources:
+            description: A list of data sources.
+            type: array
+            items:
+              description: The name of a data source.
+              type: string
+    telemetry.DruidHavingFilter:
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidHavingQueryFilter'
+      - $ref: '#/components/schemas/telemetry.DruidHavingNumericFilter'
+      - $ref: '#/components/schemas/telemetry.DruidHavingDimensionSelectorFilter'
+      discriminator:
+        propertyName: type
+        mapping:
+          having: '#/components/schemas/telemetry.DruidHavingQueryFilter'
+          greaterThan: '#/components/schemas/telemetry.DruidHavingNumericFilter'
+          equalTo: '#/components/schemas/telemetry.DruidHavingNumericFilter'
+          lessThan: '#/components/schemas/telemetry.DruidHavingNumericFilter'
+          dimSelector: '#/components/schemas/telemetry.DruidHavingDimensionSelectorFilter'
+    telemetry.DruidBaseFilter:
+      type: object
+      description: 'A filter is a JSON object indicating which rows of data should be included in the computation for a query.
 
-        only be specified as part of queries.
+        It''s essentially the equivalent of the WHERE clause in SQL.'
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: The filter type.
+          enum:
+          - selector
+          - equality
+          - null
+          - columnComparison
+          - and
+          - or
+          - not
+          - in
+          - bound
+          - range
+          - like
+          - regex
+          - interval
+          - true
+          - false
+          - search
+          - expression
+    telemetry.DruidDurationGranularity:
+      description: 'Duration granularities are specified as an exact duration in milliseconds and timestamps are returned as UTC.
 
-        Note that queries with first/last aggregators on a segment created with rollup enabled will
+        Duration granularity values are in milliseconds.
 
-        return the rolled up value, and not the last value within the raw ingested data.'
+        They also support specifying an optional origin, which defines where to start counting
+
+        time buckets from (defaults to 1970-01-01T00:00:00Z).'
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidBaseGranularity'
       - type: object
         required:
-        - name
-        - fieldName
+        - duration
         properties:
-          name:
-            description: Output name for the first/last value.
+          duration:
+            description: The duration in milliseconds.
+            type: integer
+            format: int64
+          origin:
+            description: 'An optional value specifying when to start counting time buckets from.
+
+              The default value is 1970-01-01T00:00:00Z.'
             type: string
-          fieldName:
-            description: Name of the metric column.
+            format: date-time
+    telemetry.DruidExtractionFunctionSearchQuery:
+      description: Returns the dimension value unchanged if the given SearchQuerySpec matches, otherwise returns null.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        - query
+        properties:
+          type:
             type: string
+            enum:
+            - searchQuery
+          query:
+            type: string
+    telemetry.DruidRangeFilter:
+      description: 'The range filter is a replacement for the bound filter.
+
+        It compares against any type of column and is designed to have has more SQL compliant behavior than the bound filter.
+
+        It won''t match null values, even if you don''t specify a lower bound.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - column
+        - matchValueType
+        properties:
+          type:
+            type: string
+            enum:
+            - range
+          column:
+            description: Input column or virtual column name to filter.
+            type: string
+          matchValueType:
+            description: String specifying the type of bounds to match. For example STRING, LONG, DOUBLE, FLOAT, ARRAY<STRING>, ARRAY<LONG>, or any other Druid type. The matchValueType determines how Druid interprets the matchValue to assist in converting to the type of the matched column and also defines the type of comparison used when matching values.
+            type: string
+          lower:
+            description: Lower bound value to match. At least one of lower or upper must not be null.
+          upper:
+            description: Upper bound value to match. At least one of lower or upper must not be null.
+          lowerOpen:
+            description: Boolean indicating if lower bound is open in the interval of values defined by the range (">" instead of ">=").
+            type: boolean
+          upperOpen:
+            description: Boolean indicating if upper bound is open on the interval of values defined by the range ("<" instead of "<=").
+            type: boolean
+    telemetry.DruidQuerySpecContains:
+      description: A 'contains' query spec.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseQuerySpec'
+      - type: object
+        required:
+        - type
+        - value
+        properties:
+          type:
+            type: string
+            enum:
+            - contains
+          value:
+            description: A String value to search.
+            type: string
+          caseSensitive:
+            description: Whether the string comparison is case-sensitive or not.
+            type: boolean
     telemetry.DruidGroupByRequest:
       description: 'These types of Apache Druid queries take a groupBy query object and return an array of JSON objects
 
@@ -2118,196 +2671,39 @@ components:
             type: object
           context:
             $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidExpressionVirtualColumn:
-      description: 'A virtual column defined as a Druid expression. Supported Druid expressions are documented at
-
-        https://druid.apache.org/docs/latest/misc/math-expr.html.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseVirtualColumn'
-      - type: object
-        properties:
-          name:
-            description: Name of the virtual column.
-            type: string
-          expression:
-            description: The Druid expression.
-            type: string
-          outputType:
-            description: Type of the resulting column.
-            type: string
-            enum:
-            - LONG
-            - FLOAT
-            - DOUBLE
-            - STRING
-            - ARRAY
-            - COMPLEX
-            default: FLOAT
-    telemetry.DruidAggregateSearchSpec:
-      description: Generic search specification descriptor
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidInsensitiveContainsSearchSpec'
-      - $ref: '#/components/schemas/telemetry.DruidFragmentSearchSpec'
-      - $ref: '#/components/schemas/telemetry.DruidContainsSearchSpec'
-      - $ref: '#/components/schemas/telemetry.DruidRegexSearchSpec'
-      discriminator:
-        propertyName: type
-        mapping:
-          insensitive_contains: '#/components/schemas/telemetry.DruidInsensitiveContainsSearchSpec'
-          fragment: '#/components/schemas/telemetry.DruidFragmentSearchSpec'
-          contains: '#/components/schemas/telemetry.DruidContainsSearchSpec'
-          regex: '#/components/schemas/telemetry.DruidRegexSearchSpec'
-    telemetry.DruidFilteredAggregator:
-      description: 'A filtered aggregator wraps any given aggregator, but only aggregates the values for
-
-        which the given dimension filter matches.
-
-        This makes it possible to compute the results of a filtered and an unfiltered aggregation
-
-        simultaneously, without having to issue multiple queries, and use both results as part
-
-        of post-aggregations.
-
-        If only the filtered results are required, consider putting the filter on the query
-
-        itself, which will be much faster since it does not require scanning all the data.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
-      - type: object
-        required:
-        - filter
-        - aggregator
-        properties:
-          filter:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-          aggregator:
-            $ref: '#/components/schemas/telemetry.DruidAggregator'
-    telemetry.DruidMinMaxAggregator:
-      description: Computes the min or max of values.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
-      - type: object
-        required:
-        - name
-        - fieldName
-        properties:
-          name:
-            description: Output name for the min/max value.
-            type: string
-          fieldName:
-            description: Name of the metric column.
-            type: string
-    telemetry.DruidSelectorFilter:
-      description: 'The selector filter matches a specific dimension with a specific value.
-
-        Selector filters can be used as the base filters for more complex Boolean expressions of filters.
-
-        The selector filter supports the use of extraction functions.
-
-        See [Filtering with Extraction Functions](https://druid.apache.org/docs/latest/querying/filters.html#filtering-with-extraction-functions) for details.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - dimension
-        - value
-        properties:
-          type:
-            type: string
-            enum:
-            - selector
-          dimension:
-            description: The name of a dimension.
-            type: string
-          value:
-            description: The value of a dimension.
-            type: string
-          extractionFn:
-            $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidBaseFilter:
+    telemetry.DruidBaseDimensionSpec:
+      description: A dimension spec is used in a query to operate on dimension values.
       type: object
-      description: 'A filter is a JSON object indicating which rows of data should be included in the computation for a query.
-
-        It''s essentially the equivalent of the WHERE clause in SQL.'
       required:
       - type
       properties:
         type:
+          description: the dimension spec type.
           type: string
-          description: The filter type.
           enum:
-          - selector
-          - equality
-          - null
-          - columnComparison
-          - and
-          - or
-          - not
-          - in
-          - bound
-          - range
-          - like
-          - regex
-          - interval
-          - true
-          - false
-          - search
-          - expression
-    telemetry.DruidExtractionFunction:
-      description: 'The extraction function is used to transform input values before the filter is applied.
+          - default
+          - extraction
+          - listFiltered
+          - regexFiltered
+          - prefixFiltered
+          - lookup
+    telemetry.DruidBaseDataSource:
+      description: 'A data source is the Apache Druid equivalent of a database table. However, a query can also
 
-        Transformations can be applied to both regular (string) dimensions, as well as the special __time dimension,
+        masquerade as a data source, providing subquery-like functionality. Query data sources are
 
-        which represents the current time bucket according to the query aggregation granularity.
-
-        For functions taking string values (such as regular expressions), __time dimension values will be formatted
-
-        in ISO-8601 format before getting passed to the extraction function.
-
-        The example below shows a selector filter combined with an extraction function. This filter will transform
-
-        input values according to the values defined in the lookup map; transformed values will then be matched
-
-        with the string "bar_1".'
-      example:
-        type: lookup
-        lookup:
-          type: map
-          map:
-            product_1: bar_1
-            product_5: bar_1
-            product_3: bar_1
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionRegex'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionPartial'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionSearchQuery'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionSubstring'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionStrlen'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionTimeFormat'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionTimeParsing'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionInlineLookup'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionCascade'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionStringFormat'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionUpperCase'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionLowerCase'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionFunctionBucket'
-      discriminator:
-        propertyName: type
-        mapping:
-          regex: '#/components/schemas/telemetry.DruidExtractionFunctionRegex'
-          partial: '#/components/schemas/telemetry.DruidExtractionFunctionPartial'
-          searchQuery: '#/components/schemas/telemetry.DruidExtractionFunctionSearchQuery'
-          substring: '#/components/schemas/telemetry.DruidExtractionFunctionSubstring'
-          strlen: '#/components/schemas/telemetry.DruidExtractionFunctionStrlen'
-          timeFormat: '#/components/schemas/telemetry.DruidExtractionFunctionTimeFormat'
-          time: '#/components/schemas/telemetry.DruidExtractionFunctionTimeParsing'
-          lookup: '#/components/schemas/telemetry.DruidExtractionFunctionInlineLookup'
-          cascade: '#/components/schemas/telemetry.DruidExtractionFunctionCascade'
-          stringFormat: '#/components/schemas/telemetry.DruidExtractionFunctionStringFormat'
-          upper: '#/components/schemas/telemetry.DruidExtractionFunctionUpperCase'
-          lower: '#/components/schemas/telemetry.DruidExtractionFunctionLowerCase'
-          bucket: '#/components/schemas/telemetry.DruidExtractionFunctionBucket'
+        currently supported only by GroupBy queries.'
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          description: The type of data source.
+          type: string
+          enum:
+          - table
+          - union
+          - query
     telemetry.DruidExtractionFunctionInlineLookup:
       description: 'Lookups are a concept in Druid where dimension values are (optionally) replaced with new values.
 
@@ -2347,43 +2743,6 @@ components:
           optimize:
             description: Allow optimization of lookup based extraction filter (by default optimize = true). The optimization layer will run on the Broker and it will rewrite the extraction filter as clause of selector filters.
             type: boolean
-    telemetry.DruidDataSource:
-      description: 'A data source is the Apache Druid equivalent of a database table. However, a query can also
-
-        masquerade as a data source, providing subquery-like functionality. Query data sources are
-
-        currently supported only by GroupBy queries.'
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidTableDataSource'
-      - $ref: '#/components/schemas/telemetry.DruidUnionDataSource'
-      - $ref: '#/components/schemas/telemetry.DruidQueryDataSource'
-      - $ref: '#/components/schemas/telemetry.DruidLookupDataSource'
-      - $ref: '#/components/schemas/telemetry.DruidJoinDataSource'
-      - $ref: '#/components/schemas/telemetry.DruidInlineDataSource'
-      discriminator:
-        propertyName: type
-        mapping:
-          table: '#/components/schemas/telemetry.DruidTableDataSource'
-          union: '#/components/schemas/telemetry.DruidUnionDataSource'
-          query: '#/components/schemas/telemetry.DruidQueryDataSource'
-          lookup: '#/components/schemas/telemetry.DruidLookupDataSource'
-          join: '#/components/schemas/telemetry.DruidJoinDataSource'
-          scan: '#/components/schemas/telemetry.DruidInlineDataSource'
-    telemetry.DruidExtractionFunctionSearchQuery:
-      description: Returns the dimension value unchanged if the given SearchQuerySpec matches, otherwise returns null.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        - query
-        properties:
-          type:
-            type: string
-            enum:
-            - searchQuery
-          query:
-            type: string
     telemetry.DruidNumericTopNMetricSpec:
       description: The simplest metric specification is a String value indicating the metric to sort topN results by.
       allOf:
@@ -2395,251 +2754,57 @@ components:
           metric:
             description: The name of the metric to sort topN results.
             type: string
-    telemetry.DruidColumnComparisonFilter:
-      description: The column comparison filter compares dimensions to each other.
+    telemetry.DruidJoinDataSource:
+      description: Join datasources allow you to do a SQL-style join of two datasources. Stacking joins on top of each other allows you to join arbitrarily many datasources. Joins are implemented with a broadcast hash-join algorithm. This means that all tables other than the leftmost "base" table must fit in memory. It also means that the join condition must be an equality. This feature is intended mainly to allow joining regular Druid tables with lookup, inline, and query datasources.
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
       - type: object
         required:
-        - dimensions
-        - type
+        - left
+        - right
+        - rightPrefix
+        - condition
+        - joinType
         properties:
-          type:
+          left:
+            description: Left-hand datasource. Must be of type table, join, lookup, query, or inline. Placing another join as the left datasource allows you to join arbitrarily many datasources.
+            type: string
+          right:
+            description: Right-hand datasource. Must be of type lookup, query, or inline.
+            type: string
+          rightPrefix:
+            description: String prefix that will be applied to all columns from the right-hand datasource, to prevent them from colliding with columns from the left-hand datasource. Can be any string, so long as it is nonempty and is not be a prefix of the string __time. Any columns from the left-hand side that start with your rightPrefix will be shadowed. It is up to you to provide a prefix that will not shadow any important columns from the left side.
+            type: string
+          condition:
+            description: Expression that must be an equality where one side is an expression of the left-hand side, and the other side is a simple column reference to the right-hand side. The right-hand reference must be a simple column reference.
+            type: string
+          joinType:
             type: string
             enum:
-            - columnComparison
-          dimensions:
-            description: A list of DimensionSpecs, making it possible to apply an extraction function if needed.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidDimensionSpec'
-    telemetry.DruidGreatestLeastPostAggregator:
-      description: 'doubleGreatest and longGreatest computes the maximum of all fields and Double.NEGATIVE_INFINITY.
-
-        doubleLeast and longLeast computes the minimum of all fields and Double.POSITIVE_INFINITY.
-
-        The difference between the doubleMax aggregator and the doubleGreatest post-aggregator
-
-        is that doubleMax returns the highest value of all rows for one specific column while
-
-        doubleGreatest returns the highest value of multiple columns in one row.
-
-        These are similar to the SQL MAX and GREATEST functions.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
-      - type: object
-        properties:
-          name:
-            description: Output name for the post-aggregator.
-            type: string
-    telemetry.DruidDimensionSpec:
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidDefaultDimensionSpec'
-      - $ref: '#/components/schemas/telemetry.DruidExtractionDimensionSpec'
-      discriminator:
-        propertyName: type
-        mapping:
-          default: '#/components/schemas/telemetry.DruidDefaultDimensionSpec'
-          extraction: '#/components/schemas/telemetry.DruidExtractionDimensionSpec'
-    telemetry.DruidPeriodGranularity:
-      description: 'Period granularities are specified as arbitrary period combinations of years, months, weeks, hours,
-
-        minutes and seconds (e.g., P2W, P3M, PT1H30M, PT0.750S) in ISO8601 format.
-
-        They support specifying a time zone which determines where period boundaries start as well as the
-
-        timezone of the returned timestamps. By default, years start on the first of January, months start
-
-        on the first of the month and weeks start on Mondays unless an origin is specified.
-
-        Time zone is optional (defaults to UTC). Origin is optional (defaults to 1970-01-01T00:00:00 in the given time zone).'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseGranularity'
-      - type: object
-        required:
-        - period
-        properties:
-          period:
-            description: The period in ISO 8601 format. Examples are P2W, P3M, PT1H30M, PT0.750S.
-            type: string
-          timeZone:
-            description: An optional value specifying the time zone. Standard [IANA time zones](http://joda-time.sourceforge.net/timezones.html) are supported.
-            type: string
-    telemetry.DruidBaseQuerySpec:
+            - INNER
+            - LEFT
+    telemetry.DruidBaseRequest:
       type: object
-      description: A Druid query spec.
+      description: The base structure for all Druid requests.
       required:
-      - type
+      - queryType
       properties:
-        type:
-          description: The type of query spec.
+        queryType:
+          description: The type of druid query.
           type: string
           enum:
-          - contains
-          - insensitive_contains
-          - fragment
-    telemetry.DruidNullFilter:
-      description: The null filter is a partial replacement for the selector filter. It is dedicated to matching NULL values.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - column
-        properties:
-          type:
-            type: string
-            enum:
-            - 'null'
-          column:
-            description: Input column or virtual column name to filter.
-            type: string
-    telemetry.DruidDataSourceMetadataRequest:
-      description: 'Data Source Metadata queries return metadata information for a dataSource.
+          - timeseries
+          - topN
+          - groupBy
+          - scan
+          - timeBoundary
+          - segmentMetadata
+          - dataSourceMetadata
+          - search
+    telemetry.DruidAnyAggregator:
+      description: 'Returns any value including null. This aggregator can simplify and optimize
 
-        These queries return information about the timestamp of latest ingested event for the dataSource.
-
-        This is the ingested event without any consideration of rollup.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
-      - type: object
-        required:
-        - dataSource
-        properties:
-          dataSource:
-            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
-            $ref: '#/components/schemas/telemetry.DruidDataSource'
-          context:
-            $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidQuerySpec:
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidQuerySpecContains'
-      - $ref: '#/components/schemas/telemetry.DruidQuerySpecInsensitiveContains'
-      - $ref: '#/components/schemas/telemetry.DruidQuerySpecFragment'
-      discriminator:
-        propertyName: type
-        mapping:
-          contains: '#/components/schemas/telemetry.DruidQuerySpecContains'
-          insensitive_contains: '#/components/schemas/telemetry.DruidQuerySpecInsensitiveContains'
-          fragment: '#/components/schemas/telemetry.DruidQuerySpecFragment'
-    telemetry.DruidIntervalResult:
-      description: The time series results for a particular interval
-      type: object
-      properties:
-        timestamp:
-          description: The ISO 8601 timestamp.
-          type: string
-          format: date-time
-        result:
-          description: A map of output field names to metric values (long or double).
-          type: object
-    telemetry.DruidBaseDataSource:
-      description: 'A data source is the Apache Druid equivalent of a database table. However, a query can also
-
-        masquerade as a data source, providing subquery-like functionality. Query data sources are
-
-        currently supported only by GroupBy queries.'
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          description: The type of data source.
-          type: string
-          enum:
-          - table
-          - union
-          - query
-    telemetry.DruidQueryContext:
-      description: 'The query context is used for various query configuration parameters.
-
-        Can be used to modify query behavior, including grand totals and zero-filling.'
-      type: object
-      properties:
-        grandTotal:
-          description: Druid can include an extra "grand totals" row as the last row of a timeseries result set. To enable this, set "grandTotal" to true. The grand totals row will appear as the last row in the result array, and will have no timestamp. It will be the last row even if the query is run in "descending" mode. Post-aggregations in the grand totals row will be computed based upon the grand total aggregations.
-          type: boolean
-        skipEmptyBuckets:
-          description: Timeseries queries normally fill empty interior time buckets with zeroes. Time buckets that lie completely outside the data interval are not zero-filled. You can disable all zero-filling with this flag. In this mode, the data point for empty buckets are omitted from the results.
-          type: boolean
-        timeout:
-          description: 'Query timeout in milliseconds, beyond which unfinished queries will be cancelled.
-
-            0 timeout means no timeout.'
-          type: integer
-        priority:
-          description: Query Priority. Queries with higher priority get precedence for computational resources.
-          type: integer
-        queryId:
-          description: Unique identifier given to this query. If a query ID is set or known, this can be used to cancel the query.
-          type: string
-        useCache:
-          description: Flag indicating whether to leverage the query cache for this query. When set to false, it disables reading from the query cache for this query. When set to true, Apache Druid uses druid.broker.cache.useCache or druid.historical.cache.useCache to determine whether or not to read from the query cache.
-          type: boolean
-        populateCache:
-          description: Flag indicating whether to save the results of the query to the query cache. Primarily used for debugging. When set to false, it disables saving the results of this query to the query cache. When set to true, Druid uses druid.broker.cache.populateCache or druid.historical.cache.populateCache to determine whether or not to save the results of this query to the query cache.
-          type: boolean
-        useResultLevelCache:
-          description: Flag indicating whether to leverage the result level cache for this query. When set to false, it disables reading from the query cache for this query. When set to true, Druid uses druid.broker.cache.useResultLevelCache to determine whether or not to read from the result-level query cache.
-          type: boolean
-        populateResultLevelCache:
-          description: Flag indicating whether to save the results of the query to the result level cache. Primarily used for debugging. When set to false, it disables saving the results of this query to the query cache. When set to true, Druid uses druid.broker.cache.populateResultLevelCache to determine whether or not to save the results of this query to the result-level query cache.
-          type: boolean
-        bySegment:
-          description: Return "by segment" results. Primarily used for debugging, setting it to true returns results associated with the data segment they came from.
-          type: boolean
-        finalize:
-          description: Flag indicating whether to "finalize" aggregation results. Primarily used for debugging. For instance, the hyperUnique aggregator will return the full HyperLogLog sketch instead of the estimated cardinality when this flag is set to false.
-          type: boolean
-        chunkPeriod:
-          description: At the Broker process level, long interval queries (of any type) may be broken into shorter interval queries to parallelize merging more than normal. Broken up queries will use a larger share of cluster resources, but, if you use groupBy "v1, it may be able to complete faster as a result. Use ISO 8601 periods. For example, if this property is set to P1M (one month), then a query covering a year would be broken into 12 smaller queries. The broker uses its query processing executor service to initiate processing for query chunks, so make sure druid.processing.numThreads is configured appropriately on the broker. groupBy queries do not support chunkPeriod by default, although they do if using the legacy "v1" engine. This context is deprecated since it's only useful for groupBy "v1", and will be removed in the future releases.
-          type: string
-        maxScatterGatherBytes:
-          description: Maximum number of bytes gathered from data processes such as Historicals and realtime processes to execute a query. This parameter can be used to further reduce maxScatterGatherBytes limit at query time.
-          type: integer
-        maxQueuedBytes:
-          description: Maximum number of bytes queued per query before exerting backpressure on the channel to the data server. Similar to maxScatterGatherBytes, except unlike that configuration, this one will trigger backpressure rather than query failure. Zero means disabled.
-          type: integer
-        serializeDateTimeAsLong:
-          description: If true, DateTime is serialized as long in the result returned by Broker and the data transportation between Broker and compute process.
-          type: boolean
-        serializeDateTimeAsLongInner:
-          description: If true, DateTime is serialized as long in the data transportation between Broker and compute process.
-          type: boolean
-        enableParallelMerge:
-          description: Enable parallel result merging on the Broker. Note that druid.processing.merge.useParallelMergePool must be enabled for this setting to be set to true.
-          type: boolean
-        parallelMergeParallelism:
-          description: Maximum number of parallel threads to use for parallel result merging on the Broker.
-          type: integer
-        parallelMergeInitialYieldRows:
-          description: Number of rows to yield per ForkJoinPool merge task for parallel result merging on the Broker, before forking off a new task to continue merging sequences.
-          type: integer
-        parallelMergeSmallBatchRows:
-          description: Size of result batches to operate on in ForkJoinPool merge tasks for parallel result merging on the Broker.
-          type: integer
-    telemetry.DruidExtractionFunctionBucket:
-      description: Bucket extraction function is used to bucket numerical values in each range of the given size by converting them to the same base value. Non numeric values are converted to null.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - bucket
-          size:
-            description: The size of the buckets (optional, default 1).
-            type: integer
-            format: int32
-          offset:
-            description: The offset for the buckets (optional, default 0).
-            type: integer
-            format: int32
-    telemetry.DruidSumAggregator:
-      description: Computes the sum of values.
+        the performance by returning the first encountered value (including null).'
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
       - type: object
@@ -2648,85 +2813,137 @@ components:
         - fieldName
         properties:
           name:
-            description: Output name for the summed value.
+            description: Output name for the 'any' value.
             type: string
           fieldName:
-            description: Name of the metric column to sum over.
+            description: Name of the metric column.
             type: string
-    telemetry.DruidSegmentMetadataRequest:
-      description: Time boundary queries return the earliest and latest data points of a data set.
+    telemetry.DruidExpressionFilter:
+      description: 'The expression filter allows for the implementation of arbitrary conditions,
+
+        leveraging the Druid expression system. This filter allows for complete flexibility,
+
+        but it might be less performant than a combination of the other filters on this page because
+
+        it can''t always use the same optimizations available to other filters.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        - expression
+        properties:
+          type:
+            type: string
+            enum:
+            - expression
+          expression:
+            description: Expression string to evaluate into true or false. See the Druid expression system for more details.
+            type: string
+    telemetry.DruidTopNRequest:
+      description: 'TopN queries return a sorted set of results for the values in a given dimension according
+
+        to some criteria. Conceptually, they can be thought of as an approximate GroupByQuery over
+
+        a single dimension with an Ordering spec. TopNs are much faster and resource efficient than
+
+        GroupBys for this use case. These types of queries take a topN query object and return an
+
+        array of JSON objects where each object represents a value asked for by the topN query.
+
+        TopNs are approximate in that each data process will rank their top K results and only return
+
+        those top K results to the Broker. K, by default in Druid, is max(1000, threshold).
+
+        In practice, this means that if you ask for the top 1000 items ordered, the correctness of the
+
+        first ~900 items will be 100%, and the ordering of the results after that is not guaranteed.
+
+        TopNs can be made more accurate by increasing the threshold.'
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
       - type: object
         required:
         - dataSource
+        - intervals
+        - granularity
+        - dimension
+        - threshold
+        - metric
         properties:
           dataSource:
-            description: A String or Object defining the data source to query, very similar to a table in a relational database. See DataSource for more information.
+            description: 'A String or Object defining the data source to query, very similar to a table in
+
+              a relational database. However, a query can also masquerade as a data source,
+
+              providing subquery-like functionality. Query data sources are currently supported
+
+              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
             $ref: '#/components/schemas/telemetry.DruidDataSource'
           intervals:
-            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over. If an interval is not specified, the query will use a default interval that spans a configurable period before the end time of the most recent segment.
+            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
             type: array
             items:
               type: string
-          toInclude:
-            description: A JSON Object representing what columns should be included in the result. Defaults to "all".
-            type: object
-          merge:
-            description: Merge all individual segment metadata results into a single result.
-            type: boolean
+          granularity:
+            $ref: '#/components/schemas/telemetry.DruidGranularity'
+          filter:
+            $ref: '#/components/schemas/telemetry.DruidFilter'
+          aggregations:
+            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidAggregator'
+          postAggregations:
+            description: Post-aggregations are specifications of processing that should happen on aggregated values as they come out of Apache Druid. If you include a post aggregation as part of a query, make sure to include all aggregators the post-aggregator requires.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidPostAggregator'
+          virtualColumns:
+            description: Virtual columns are columns that are computed on the fly during query execution. It can potentially draw from multiple underlying columns, although a virtual column always presents itself as a single column. Virtual columns can be referenced by their output names to be used as dimensions or as inputs to filters and aggregators.
+            type: array
+            items:
+              $ref: '#/components/schemas/telemetry.DruidVirtualColumn'
+          dimension:
+            description: A String or JSON object defining the dimension that you want the top taken for.
+            $ref: '#/components/schemas/telemetry.DruidDimensionSpec'
+          threshold:
+            description: An integer defining the N in the topN (i.e., how many results you want in the top list).
+            type: integer
+          metric:
+            description: A String or JSON object specifying the metric to sort by for the top list.
+            $ref: '#/components/schemas/telemetry.DruidTopNMetricSpec'
           context:
             $ref: '#/components/schemas/telemetry.DruidQueryContext'
-          analysisTypes:
-            description: A list of Strings specifying what column properties (e.g., cardinality, size) should be calculated and returned in the result. Defaults to ["cardinality", "interval", "minmax"], but can be overridden with using the segment metadata query config. * cardinality - in the result will return the estimated floor of cardinality for each column. Only relevant for dimension columns. * minmax - Estimated min/max values for each column. Only relevant for dimension columns. * size - in the result will contain the estimated total segment byte size as if the data were stored in text format. * intervals - in the result will contain the list of intervals associated with the queried segments. * timestampSpec - in the result will contain timestampSpec of data stored in segments. This can be null if timestampSpec of segments was unknown or unmergeable (if merging is enabled). * queryGranularity - in the result will contain query granularity of data stored in segments. This can be null if query granularity of segments was unknown or unmergeable (if merging is enabled). * aggregators - in the result will contain the list of aggregators usable for querying metric columns. This may be null if the aggregators are unknown or unmergeable (if merging is enabled). Merging can be strict or lenient. The form of the result is a map of column name to aggregator. * rollup - in the result is true/false/null. When merging is enabled, if some are rollup, others are not, result is null.
+    telemetry.DruidListFilteredVirtualColumn:
+      description: 'This virtual column provides an alternative way to use ''list filtered'' dimension spec as a virtual column.
+
+        It has optimized access to the underlying column value indexes that can provide a small performance
+
+        improvement in some cases.
+
+        Refer https://druid.apache.org/docs/latest/querying/dimensionspecs/#filtered-dimensionspecs for more details.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseVirtualColumn'
+      - type: object
+        properties:
+          name:
+            description: name of the virtual column.
+            type: string
+          delegate:
+            description: Name of the multi-value string input column to filter.
+            type: string
+          values:
+            description: Set of string value to allow or deny.
             type: array
             items:
               type: string
-          lenientAggregatorMerge:
-            description: If true, and if the "aggregators" analysisType is enabled, aggregators will be merged leniently.
+          isAllowList:
+            description: 'If set to true, the virtual column will allow only the values in the list.
+
+              If set to false, the virtual column will provide all values except those specified.'
             type: boolean
-    telemetry.DruidTimeBoundaryResult:
-      description: The earliest and latest timestamps for a dataset
-      type: object
-      properties:
-        timestamp:
-          description: The ISO 8601 timestamp.
-          type: string
-          format: date-time
-        result:
-          description: The corresponding timestamps for query. May contain maxTime, minTime, or both (default).
-          type: object
-    telemetry.DruidBasePostAggregator:
-      type: object
-      description: 'Post-aggregations are specifications of processing that should happen on aggregated values as
-
-        they come out of Apache Druid. If you include a post aggregation as part of a query, make sure
-
-        to include all aggregators the post-aggregator requires.'
-      required:
-      - type
-      properties:
-        type:
-          description: The post-aggregator type.
-          type: string
-          enum:
-          - arithmetic
-          - expression
-          - fieldAccess
-          - finalizingFieldAccess
-          - constant
-          - doubleGreatest
-          - longGreatest
-          - doubleLeast
-          - longLeast
-          - hyperUniqueCardinality
-          - thetaSketchEstimate
-          - thetaSketchSetOp
-        fields:
-          description: Fields processed by post aggregator
-          type: array
-          items:
-            $ref: '#/components/schemas/telemetry.DruidPostAggregator'
+            default: true
     telemetry.DruidBaseSearchSpec:
       type: object
       description: The base structure for all Druid search specifications.
@@ -2741,16 +2958,132 @@ components:
           - fragment
           - contains
           - regex
-    telemetry.DruidHavingQueryFilter:
-      description: Query filter HavingSpecs allow all Druid query filters to be used in the Having part of the query.
+    telemetry.DruidExtractionFunctionUpperCase:
+      description: Returns the dimension values as all upper case. Optionally user can specify the language to use in order to perform upper transformation.
       allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseHavingFilter'
+      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - upper
+          locale:
+            type: string
+    telemetry.DruidQueryDataSource:
+      description: This is used for nested groupBys and is only currently supported for groupBys.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
+      - type: object
+        required:
+        - query
+        properties:
+          query:
+            $ref: '#/components/schemas/telemetry.DruidGroupByRequest'
+    telemetry.DruidPostAggregator:
+      oneOf:
+      - $ref: '#/components/schemas/telemetry.DruidArithmeticPostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidExpressionPostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidConstantPostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidHyperUniquePostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidThetaSketchEstimatePostAggregator'
+      - $ref: '#/components/schemas/telemetry.DruidThetaSketchOperationsPostAggregator'
+      discriminator:
+        propertyName: type
+        mapping:
+          arithmetic: '#/components/schemas/telemetry.DruidArithmeticPostAggregator'
+          expression: '#/components/schemas/telemetry.DruidExpressionPostAggregator'
+          fieldAccess: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
+          finalizingFieldAccess: '#/components/schemas/telemetry.DruidFieldAccessorPostAggregator'
+          constant: '#/components/schemas/telemetry.DruidConstantPostAggregator'
+          doubleGreatest: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
+          longGreatest: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
+          doubleLeast: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
+          longLeast: '#/components/schemas/telemetry.DruidGreatestLeastPostAggregator'
+          hyperUniqueCardinality: '#/components/schemas/telemetry.DruidHyperUniquePostAggregator'
+          thetaSketchEstimate: '#/components/schemas/telemetry.DruidThetaSketchEstimatePostAggregator'
+          thetaSketchSetOp: '#/components/schemas/telemetry.DruidThetaSketchOperationsPostAggregator'
+    telemetry.DruidConstantPostAggregator:
+      description: The constant post-aggregator always returns the specified value.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBasePostAggregator'
+      - type: object
+        properties:
+          name:
+            description: Output name for the post-aggregator.
+            type: string
+          value:
+            description: The numerical value.
+            type: number
+            format: double
+    telemetry.DruidContainsSearchSpec:
+      description: The specification for a Druid 'insensitive_contains' search
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
+      - required:
+        - value
+        type: object
+        properties:
+          value:
+            description: The value to match.  If any part of a dimension value contains the value specified in this search query spec, regardless of case, a "match" occurs.
+            type: string
+          case_sensitive:
+            description: Whether or not search is case sensitive
+            type: boolean
+    telemetry.DruidBaseQuerySpec:
+      type: object
+      description: A Druid query spec.
+      required:
+      - type
+      properties:
+        type:
+          description: The type of query spec.
+          type: string
+          enum:
+          - contains
+          - insensitive_contains
+          - fragment
+    telemetry.DruidTrueFilter:
+      description: A filter which matches all values. You can use it to temporarily disable other filters without removing them.
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
+      - type: object
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            enum:
+            - 'true'
+    telemetry.DruidFilteredAggregator:
+      description: 'A filtered aggregator wraps any given aggregator, but only aggregates the values for
+
+        which the given dimension filter matches.
+
+        This makes it possible to compute the results of a filtered and an unfiltered aggregation
+
+        simultaneously, without having to issue multiple queries, and use both results as part
+
+        of post-aggregations.
+
+        If only the filtered results are required, consider putting the filter on the query
+
+        itself, which will be much faster since it does not require scanning all the data.'
+      allOf:
+      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
       - type: object
         required:
         - filter
+        - aggregator
         properties:
           filter:
             $ref: '#/components/schemas/telemetry.DruidFilter'
+          aggregator:
+            $ref: '#/components/schemas/telemetry.DruidAggregator'
     telemetry.DruidExpressionPostAggregator:
       description: 'A post-aggregator defined as a Druid expression. Supported Druid expressions are documented at
 
@@ -2774,238 +3107,23 @@ components:
 
               numericFirst ordering always returns finite values first, followed by NaN, and infinite values last.'
             type: string
-    telemetry.DruidStringAnyAggregator:
-      description: 'Returns any value including null. This aggregator can simplify and optimize
-
-        the performance by returning the first encountered value (including null).'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
-      - type: object
-        required:
-        - name
-        - fieldName
-        properties:
-          name:
-            description: Output name for the 'any' value.
-            type: string
-          fieldName:
-            description: Name of the metric column.
-            type: string
-          maxStringBytes:
-            description: Size in bytes limit on aggregation size.
-            type: integer
-            default: 1024
-    telemetry.DruidInlineDataSource:
-      description: Inline datasources allow you to query a small amount of data that is embedded in the query itself. They are useful when you want to write a query on a small amount of data without loading it first. They are also useful as inputs into a join. Druid also uses them internally to handle subqueries that need to be inlined on the Broker. There are two fields in an inline datasource, an array of columnNames and an array of rows. Each row is an array that must be exactly as long as the list of columnNames. The first element in each row corresponds to the first column in columnNames, and so on.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseDataSource'
-      - type: object
-        required:
-        - columnNames
-        - rows
-        properties:
-          columnNames:
-            description: the column names.
-            type: array
-            items:
-              description: the name of a column.
-              type: string
-          rows:
-            description: an array of rows.
-            type: array
-            items:
-              description: a row. Each row is an array that must be exactly as long as the list of columnNames.
-              type: array
-              items:
-                description: a column/row cell value.
-                type: string
-    telemetry.DruidExpressionFilter:
-      description: 'The expression filter allows for the implementation of arbitrary conditions,
-
-        leveraging the Druid expression system. This filter allows for complete flexibility,
-
-        but it might be less performant than a combination of the other filters on this page because
-
-        it can''t always use the same optimizations available to other filters.'
+    telemetry.DruidOrFilter:
+      description: A logical OR expression filter.
       allOf:
       - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
       - type: object
         required:
+        - fields
         - type
-        - expression
         properties:
           type:
             type: string
             enum:
-            - expression
-          expression:
-            description: Expression string to evaluate into true or false. See the Druid expression system for more details.
-            type: string
-    telemetry.DruidCountAggregator:
-      description: Computes the count of Druid rows that match the filters. The count aggregator counts the number of Druid rows, which does not always reflect the number of raw events ingested. This is because Druid can be configured to roll up data at ingestion time To count the number of ingested rows of data, include a count aggregator at ingestion time, and a longSum aggregator at query time.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseAggregator'
-      - type: object
-        properties:
-          name:
-            description: the output name
-            type: string
-    telemetry.DruidBaseAggregator:
-      type: object
-      description: A Druid aggregator.
-      required:
-      - type
-      properties:
-        type:
-          description: The aggregator type.
-          type: string
-          enum:
-          - count
-          - longSum
-          - doubleSum
-          - floatSum
-          - doubleMin
-          - doubleMax
-          - floatMin
-          - floatMax
-          - longMin
-          - longMax
-          - doubleFirst
-          - doubleLast
-          - floatFirst
-          - floatLast
-          - longFirst
-          - longLast
-          - stringFirst
-          - stringLast
-          - doubleAny
-          - floatAny
-          - longAny
-          - stringAny
-          - thetaSketch
-          - filtered
-    telemetry.DruidTopNResult:
-      description: Sorted time series results for a particular interval based on some criteria
-      type: object
-      properties:
-        timestamp:
-          description: The ISO 8601 timestamp.
-          type: string
-          format: date-time
-        result:
-          description: A sorted list of dimension values
-          type: array
-          items:
-            description: A dimension value matching criteria
-            type: object
-    telemetry.DruidBaseVirtualColumn:
-      type: object
-      description: 'Virtual columns are columns that are computed on the fly during query execution.
-
-        If you include a virtual column as part of a query, make sure to include all attributes
-
-        the virtual column requires.
-
-        Refer https://druid.apache.org/docs/latest/querying/virtual-columns/ for more details.'
-      required:
-      - type
-      properties:
-        type:
-          description: The virtual-column type.
-          type: string
-          enum:
-          - expression
-          - nested-field
-          - mv-filtered
-    telemetry.DruidDataSourceMetadataResult:
-      description: Metadata about a Druid datasource
-      type: object
-      properties:
-        timestamp:
-          description: The ISO 8601 timestamp.
-          type: string
-          format: date-time
-        result:
-          description: The metadata for the specified datasource
-          type: object
-    telemetry.DruidExtractionFunctionPartial:
-      description: Returns the dimension value unchanged if the regular expression matches, otherwise returns null.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseExtractionFunction'
-      - type: object
-        required:
-        - type
-        - expr
-        properties:
-          type:
-            type: string
-            enum:
-            - partial
-          expr:
-            type: string
-    telemetry.DruidFragmentSearchSpec:
-      description: The specification for a Druid 'insensitive_contains' search
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseSearchSpec'
-      - required:
-        - values
-        type: object
-        properties:
-          values:
-            description: The value to match.  If any part of a dimension value contains all of the values specified in this search query spec a "match" occurs.
+            - or
+          fields:
             type: array
             items:
-              description: Values to match
-              type: string
-          case_sensitive:
-            description: Whether or not search is case sensitive
-            type: boolean
-    telemetry.DruidRangeFilter:
-      description: 'The range filter is a replacement for the bound filter.
-
-        It compares against any type of column and is designed to have has more SQL compliant behavior than the bound filter.
-
-        It won''t match null values, even if you don''t specify a lower bound.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        - column
-        - matchValueType
-        properties:
-          type:
-            type: string
-            enum:
-            - range
-          column:
-            description: Input column or virtual column name to filter.
-            type: string
-          matchValueType:
-            description: String specifying the type of bounds to match. For example STRING, LONG, DOUBLE, FLOAT, ARRAY<STRING>, ARRAY<LONG>, or any other Druid type. The matchValueType determines how Druid interprets the matchValue to assist in converting to the type of the matched column and also defines the type of comparison used when matching values.
-            type: string
-          lower:
-            description: Lower bound value to match. At least one of lower or upper must not be null.
-          upper:
-            description: Upper bound value to match. At least one of lower or upper must not be null.
-          lowerOpen:
-            description: Boolean indicating if lower bound is open in the interval of values defined by the range (">" instead of ">=").
-            type: boolean
-          upperOpen:
-            description: Boolean indicating if upper bound is open on the interval of values defined by the range ("<" instead of "<=").
-            type: boolean
-    telemetry.DruidTrueFilter:
-      description: A filter which matches all values. You can use it to temporarily disable other filters without removing them.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseFilter'
-      - type: object
-        required:
-        - type
-        properties:
-          type:
-            type: string
-            enum:
-            - 'true'
+              $ref: '#/components/schemas/telemetry.DruidFilter'
     telemetry.DruidIntervalFilter:
       description: 'The Interval filter enables range filtering on columns that contain long millisecond values,
 
@@ -3046,124 +3164,6 @@ components:
               type: string
           extractionFn:
             $ref: '#/components/schemas/telemetry.DruidExtractionFunction'
-    telemetry.DruidTimeSeriesRequest:
-      description: These types of queries take a timeseries query object and return an array of JSON objects where each object represents a value asked for by the timeseries query.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseRequest'
-      - type: object
-        required:
-        - dataSource
-        - intervals
-        - granularity
-        properties:
-          dataSource:
-            description: 'A String or Object defining the data source to query, very similar to a table in
-
-              a relational database. However, a query can also masquerade as a data source,
-
-              providing subquery-like functionality. Query data sources are currently supported
-
-              only by GroupBy queries. See [DataSource](https://druid.apache.org/docs/latest/querying/datasource.html) for more information.'
-            $ref: '#/components/schemas/telemetry.DruidDataSource'
-          descending:
-            description: Whether to make descending ordered result. Default is false(ascending).
-            type: boolean
-          intervals:
-            description: A JSON Object representing ISO-8601 Intervals. This defines the time ranges to run the query over.
-            type: array
-            items:
-              description: A ISO-8601 time interval. The ISO 8601 interval is a representation of a time interval with optional UTC offset.
-              type: string
-            example:
-            - 2020-01-01T00:00:00.000/2020-01-03T00:00:00.000
-            - 2020-01-01T00:00:00.000Z/2020-01-03T00:00:00.000Z
-            - 2007-03-01T13:00:00Z/2008-05-11T15:30:00Z
-            - 2007-03-01T13:00:00Z/P1Y2M10DT2H30M
-            - P1Y2M10DT2H30M/2008-05-11T15:30:00Z
-          granularity:
-            $ref: '#/components/schemas/telemetry.DruidGranularity'
-          filter:
-            $ref: '#/components/schemas/telemetry.DruidFilter'
-          aggregations:
-            description: Aggregation functions are used to summarize data in buckets. Summarization functions include counting rows, calculating the min/max/sum of metrics and retrieving the first/last value of metrics for each bucket. Additional summarization functions are available with extensions. If no aggregator is provided, the results will be empty for each bucket.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidAggregator'
-          postAggregations:
-            description: Post-aggregations are specifications of processing that should happen on aggregated values as they come out of Apache Druid. If you include a post aggregation as part of a query, make sure to include all aggregators the post-aggregator requires.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidPostAggregator'
-          virtualColumns:
-            description: Virtual columns are columns that are computed on the fly during query execution. It can potentially draw from multiple underlying columns, although a virtual column always presents itself as a single column. Virtual columns can be referenced by their output names to be used as dimensions or as inputs to filters and aggregators.
-            type: array
-            items:
-              $ref: '#/components/schemas/telemetry.DruidVirtualColumn'
-          limit:
-            description: An integer that limits the number of results. The default is unlimited.
-            type: integer
-            format: int32
-          context:
-            $ref: '#/components/schemas/telemetry.DruidQueryContext'
-    telemetry.DruidDimensionTopNMetricSpec:
-      description: This metric specification sorts TopN results by dimension value, using one of the sorting orders.
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseTopNMetricSpec'
-      - type: object
-        properties:
-          ordering:
-            description: Specifies the sorting order. It can be one of the following values. "lexicographic", "alphanumeric", "numeric", "strlen". * lexicographic - Sorts values by converting Strings to their UTF-8 byte array representations and comparing lexicographically, byte-by-byte. * alphanumeric - Suitable for strings with both numeric and non-numeric content, e.g., "file12 sorts after file2". See https://github.com/amjjd/java-alphanum for more details on how this ordering sorts values. This ordering is not suitable for numbers with decimal points or negative numbers. * numeric - Sorts values as numbers, supports integers and floating point values. Negative values are supported. This sorting order will try to parse all string values as numbers. Unparseable values are treated as nulls, and nulls precede numbers. When comparing two unparseable values (e.g., "hello" and "world"), this ordering will sort by comparing the unparsed strings lexicographically. * strlen - Sorts values by the their string lengths. When there is a tie, this comparator falls back to using the String compareTo method. * version - Sorts values as versions, e.g., "10.0 sorts after 9.0", "1.0.0-SNAPSHOT sorts after 1.0.0".
-            type: string
-            enum:
-            - lexicographic
-            - alphanumeric
-            - numeric
-            - strlen
-            - version
-            default: lexicographic
-          previousStop:
-            description: The starting point of the sort. For example, if a previousStop value is 'b', all values before 'b' are discarded. This field can be used to paginate through all the dimension values.
-            type: string
-    telemetry.DruidListFilteredVirtualColumn:
-      description: 'This virtual column provides an alternative way to use ''list filtered'' dimension spec as a virtual column.
-
-        It has optimized access to the underlying column value indexes that can provide a small performance
-
-        improvement in some cases.
-
-        Refer https://druid.apache.org/docs/latest/querying/dimensionspecs/#filtered-dimensionspecs for more details.'
-      allOf:
-      - $ref: '#/components/schemas/telemetry.DruidBaseVirtualColumn'
-      - type: object
-        properties:
-          name:
-            description: name of the virtual column.
-            type: string
-          delegate:
-            description: Name of the multi-value string input column to filter.
-            type: string
-          values:
-            description: Set of string value to allow or deny.
-            type: array
-            items:
-              type: string
-          isAllowList:
-            description: 'If set to true, the virtual column will allow only the values in the list.
-
-              If set to false, the virtual column will provide all values except those specified.'
-            type: boolean
-            default: true
-    telemetry.DruidVirtualColumn:
-      oneOf:
-      - $ref: '#/components/schemas/telemetry.DruidExpressionVirtualColumn'
-      - $ref: '#/components/schemas/telemetry.NestedFieldVirtualColumn'
-      - $ref: '#/components/schemas/telemetry.DruidListFilteredVirtualColumn'
-      discriminator:
-        propertyName: type
-        mapping:
-          expression: '#/components/schemas/telemetry.DruidExpressionVirtualColumn'
-          nested-field: '#/components/schemas/telemetry.NestedFieldVirtualColumn'
-          mv-filtered: '#/components/schemas/telemetry.DruidListFilteredVirtualColumn'
   headers:
     Set-Cookie:
       description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.

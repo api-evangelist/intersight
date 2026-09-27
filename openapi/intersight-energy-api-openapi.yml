@@ -177,16 +177,8 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
+    default:
+      description: An unexpected error occurred.
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -207,8 +199,16 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -216,31 +216,30 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-  schemas:
-    energy.DailyMetrics:
-      title: Energy:Daily Metrics
-      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
-      x-allOf-name: energy.DailyMetrics
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-    energy.Metrics:
-      title: Energy:Metrics
-      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
-      x-allOf-name: energy.Metrics
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-  links:
-    GetIamAccountByMoid:
-      operationId: GetIamAccountByMoid
-      parameters:
-        Moid: $response.body#/AccountMoid
-      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
-    GetIamDomainGroupByMoid:
-      operationId: GetIamDomainGroupByMoid
-      parameters:
-        Moid: $response.body#/DomainGroupMoid
-      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
   parameters:
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
     IfMatch:
       name: If-Match
       in: header
@@ -266,29 +265,6 @@ components:
       required: false
       schema:
         type: string
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
   headers:
     x-starship-traceid:
       description: A value that uniquely identifies a HTTP request and its response.
@@ -299,6 +275,30 @@ components:
       schema:
         type: string
         example: X-Starship-Token=abcde12345; Path=/
+  schemas:
+    energy.Metrics:
+      title: Energy:Metrics
+      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
+      x-allOf-name: energy.Metrics
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+    energy.DailyMetrics:
+      title: Energy:Daily Metrics
+      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
+      x-allOf-name: energy.DailyMetrics
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+  links:
+    GetIamDomainGroupByMoid:
+      operationId: GetIamDomainGroupByMoid
+      parameters:
+        Moid: $response.body#/DomainGroupMoid
+      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
+    GetIamAccountByMoid:
+      operationId: GetIamAccountByMoid
+      parameters:
+        Moid: $response.body#/AccountMoid
+      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
   securitySchemes:
     cookieAuth:
       type: apiKey

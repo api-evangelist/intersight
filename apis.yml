@@ -56,7 +56,7 @@ modified: '2026-09-16'
 tags:
 - Infrastructure
 - Cloud Operations
-- Data-Center
+- Data Center
 - Compute
 - Networking
 - Enterprise
@@ -79,12 +79,12 @@ tags_raw:
 - Orchestration
 - Telemetry
 - Firmware Management
+- Data-Center
 apis:
 - aid: intersight:intersight-aaa-api
   name: Cisco Intersight Aaa API
   description: The aaa API from Cisco Intersight — 6 operation(s) for aaa.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - aaa
   properties:
@@ -141,7 +141,6 @@ apis:
   name: Cisco Intersight Access API
   description: The access API from Cisco Intersight — 6 operation(s) for access.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Access
   tags_raw:
@@ -200,7 +199,6 @@ apis:
   name: Cisco Intersight Adapter API
   description: The adapter API from Cisco Intersight — 14 operation(s) for adapter.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Adapter
   tags_raw:
@@ -259,7 +257,6 @@ apis:
   name: Cisco Intersight Apiproxy API
   description: The apiproxy API from Cisco Intersight — 2 operation(s) for apiproxy.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - API Proxy
   tags_raw:
@@ -318,7 +315,6 @@ apis:
   name: Cisco Intersight Appliance API
   description: The appliance API from Cisco Intersight — 104 operation(s) for appliance.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Appliances
   tags_raw:
@@ -377,7 +373,6 @@ apis:
   name: Cisco Intersight Asset API
   description: The asset API from Cisco Intersight — 31 operation(s) for asset.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Asset
   tags_raw:
@@ -436,7 +431,6 @@ apis:
   name: Cisco Intersight Auditd API
   description: The auditd API from Cisco Intersight — 2 operation(s) for auditd.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - auditd
   properties:
@@ -493,7 +487,6 @@ apis:
   name: Cisco Intersight Bios API
   description: The bios API from Cisco Intersight — 14 operation(s) for bios.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - bios
   properties:
@@ -550,7 +543,6 @@ apis:
   name: Cisco Intersight Boot API
   description: The boot API from Cisco Intersight — 28 operation(s) for boot.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Boot
   tags_raw:
@@ -609,7 +601,6 @@ apis:
   name: Cisco Intersight Bulk API
   description: The bulk API from Cisco Intersight — 16 operation(s) for bulk.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Bulk
   tags_raw:
@@ -668,7 +659,6 @@ apis:
   name: Cisco Intersight Capability API
   description: The capability API from Cisco Intersight — 116 operation(s) for capability.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Capabilities
   tags_raw:
@@ -727,7 +717,6 @@ apis:
   name: Cisco Intersight Catalystsdwan API
   description: The catalystsdwan API from Cisco Intersight — 16 operation(s) for catalystsdwan.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - catalystsdwan
   properties:
@@ -784,7 +773,6 @@ apis:
   name: Cisco Intersight Chassis API
   description: The chassis API from Cisco Intersight — 14 operation(s) for chassis.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Chassis
   tags_raw:
@@ -843,7 +831,6 @@ apis:
   name: Cisco Intersight Cli API
   description: The cli API from Cisco Intersight — 2 operation(s) for cli.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - CLI
   tags_raw:
@@ -902,7 +889,6 @@ apis:
   name: Cisco Intersight Cloud API
   description: The cloud API from Cisco Intersight — 7 operation(s) for cloud.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Cloud
   tags_raw:
@@ -961,7 +947,6 @@ apis:
   name: Cisco Intersight Comm API
   description: The comm API from Cisco Intersight — 4 operation(s) for comm.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - comm
   properties:
@@ -1018,7 +1003,6 @@ apis:
   name: Cisco Intersight Compute API
   description: The compute API from Cisco Intersight — 36 operation(s) for compute.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Compute
   tags_raw:
@@ -1077,7 +1061,6 @@ apis:
   name: Cisco Intersight Cond API
   description: The cond API from Cisco Intersight — 25 operation(s) for cond.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - cond
   properties:
@@ -1134,7 +1117,6 @@ apis:
   name: Cisco Intersight Connectorpack API
   description: The connectorpack API from Cisco Intersight — 4 operation(s) for connectorpack.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - connectorpack
   properties:
@@ -1191,7 +1173,6 @@ apis:
   name: Cisco Intersight Console API
   description: The console API from Cisco Intersight — 2 operation(s) for console.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Console
   tags_raw:
@@ -1250,7 +1231,6 @@ apis:
   name: Cisco Intersight Convergedinfra API
   description: The convergedinfra API from Cisco Intersight — 12 operation(s) for convergedinfra.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - convergedinfra
   properties:
@@ -1307,7 +1287,6 @@ apis:
   name: Cisco Intersight Coremanagement API
   description: The coremanagement API from Cisco Intersight — 4 operation(s) for coremanagement.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - coremanagement
   properties:
@@ -1364,7 +1343,6 @@ apis:
   name: Cisco Intersight Crd API
   description: The crd API from Cisco Intersight — 2 operation(s) for crd.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - CRD
   tags_raw:
@@ -1423,7 +1401,6 @@ apis:
   name: Cisco Intersight Deviceconnector API
   description: The deviceconnector API from Cisco Intersight — 2 operation(s) for deviceconnector.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - deviceconnector
   properties:
@@ -1480,7 +1457,6 @@ apis:
   name: Cisco Intersight Dnac API
   description: The dnac API from Cisco Intersight — 20 operation(s) for dnac.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - dnac
   properties:
@@ -1537,7 +1513,6 @@ apis:
   name: Cisco Intersight Energy API
   description: The energy API from Cisco Intersight — 2 operation(s) for energy.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Energy
   tags_raw:
@@ -1596,7 +1571,6 @@ apis:
   name: Cisco Intersight Equipment API
   description: The equipment API from Cisco Intersight — 78 operation(s) for equipment.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Equipment
   tags_raw:
@@ -1655,7 +1629,6 @@ apis:
   name: Cisco Intersight Ether API
   description: The ether API from Cisco Intersight — 12 operation(s) for ether.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - ether
   properties:
@@ -1712,7 +1685,6 @@ apis:
   name: Cisco Intersight Externalsite API
   description: The externalsite API from Cisco Intersight — 2 operation(s) for externalsite.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - externalsite
   properties:
@@ -1769,7 +1741,6 @@ apis:
   name: Cisco Intersight Fabric API
   description: The fabric API from Cisco Intersight — 111 operation(s) for fabric.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Fabric
   tags_raw:
@@ -1828,7 +1799,6 @@ apis:
   name: Cisco Intersight Fault API
   description: The fault API from Cisco Intersight — 2 operation(s) for fault.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - fault
   properties:
@@ -1885,7 +1855,6 @@ apis:
   name: Cisco Intersight Fc API
   description: The fc API from Cisco Intersight — 6 operation(s) for fc.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - fc
   properties:
@@ -1942,7 +1911,6 @@ apis:
   name: Cisco Intersight Fcpool API
   description: The fcpool API from Cisco Intersight — 12 operation(s) for fcpool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - fcpool
   properties:
@@ -1999,7 +1967,6 @@ apis:
   name: Cisco Intersight Feedback API
   description: The feedback API from Cisco Intersight — 2 operation(s) for feedback.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Feedback
   tags_raw:
@@ -2058,7 +2025,6 @@ apis:
   name: Cisco Intersight Firmware API
   description: The firmware API from Cisco Intersight — 64 operation(s) for firmware.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Firmware
   tags_raw:
@@ -2117,7 +2083,6 @@ apis:
   name: Cisco Intersight Fmc API
   description: The fmc API from Cisco Intersight — 8 operation(s) for fmc.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - fmc
   properties:
@@ -2174,7 +2139,6 @@ apis:
   name: Cisco Intersight Forecast API
   description: The forecast API from Cisco Intersight — 6 operation(s) for forecast.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Forecast
   tags_raw:
@@ -2233,7 +2197,6 @@ apis:
   name: Cisco Intersight Graphics API
   description: The graphics API from Cisco Intersight — 4 operation(s) for graphics.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Graphics
   tags_raw:
@@ -2292,7 +2255,6 @@ apis:
   name: Cisco Intersight Hci API
   description: The hci API from Cisco Intersight — 46 operation(s) for hci.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - HCI
   tags_raw:
@@ -2351,7 +2313,6 @@ apis:
   name: Cisco Intersight Hcl API
   description: The hcl API from Cisco Intersight — 20 operation(s) for hcl.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - HCL
   tags_raw:
@@ -2410,7 +2371,6 @@ apis:
   name: Cisco Intersight Hyperflex API
   description: The hyperflex API from Cisco Intersight — 136 operation(s) for hyperflex.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - hyperflex
   properties:
@@ -2467,7 +2427,6 @@ apis:
   name: Cisco Intersight Iaas API
   description: The iaas API from Cisco Intersight — 22 operation(s) for iaas.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Infrastructure-as-a-Service
   tags_raw:
@@ -2526,7 +2485,6 @@ apis:
   name: Cisco Intersight Iam API
   description: The iam API from Cisco Intersight — 118 operation(s) for iam.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Identity and Access Management
   tags_raw:
@@ -2585,7 +2543,6 @@ apis:
   name: Cisco Intersight Inventory API
   description: The inventory API from Cisco Intersight — 9 operation(s) for inventory.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Inventory
   tags_raw:
@@ -2644,7 +2601,6 @@ apis:
   name: Cisco Intersight Ipmioverlan API
   description: The ipmioverlan API from Cisco Intersight — 4 operation(s) for ipmioverlan.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - ipmioverlan
   properties:
@@ -2701,7 +2657,6 @@ apis:
   name: Cisco Intersight Iqnpool API
   description: The iqnpool API from Cisco Intersight — 12 operation(s) for iqnpool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - iqnpool
   properties:
@@ -2758,7 +2713,6 @@ apis:
   name: Cisco Intersight Iwotenant API
   description: The iwotenant API from Cisco Intersight — 8 operation(s) for iwotenant.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - iwotenant
   properties:
@@ -2815,7 +2769,6 @@ apis:
   name: Cisco Intersight Kvm API
   description: The kvm API from Cisco Intersight — 10 operation(s) for kvm.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - KVM
   tags_raw:
@@ -2874,7 +2827,6 @@ apis:
   name: Cisco Intersight License API
   description: The license API from Cisco Intersight — 30 operation(s) for license.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - License
   tags_raw:
@@ -2933,7 +2885,6 @@ apis:
   name: Cisco Intersight Ls API
   description: The ls API from Cisco Intersight — 2 operation(s) for ls.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Ls
   tags_raw:
@@ -2992,7 +2943,6 @@ apis:
   name: Cisco Intersight Macpool API
   description: The macpool API from Cisco Intersight — 12 operation(s) for macpool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - macpool
   properties:
@@ -3049,7 +2999,6 @@ apis:
   name: Cisco Intersight Management API
   description: The management API from Cisco Intersight — 6 operation(s) for management.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Management
   tags_raw:
@@ -3108,7 +3057,6 @@ apis:
   name: Cisco Intersight Memory API
   description: The memory API from Cisco Intersight — 22 operation(s) for memory.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Memory
   tags_raw:
@@ -3167,7 +3115,6 @@ apis:
   name: Cisco Intersight Meraki API
   description: The meraki API from Cisco Intersight — 10 operation(s) for meraki.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Meraki
   tags_raw:
@@ -3226,7 +3173,6 @@ apis:
   name: Cisco Intersight Meta API
   description: The meta API from Cisco Intersight — 2 operation(s) for meta.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Meta
   tags_raw:
@@ -3285,7 +3231,6 @@ apis:
   name: Cisco Intersight Metrics API
   description: The metrics API from Cisco Intersight — 6 operation(s) for metrics.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Metrics
   tags_raw:
@@ -3344,7 +3289,6 @@ apis:
   name: Cisco Intersight Mgmt API
   description: The mgmt API from Cisco Intersight — 22 operation(s) for mgmt.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Mgmt
   tags_raw:
@@ -3403,7 +3347,6 @@ apis:
   name: Cisco Intersight Monitoring API
   description: The monitoring API from Cisco Intersight — 2 operation(s) for monitoring.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Monitoring
   tags_raw:
@@ -3462,7 +3405,6 @@ apis:
   name: Cisco Intersight Network API
   description: The network API from Cisco Intersight — 38 operation(s) for network.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Networks
   tags_raw:
@@ -3521,7 +3463,6 @@ apis:
   name: Cisco Intersight Networkconfig API
   description: The networkconfig API from Cisco Intersight — 4 operation(s) for networkconfig.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - networkconfig
   properties:
@@ -3578,7 +3519,6 @@ apis:
   name: Cisco Intersight Niaapi API
   description: The niaapi API from Cisco Intersight — 48 operation(s) for niaapi.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - niaapi
   properties:
@@ -3635,7 +3575,6 @@ apis:
   name: Cisco Intersight Niatelemetry API
   description: The niatelemetry API from Cisco Intersight — 190 operation(s) for niatelemetry.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - niatelemetry
   properties:
@@ -3692,7 +3631,6 @@ apis:
   name: Cisco Intersight Notification API
   description: The notification API from Cisco Intersight — 2 operation(s) for notification.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Notification
   tags_raw:
@@ -3751,7 +3689,6 @@ apis:
   name: Cisco Intersight Ntp API
   description: The ntp API from Cisco Intersight — 6 operation(s) for ntp.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - NTP
   tags_raw:
@@ -3810,7 +3747,6 @@ apis:
   name: Cisco Intersight Oprs API
   description: The oprs API from Cisco Intersight — 4 operation(s) for oprs.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - oprs
   properties:
@@ -3867,7 +3803,6 @@ apis:
   name: Cisco Intersight Organization API
   description: The organization API from Cisco Intersight — 2 operation(s) for organization.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Organization
   tags_raw:
@@ -3926,7 +3861,6 @@ apis:
   name: Cisco Intersight Os API
   description: The os API from Cisco Intersight — 17 operation(s) for os.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Os
   tags_raw:
@@ -3985,7 +3919,6 @@ apis:
   name: Cisco Intersight Pci API
   description: The pci API from Cisco Intersight — 20 operation(s) for pci.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - PCI
   tags_raw:
@@ -4044,7 +3977,6 @@ apis:
   name: Cisco Intersight Pool API
   description: The pool API from Cisco Intersight — 4 operation(s) for pool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Pool
   tags_raw:
@@ -4103,7 +4035,6 @@ apis:
   name: Cisco Intersight Port API
   description: The port API from Cisco Intersight — 6 operation(s) for port.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Ports
   tags_raw:
@@ -4162,7 +4093,6 @@ apis:
   name: Cisco Intersight Power API
   description: The power API from Cisco Intersight — 10 operation(s) for power.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Power
   tags_raw:
@@ -4221,7 +4151,6 @@ apis:
   name: Cisco Intersight Processor API
   description: The processor API from Cisco Intersight — 2 operation(s) for processor.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Processors
   tags_raw:
@@ -4280,7 +4209,6 @@ apis:
   name: Cisco Intersight Rack API
   description: The rack API from Cisco Intersight — 2 operation(s) for rack.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Rack
   tags_raw:
@@ -4339,7 +4267,6 @@ apis:
   name: Cisco Intersight Recommendation API
   description: The recommendation API from Cisco Intersight — 16 operation(s) for recommendation.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Recommendations
   tags_raw:
@@ -4398,7 +4325,6 @@ apis:
   name: Cisco Intersight Recovery API
   description: The recovery API from Cisco Intersight — 14 operation(s) for recovery.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Recovery
   tags_raw:
@@ -4457,7 +4383,6 @@ apis:
   name: Cisco Intersight Resource API
   description: The resource API from Cisco Intersight — 16 operation(s) for resource.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Resource
   tags_raw:
@@ -4516,7 +4441,6 @@ apis:
   name: Cisco Intersight Resourcepool API
   description: The resourcepool API from Cisco Intersight — 18 operation(s) for resourcepool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Resource - Pool
   tags_raw:
@@ -4575,7 +4499,6 @@ apis:
   name: Cisco Intersight Rproxy API
   description: The rproxy API from Cisco Intersight — 1 operation(s) for rproxy.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - rproxy
   properties:
@@ -4632,7 +4555,6 @@ apis:
   name: Cisco Intersight Scheduler API
   description: The scheduler API from Cisco Intersight — 6 operation(s) for scheduler.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Scheduler
   tags_raw:
@@ -4691,7 +4613,6 @@ apis:
   name: Cisco Intersight Sdaaci API
   description: The sdaaci API from Cisco Intersight — 4 operation(s) for sdaaci.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - sdaaci
   properties:
@@ -4748,7 +4669,6 @@ apis:
   name: Cisco Intersight Sdcard API
   description: The sdcard API from Cisco Intersight — 4 operation(s) for sdcard.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - sdcard
   properties:
@@ -4805,7 +4725,6 @@ apis:
   name: Cisco Intersight Search API
   description: The search API from Cisco Intersight — 5 operation(s) for search.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Search
   tags_raw:
@@ -4864,7 +4783,6 @@ apis:
   name: Cisco Intersight Security API
   description: The security API from Cisco Intersight — 2 operation(s) for security.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Security
   tags_raw:
@@ -4923,7 +4841,6 @@ apis:
   name: Cisco Intersight Server API
   description: The server API from Cisco Intersight — 22 operation(s) for server.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Servers
   tags_raw:
@@ -4982,7 +4899,6 @@ apis:
   name: Cisco Intersight Servicenow API
   description: The servicenow API from Cisco Intersight — 8 operation(s) for servicenow.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - ServiceNow
   tags_raw:
@@ -5041,7 +4957,6 @@ apis:
   name: Cisco Intersight Smtp API
   description: The smtp API from Cisco Intersight — 6 operation(s) for smtp.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - SMTP
   tags_raw:
@@ -5100,7 +5015,6 @@ apis:
   name: Cisco Intersight Snmp API
   description: The snmp API from Cisco Intersight — 4 operation(s) for snmp.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - SNMP
   tags_raw:
@@ -5159,7 +5073,6 @@ apis:
   name: Cisco Intersight Software API
   description: The software API from Cisco Intersight — 24 operation(s) for software.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Software
   tags_raw:
@@ -5219,7 +5132,6 @@ apis:
   description: >-
     The softwarerepository API from Cisco Intersight — 20 operation(s) for softwarerepository.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - softwarerepository
   properties:
@@ -5276,7 +5188,6 @@ apis:
   name: Cisco Intersight Sol API
   description: The sol API from Cisco Intersight — 4 operation(s) for sol.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Sol
   tags_raw:
@@ -5335,7 +5246,6 @@ apis:
   name: Cisco Intersight Ssh API
   description: The ssh API from Cisco Intersight — 4 operation(s) for ssh.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - SSH
   tags_raw:
@@ -5394,7 +5304,6 @@ apis:
   name: Cisco Intersight Storage API
   description: The storage API from Cisco Intersight — 274 operation(s) for storage.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Storage
   tags_raw:
@@ -5453,7 +5362,6 @@ apis:
   name: Cisco Intersight Syslog API
   description: The syslog API from Cisco Intersight — 4 operation(s) for syslog.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Syslog
   tags_raw:
@@ -5512,7 +5420,6 @@ apis:
   name: Cisco Intersight Tam API
   description: The tam API from Cisco Intersight — 10 operation(s) for tam.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - tam
   properties:
@@ -5569,7 +5476,6 @@ apis:
   name: Cisco Intersight Task API
   description: The task API from Cisco Intersight — 16 operation(s) for task.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Task
   tags_raw:
@@ -5629,7 +5535,6 @@ apis:
   description: >-
     The techsupportmanagement API from Cisco Intersight — 10 operation(s) for techsupportmanagement.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - techsupportmanagement
   properties:
@@ -5686,7 +5591,6 @@ apis:
   name: Cisco Intersight Telemetry API
   description: The telemetry API from Cisco Intersight — 8 operation(s) for telemetry.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Telemetry
   tags_raw:
@@ -5745,7 +5649,6 @@ apis:
   name: Cisco Intersight Terminal API
   description: The terminal API from Cisco Intersight — 2 operation(s) for terminal.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Terminal
   tags_raw:
@@ -5804,7 +5707,6 @@ apis:
   name: Cisco Intersight Thermal API
   description: The thermal API from Cisco Intersight — 4 operation(s) for thermal.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Thermal
   tags_raw:
@@ -5863,7 +5765,6 @@ apis:
   name: Cisco Intersight Top API
   description: The top API from Cisco Intersight — 2 operation(s) for top.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Top
   tags_raw:
@@ -5922,7 +5823,6 @@ apis:
   name: Cisco Intersight Ucsd API
   description: The ucsd API from Cisco Intersight — 2 operation(s) for ucsd.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - ucsd
   properties:
@@ -5979,7 +5879,6 @@ apis:
   name: Cisco Intersight Uuidpool API
   description: The uuidpool API from Cisco Intersight — 12 operation(s) for uuidpool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - uuidpool
   properties:
@@ -6036,7 +5935,6 @@ apis:
   name: Cisco Intersight View API
   description: The view API from Cisco Intersight — 4 operation(s) for view.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Views
   tags_raw:
@@ -6095,7 +5993,6 @@ apis:
   name: Cisco Intersight Virtualization API
   description: The virtualization API from Cisco Intersight — 48 operation(s) for virtualization.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Virtualization
   tags_raw:
@@ -6154,7 +6051,6 @@ apis:
   name: Cisco Intersight Vmedia API
   description: The vmedia API from Cisco Intersight — 4 operation(s) for vmedia.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - vmedia
   properties:
@@ -6211,7 +6107,6 @@ apis:
   name: Cisco Intersight Vmrc API
   description: The vmrc API from Cisco Intersight — 2 operation(s) for vmrc.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - vmrc
   properties:
@@ -6268,7 +6163,6 @@ apis:
   name: Cisco Intersight Vnic API
   description: The vnic API from Cisco Intersight — 78 operation(s) for vnic.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - vnic
   properties:
@@ -6325,7 +6219,6 @@ apis:
   name: Cisco Intersight Vrf API
   description: The vrf API from Cisco Intersight — 2 operation(s) for vrf.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - VRF
   tags_raw:
@@ -6384,7 +6277,6 @@ apis:
   name: Cisco Intersight Webhook API
   description: The webhook API from Cisco Intersight — 4 operation(s) for webhook.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Webhook
   tags_raw:
@@ -6443,7 +6335,6 @@ apis:
   name: Cisco Intersight Workflow API
   description: The workflow API from Cisco Intersight — 58 operation(s) for workflow.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Workflows
   tags_raw:
@@ -6502,7 +6393,6 @@ apis:
   name: Cisco Intersight Workload API
   description: The workload API from Cisco Intersight — 14 operation(s) for workload.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Workload
   tags_raw:
@@ -6561,7 +6451,6 @@ apis:
   name: Cisco Intersight OAUTH API
   description: The oauth API from Cisco Intersight — 4 operation(s) for oauth.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Authentication
   tags_raw:
@@ -6621,10 +6510,7 @@ apis:
   description: >-
     The certificate management API from Cisco Intersight — 4 operation(s) for certificate management.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
-  - Certificate Management
-  tags_raw:
   - certificate management
   properties:
   - type: OpenAPI
@@ -6680,7 +6566,6 @@ apis:
   name: Cisco Intersight IP Pool API
   description: The IP Pool API from Cisco Intersight — 16 operation(s) for ip pool.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - IP Pool
   properties:
@@ -6737,10 +6622,7 @@ apis:
   name: Cisco Intersight On Prem API
   description: The On Prem API from Cisco Intersight — 8 operation(s) for on prem.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
-  - On-Prem
-  tags_raw:
   - On Prem
   properties:
   - type: OpenAPI
@@ -6796,10 +6678,7 @@ apis:
   name: Cisco Intersight Open API
   description: The Open API API from Cisco Intersight — 10 operation(s) for open api.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
-  - OpenAPI
-  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
@@ -6856,7 +6735,6 @@ apis:
   description: >-
     The Partner Integration API from Cisco Intersight — 18 operation(s) for partner integration.
   humanURL: https://intersight.com/apidocs/apirefs/
-  baseURL: https://intersight.com
   tags:
   - Partner Integration
   properties:
