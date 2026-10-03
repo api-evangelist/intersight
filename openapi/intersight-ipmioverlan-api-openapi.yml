@@ -499,101 +499,6 @@ paths:
           $ref: '#/components/responses/default'
 components:
   parameters:
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
-    atParam:
-      name: at
-      in: query
-      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
-
-        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
-
-        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
-
-        expression specified by the query option.
-
-        The expression language that is used in at operators supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false) or any of the additional literal representations shown in the Abstract
-
-        Type System section.'
-      examples:
-        versiontype_equality:
-          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
-          value: at=VersionType eq 'Configured'
-        interestedmos_query:
-          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
-          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
-      required: false
-      schema:
-        type: string
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
     applyParam:
       name: $apply
       in: query
@@ -625,61 +530,120 @@ components:
       required: false
       schema:
         type: string
-    selectParam:
-      name: $select
+    orderbyParam:
+      name: $orderby
       in: query
-      description: Specifies a subset of properties to return.
+      description: Determines what properties are used to sort the collection of resources.
       required: false
       schema:
         type: string
-        default: ''
       examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    atParam:
+      name: at
       in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
+
+        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
+
+        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
+
+        expression specified by the query option.
+
+        The expression language that is used in at operators supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false) or any of the additional literal representations shown in the Abstract
+
+        Type System section.'
+      examples:
+        versiontype_equality:
+          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
+          value: at=VersionType eq 'Configured'
+        interestedmos_query:
+          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
+          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
+      required: false
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
       required: false
       allowEmptyValue: false
       schema:
-        type: boolean
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
       examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    skipParam:
-      name: $skip
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
+    tagsParam:
+      name: tags
       in: query
-      description: Specifies the number of resources to skip in the response.
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
       required: false
       allowEmptyValue: false
       schema:
         type: integer
         format: int32
-        default: 0
+        default: 100
       examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
     IfMatch:
       name: If-Match
       in: header
@@ -758,6 +722,41 @@ components:
       description: The unique Moid identifier of a resource instance.
       schema:
         type: string
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
     expandParam:
       name: $expand
       in: query
@@ -769,162 +768,120 @@ components:
         expand_displaynames:
           summary: Return the resources.
           value: $expand=DisplayNames
-    inlinecountParam:
-      name: $inlinecount
+    skipParam:
+      name: $skip
       in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      description: Specifies the number of resources to skip in the response.
       required: false
       allowEmptyValue: false
       schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
+        type: integer
+        format: int32
+        default: 0
       examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+  responses:
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+  headers:
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
+      schema:
+        type: string
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
+  links:
+    GetIamDomainGroupByMoid:
+      operationId: GetIamDomainGroupByMoid
+      parameters:
+        Moid: $response.body#/DomainGroupMoid
+      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
+    GetIamAccountByMoid:
+      operationId: GetIamAccountByMoid
+      parameters:
+        Moid: $response.body#/AccountMoid
+      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
   schemas:
-    ipmioverlan.PolicyInventory:
-      title: IPMI Over LAN
-      description: 'The IPMI Over LAN Policy object is a reusable policy for configuring the Intelligent Platform Management Interface (IPMI) over LAN service on a server.
-
-        #### Purpose
-
-        The purpose of this policy is to enable and secure out-of-band server management using the IPMI protocol. It allows administrators to control the state of the IPMI service, set the maximum privilege level for IPMI sessions, and configure an encryption key to secure communications.
-
-        #### Key Concepts
-
-        - **Service Control:** The policy allows administrators to enable or disable the IPMI over LAN service on the endpoint.
-
-        - **Privilege Level Management:** It defines the highest privilege level (admin, user, or read-only) that can be assigned to an IPMI session, providing a layer of access control.
-
-        - **Security:** An optional encryption key can be configured to encrypt IPMI traffic, enhancing the security of out-of-band management. The key is a write-only, encrypted property.
-
-        - **Profile-Based Application:** The policy is attached to a Server Profile to apply the IPMI settings to the assigned physical server.'
-      x-allOf-name: ipmioverlan.PolicyInventory
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicyInventory
-      - type: object
-        description: Definition of the list of properties defined in 'ipmioverlan.PolicyInventory', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ipmioverlan.PolicyInventory
-            default: ipmioverlan.PolicyInventory
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ipmioverlan.PolicyInventory
-            default: ipmioverlan.PolicyInventory
-            x-enum-as-string: true
-          Enabled:
-            description: State of the IPMI Over LAN service on the endpoint.
-            type: boolean
-            default: true
-            readOnly: true
-            x-omitempty: true
-          EncryptionKey:
-            description: The encryption key to use for IPMI communication. It should have an even number of hexadecimal characters and not exceed 40 characters. Use “00” to disable encryption key use. This configuration is supported by all Standalone C-Series servers. FI-attached C-Series servers with firmware at minimum of 4.2.3a support this configuration. B/X-Series servers with firmware at minimum of 5.1.0.x support this configuration. IPMI commands using this key should append zeroes to the key to achieve a length of 40 characters.
-            type: string
-            pattern: ^[a-fA-F0-9]*$
-            minLength: 0
-            maxLength: 40
-            writeOnly: true
-            x-omitempty: true
-          IsEncryptionKeySet:
-            description: Indicates whether the value of the 'encryptionKey' property has been set.
-            type: boolean
-            default: false
-            readOnly: true
-            x-omitempty: true
-          Privilege:
-            description: 'The highest privilege level that can be assigned to an IPMI session on a server. This configuration is supported by all Standalone C-Series servers. FI-attached C-Series servers with firmware at minimum of 4.2.3a support this configuration. B/X-Series servers with firmware at minimum of 5.1.0.x support this configuration. Privilege level user is not supported for B/X-Series servers.
-
-              * `admin` - Privilege to perform all actions available through IPMI.
-
-              * `user` - Privilege to perform some functions through IPMI but restriction on performing administrative tasks.
-
-              * `read-only` - Privilege to view information throught IPMI but restriction on making any changes.'
-            type: string
-            enum:
-            - admin
-            - user
-            - read-only
-            default: admin
-            readOnly: true
-            x-omitempty: true
-          TargetMo:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ipmioverlan.PolicyInventory.Response:
-      description: "The response body of a HTTP GET request for the 'ipmioverlan.PolicyInventory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ipmioverlan.PolicyInventory' resources."
-      x-one-of-name: ipmioverlan.PolicyInventory.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ipmioverlan.PolicyInventory.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    ipmioverlan.Policy.List:
-      title: List of 'ipmioverlan.Policy' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ipmioverlan.Policy'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ipmioverlan.Policy' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ipmioverlan.Policy'
-    ipmioverlan.PolicyInventory.List:
-      title: List of 'ipmioverlan.PolicyInventory' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ipmioverlan.PolicyInventory'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'ipmioverlan.PolicyInventory' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ipmioverlan.PolicyInventory'
     ipmioverlan.Policy:
       title: IPMI Over LAN
       description: 'The IPMI Over LAN Policy object is a reusable policy for configuring the Intelligent Platform Management Interface (IPMI) over LAN service on a server.
@@ -1018,6 +975,36 @@ components:
             - 'null'
             items:
               $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractConfigProfile.Relationship
+    ipmioverlan.PolicyInventory.Response:
+      description: "The response body of a HTTP GET request for the 'ipmioverlan.PolicyInventory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ipmioverlan.PolicyInventory' resources."
+      x-one-of-name: ipmioverlan.PolicyInventory.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/ipmioverlan.PolicyInventory.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    ipmioverlan.Policy.List:
+      title: List of 'ipmioverlan.Policy' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''ipmioverlan.Policy'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'ipmioverlan.Policy' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ipmioverlan.Policy'
     ipmioverlan.Policy.Response:
       description: "The response body of a HTTP GET request for the 'ipmioverlan.Policy' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ipmioverlan.Policy' resources."
       x-one-of-name: ipmioverlan.Policy.Response
@@ -1028,99 +1015,112 @@ components:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-  links:
-    GetIamDomainGroupByMoid:
-      operationId: GetIamDomainGroupByMoid
-      parameters:
-        Moid: $response.body#/DomainGroupMoid
-      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
-    GetIamAccountByMoid:
-      operationId: GetIamAccountByMoid
-      parameters:
-        Moid: $response.body#/AccountMoid
-      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
-  responses:
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
+    ipmioverlan.PolicyInventory.List:
+      title: List of 'ipmioverlan.PolicyInventory' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''ipmioverlan.PolicyInventory'' resources matching the request, accross all pages.
 
-        The client SHOULD NOT repeat the request without modifications.
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'ipmioverlan.PolicyInventory' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ipmioverlan.PolicyInventory'
+    ipmioverlan.PolicyInventory:
+      title: IPMI Over LAN
+      description: 'The IPMI Over LAN Policy object is a reusable policy for configuring the Intelligent Platform Management Interface (IPMI) over LAN service on a server.
 
-        For example, the request may contain an incorrect JSON syntax, or the request fails
+        #### Purpose
 
-        validation checks.
+        The purpose of this policy is to enable and secure out-of-band server management using the IPMI protocol. It allows administrators to control the state of the IPMI service, set the maximum privilege level for IPMI sessions, and configure an encryption key to secure communications.
 
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+        #### Key Concepts
 
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+        - **Service Control:** The policy allows administrators to enable or disable the IPMI over LAN service on the endpoint.
 
-        been refused for those credentials.
+        - **Privilege Level Management:** It defines the highest privilege level (admin, user, or read-only) that can be assigned to an IPMI session, providing a layer of access control.
 
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+        - **Security:** An optional encryption key can be configured to encrypt IPMI traffic, enhancing the security of out-of-band management. The key is a write-only, encrypted property.
 
-        The HTTP body may contain a document that provides more details about the error.
+        - **Profile-Based Application:** The policy is attached to a Server Profile to apply the IPMI settings to the assigned physical server.'
+      x-allOf-name: ipmioverlan.PolicyInventory
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicyInventory
+      - type: object
+        description: Definition of the list of properties defined in 'ipmioverlan.PolicyInventory', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
 
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-  headers:
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - ipmioverlan.PolicyInventory
+            default: ipmioverlan.PolicyInventory
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - ipmioverlan.PolicyInventory
+            default: ipmioverlan.PolicyInventory
+            x-enum-as-string: true
+          Enabled:
+            description: State of the IPMI Over LAN service on the endpoint.
+            type: boolean
+            default: true
+            readOnly: true
+            x-omitempty: true
+          EncryptionKey:
+            description: The encryption key to use for IPMI communication. It should have an even number of hexadecimal characters and not exceed 40 characters. Use “00” to disable encryption key use. This configuration is supported by all Standalone C-Series servers. FI-attached C-Series servers with firmware at minimum of 4.2.3a support this configuration. B/X-Series servers with firmware at minimum of 5.1.0.x support this configuration. IPMI commands using this key should append zeroes to the key to achieve a length of 40 characters.
+            type: string
+            pattern: ^[a-fA-F0-9]*$
+            minLength: 0
+            maxLength: 40
+            writeOnly: true
+            x-omitempty: true
+          IsEncryptionKeySet:
+            description: Indicates whether the value of the 'encryptionKey' property has been set.
+            type: boolean
+            default: false
+            readOnly: true
+            x-omitempty: true
+          Privilege:
+            description: 'The highest privilege level that can be assigned to an IPMI session on a server. This configuration is supported by all Standalone C-Series servers. FI-attached C-Series servers with firmware at minimum of 4.2.3a support this configuration. B/X-Series servers with firmware at minimum of 5.1.0.x support this configuration. Privilege level user is not supported for B/X-Series servers.
+
+              * `admin` - Privilege to perform all actions available through IPMI.
+
+              * `user` - Privilege to perform some functions through IPMI but restriction on performing administrative tasks.
+
+              * `read-only` - Privilege to view information throught IPMI but restriction on making any changes.'
+            type: string
+            enum:
+            - admin
+            - user
+            - read-only
+            default: admin
+            readOnly: true
+            x-omitempty: true
+          TargetMo:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
+            description: 'A reference to a moBaseMo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
   securitySchemes:
     cookieAuth:
       type: apiKey

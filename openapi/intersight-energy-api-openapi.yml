@@ -152,9 +152,41 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
+  links:
+    GetIamDomainGroupByMoid:
+      operationId: GetIamDomainGroupByMoid
+      parameters:
+        Moid: $response.body#/DomainGroupMoid
+      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
+    GetIamAccountByMoid:
+      operationId: GetIamAccountByMoid
+      parameters:
+        Moid: $response.body#/AccountMoid
+      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
   responses:
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -186,12 +218,8 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
       headers:
         x-starship-traceid:
           $ref: '#/components/headers/x-starship-traceid'
@@ -199,23 +227,19 @@ components:
         application/json:
           schema:
             $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+  schemas:
+    energy.Metrics:
+      title: Energy:Metrics
+      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
+      x-allOf-name: energy.Metrics
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+    energy.DailyMetrics:
+      title: Energy:Daily Metrics
+      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
+      x-allOf-name: energy.DailyMetrics
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
   parameters:
     IfNoneMatch:
       name: If-None-Match
@@ -266,39 +290,15 @@ components:
       schema:
         type: string
   headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
     Set-Cookie:
       description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
       schema:
         type: string
         example: X-Starship-Token=abcde12345; Path=/
-  schemas:
-    energy.Metrics:
-      title: Energy:Metrics
-      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
-      x-allOf-name: energy.Metrics
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-    energy.DailyMetrics:
-      title: Energy:Daily Metrics
-      description: Returns carbon intensity, power breakdown, and electricity rate power metrics for a set of locations and a time span.
-      x-allOf-name: energy.DailyMetrics
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-  links:
-    GetIamDomainGroupByMoid:
-      operationId: GetIamDomainGroupByMoid
-      parameters:
-        Moid: $response.body#/DomainGroupMoid
-      description: The 'DomainGroupMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/DomainGroups/{Moid}'.
-    GetIamAccountByMoid:
-      operationId: GetIamAccountByMoid
-      parameters:
-        Moid: $response.body#/AccountMoid
-      description: The 'AccountMoid' value returned in the response can be used as the 'Moid' parameter in 'GET /api/v1/iam/Accounts/{Moid}'.
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
   securitySchemes:
     cookieAuth:
       type: apiKey
