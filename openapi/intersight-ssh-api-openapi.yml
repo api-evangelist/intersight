@@ -499,57 +499,6 @@ paths:
           $ref: '#/components/responses/default'
 components:
   parameters:
-    applyParam:
-      name: $apply
-      in: query
-      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
-
-        are processed in order with the output from a transformation being used as input for the subsequent transformation.
-
-        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
-
-        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
-
-        Supported aggregation methods are "aggregate" and "groupby".
-
-        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
-
-        a result set with a single instance, representing the aggregated value for all instances in the input set.
-
-        The **groupby** transformation takes one or two parameters and
-
-        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
-
-        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
-
-        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
-
-        4. Concatenates the intermediate result sets into one result set.
-
-        A groupby transformation affects the structure of the result set.'
-      required: false
-      schema:
-        type: string
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
     atParam:
       name: at
       in: query
@@ -578,48 +527,73 @@ components:
       required: false
       schema:
         type: string
-    inlinecountParam:
-      name: $inlinecount
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    skipParam:
+      name: $skip
       in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      description: Specifies the number of resources to skip in the response.
       required: false
       allowEmptyValue: false
       schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
+        type: integer
+        format: int32
+        default: 0
       examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
       required: false
       schema:
         type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
     tagsParam:
       name: tags
       in: query
@@ -627,48 +601,17 @@ components:
       required: false
       schema:
         type: string
-    topParam:
-      name: $top
+    expandParam:
+      name: $expand
       in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-    IfMatch:
-      name: If-Match
-      in: header
-      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
-
-        the lost update problem. It can check if the modification of a resource that the user wants to upload
-
-        will not override another change that has been done since the original resource was fetched.
-
-        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
-
-        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
-
-        the resource ModTime property after which no lost update problem should occur.
-
-        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
-
-        The ModTime indicates the last time the resource was created or modified. The client then sends
-
-        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
-
-        in the GET request.'
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
       required: false
       schema:
         type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
     filterParam:
       name: $filter
       in: query
@@ -715,33 +658,77 @@ components:
         property_modTime_gt_now3:
           summary: Return the resources that were modified less than 1 day and 12 hours ago.
           value: $filter=ModTime gt now() sub P1DT12H
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
       required: false
       schema:
         type: string
-        default: ''
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
       examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    applyParam:
+      name: $apply
+      in: query
+      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
 
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+        are processed in order with the output from a transformation being used as input for the subsequent transformation.
 
-            The results are filtered and only include the resources that were created less than two hours ago.'
+        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
+
+        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
+
+        Supported aggregation methods are "aggregate" and "groupby".
+
+        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
+
+        a result set with a single instance, representing the aggregated value for all instances in the input set.
+
+        The **groupby** transformation takes one or two parameters and
+
+        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
+
+        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
+
+        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
+
+        4. Concatenates the intermediate result sets into one result set.
+
+        A groupby transformation affects the structure of the result set.'
+      required: false
+      schema:
+        type: string
     countParam:
       name: $count
       in: query
@@ -757,142 +744,153 @@ components:
         count_filtered:
           summary: Return the count of resources that were created less than two hours ago.
           value: $count=true&$filter=CreateTime gt now() sub PT2H
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
+    IfMatch:
+      name: If-Match
+      in: header
+      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
+
+        the lost update problem. It can check if the modification of a resource that the user wants to upload
+
+        will not override another change that has been done since the original resource was fetched.
+
+        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
+
+        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
+
+        the resource ModTime property after which no lost update problem should occur.
+
+        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
+
+        The ModTime indicates the last time the resource was created or modified. The client then sends
+
+        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
+
+        in the GET request.'
       required: false
       schema:
         type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
-    skipParam:
-      name: $skip
+    inlinecountParam:
+      name: $inlinecount
       in: query
-      description: Specifies the number of resources to skip in the response.
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
       required: false
       allowEmptyValue: false
       schema:
-        type: integer
-        format: int32
-        default: 0
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
       examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+  responses:
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+  headers:
+    Content-Disposition:
+      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
+      schema:
+        type: string
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
+    Set-Cookie:
+      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
+      schema:
+        type: string
+        example: X-Starship-Token=abcde12345; Path=/
   schemas:
-    ssh.PolicyInventory:
-      title: SSH
-      description: 'The SSH Policy is a reusable policy for configuring the Secure Shell (SSH) service on an endpoint''s management controller.
-
-        #### Purpose
-
-        The purpose of this policy is to enable and standardize secure command-line access to managed devices. It allows administrators to control the state of the SSH service, the network port it listens on, and the session timeout period, ensuring consistent and secure remote access.
-
-        #### Key Concepts
-
-        - **Service Control:** The policy''s primary function is to enable or disable the SSH service on the endpoint.
-
-        - **Port and Timeout Configuration:** It allows administrators to customize the SSH port and the session timeout duration in seconds.
-
-        - **Reusable and Profile-Based:** As a policy object, it can be attached to a Server Profile to apply a consistent SSH configuration across multiple servers.
-
-        - **Fundamental Security:** Configuring SSH access is a fundamental step in securing the management plane of a server.'
-      x-allOf-name: ssh.PolicyInventory
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicyInventory
-      - type: object
-        description: Definition of the list of properties defined in 'ssh.PolicyInventory', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - ssh.PolicyInventory
-            default: ssh.PolicyInventory
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - ssh.PolicyInventory
-            default: ssh.PolicyInventory
-            x-enum-as-string: true
-          Enabled:
-            description: State of SSH service on the endpoint.
-            type: boolean
-            default: true
-            readOnly: true
-            x-omitempty: true
-          Port:
-            description: Port used for secure shell access.
-            type: integer
-            format: int64
-            default: 22
-            minimum: 1
-            maximum: 65535
-            readOnly: true
-            x-omitempty: true
-          Timeout:
-            description: Number of seconds to wait before the system considers a SSH request to have timed out.
-            type: integer
-            format: int64
-            default: 1800
-            minimum: 60
-            maximum: 10800
-            readOnly: true
-            x-omitempty: true
-          TargetMo:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    ssh.PolicyInventory.List:
-      title: List of 'ssh.PolicyInventory' resources
+    ssh.Policy.List:
+      title: List of 'ssh.Policy' resources
       description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
       - type: object
         properties:
           Count:
-            description: 'The total number of ''ssh.PolicyInventory'' resources matching the request, accross all pages.
+            description: 'The total number of ''ssh.Policy'' resources matching the request, accross all pages.
 
               The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
             type: integer
             format: int32
           Results:
-            description: The array of 'ssh.PolicyInventory' resources matching the request.
+            description: The array of 'ssh.Policy' resources matching the request.
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/ssh.PolicyInventory'
-    ssh.Policy.Response:
-      description: "The response body of a HTTP GET request for the 'ssh.Policy' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ssh.Policy' resources."
-      x-one-of-name: ssh.Policy.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/ssh.Policy.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
+              $ref: '#/components/schemas/ssh.Policy'
     ssh.Policy:
       title: SSH
       description: 'The SSH Policy is a reusable policy for configuring the Secure Shell (SSH) service on an endpoint''s management controller.
@@ -973,26 +971,90 @@ components:
             - 'null'
             items:
               $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractConfigProfile.Relationship
-    ssh.Policy.List:
-      title: List of 'ssh.Policy' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''ssh.Policy'' resources matching the request, accross all pages.
+    ssh.Policy.Response:
+      description: "The response body of a HTTP GET request for the 'ssh.Policy' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ssh.Policy' resources."
+      x-one-of-name: ssh.Policy.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/ssh.Policy.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    ssh.PolicyInventory:
+      title: SSH
+      description: 'The SSH Policy is a reusable policy for configuring the Secure Shell (SSH) service on an endpoint''s management controller.
 
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+        #### Purpose
+
+        The purpose of this policy is to enable and standardize secure command-line access to managed devices. It allows administrators to control the state of the SSH service, the network port it listens on, and the session timeout period, ensuring consistent and secure remote access.
+
+        #### Key Concepts
+
+        - **Service Control:** The policy''s primary function is to enable or disable the SSH service on the endpoint.
+
+        - **Port and Timeout Configuration:** It allows administrators to customize the SSH port and the session timeout duration in seconds.
+
+        - **Reusable and Profile-Based:** As a policy object, it can be attached to a Server Profile to apply a consistent SSH configuration across multiple servers.
+
+        - **Fundamental Security:** Configuring SSH access is a fundamental step in securing the management plane of a server.'
+      x-allOf-name: ssh.PolicyInventory
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/policy.AbstractPolicyInventory
+      - type: object
+        description: Definition of the list of properties defined in 'ssh.PolicyInventory', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - ssh.PolicyInventory
+            default: ssh.PolicyInventory
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - ssh.PolicyInventory
+            default: ssh.PolicyInventory
+            x-enum-as-string: true
+          Enabled:
+            description: State of SSH service on the endpoint.
+            type: boolean
+            default: true
+            readOnly: true
+            x-omitempty: true
+          Port:
+            description: Port used for secure shell access.
             type: integer
-            format: int32
-          Results:
-            description: The array of 'ssh.Policy' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/ssh.Policy'
+            format: int64
+            default: 22
+            minimum: 1
+            maximum: 65535
+            readOnly: true
+            x-omitempty: true
+          Timeout:
+            description: Number of seconds to wait before the system considers a SSH request to have timed out.
+            type: integer
+            format: int64
+            default: 1800
+            minimum: 60
+            maximum: 10800
+            readOnly: true
+            x-omitempty: true
+          TargetMo:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
+            description: 'A reference to a moBaseMo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
     ssh.PolicyInventory.Response:
       description: "The response body of a HTTP GET request for the 'ssh.PolicyInventory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'ssh.PolicyInventory' resources."
       x-one-of-name: ssh.PolicyInventory.Response
@@ -1003,88 +1065,26 @@ components:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
       discriminator:
         propertyName: ObjectType
-  responses:
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
+    ssh.PolicyInventory.List:
+      title: List of 'ssh.PolicyInventory' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''ssh.PolicyInventory'' resources matching the request, accross all pages.
 
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
-      schema:
-        type: string
-    Content-Disposition:
-      description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
-      schema:
-        type: string
-    Set-Cookie:
-      description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
-      schema:
-        type: string
-        example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'ssh.PolicyInventory' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/ssh.PolicyInventory'
   links:
     GetIamDomainGroupByMoid:
       operationId: GetIamDomainGroupByMoid

@@ -902,361 +902,27 @@ paths:
         default:
           $ref: '#/components/responses/default'
 components:
-  parameters:
-    applyParam:
-      name: $apply
-      in: query
-      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
-
-        are processed in order with the output from a transformation being used as input for the subsequent transformation.
-
-        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
-
-        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
-
-        Supported aggregation methods are "aggregate" and "groupby".
-
-        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
-
-        a result set with a single instance, representing the aggregated value for all instances in the input set.
-
-        The **groupby** transformation takes one or two parameters and
-
-        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
-
-        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
-
-        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
-
-        4. Concatenates the intermediate result sets into one result set.
-
-        A groupby transformation affects the structure of the result set.'
-      required: false
-      schema:
-        type: string
-    orderbyParam:
-      name: $orderby
-      in: query
-      description: Determines what properties are used to sort the collection of resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        date_sort_ascending:
-          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
-          value: $orderby=CreationTime
-        date_sort_descending:
-          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
-          value: $orderby=-CreationTime
-        date_sort_filtered_descending:
-          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
-          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
-        sorted_results_with_paging:
-          summary: Return the first 20 resources sorted by modification time.
-          value: $top=20&$orderby=ModTime
-    atParam:
-      name: at
-      in: query
-      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
-
-        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
-
-        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
-
-        expression specified by the query option.
-
-        The expression language that is used in at operators supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false) or any of the additional literal representations shown in the Abstract
-
-        Type System section.'
-      examples:
-        versiontype_equality:
-          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
-          value: at=VersionType eq 'Configured'
-        interestedmos_query:
-          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
-          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
-      required: false
-      schema:
-        type: string
-    inlinecountParam:
-      name: $inlinecount
-      in: query
-      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: string
-        enum:
-        - allpages
-        - none
-        default: allpages
-      examples:
-        inlinecount_output:
-          summary: Return the count of the resources, and an array containing the resources.
-          value: $inlinecount=true
-        inlinecount_filtered:
-          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
-          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
-    IfNoneMatch:
-      name: If-None-Match
-      in: header
-      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
-
-        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
-
-        losing the data of the previous put. The request will be processed only if the eventually existing
-
-        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
-
-        (Precondition Failed) is used.
-
-        The asterisk is a special value representing any resource. It is only useful when creating a resource,
-
-        usually with PUT, to check if another resource with the identity has already been created before.
-
-        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
-
-        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
-      required: false
-      schema:
-        type: string
-    tagsParam:
-      name: tags
-      in: query
-      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
-      required: false
-      schema:
-        type: string
-    topParam:
-      name: $top
-      in: query
-      description: Specifies the maximum number of resources to return in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 100
-      examples:
-        top:
-          summary: Return up to 10 resources.
-          value: $top=10
-        top_with_filter:
-          summary: Return up to 20 resources that were created less than two hours ago.
-          value: $top=20&$filter=CreateTime gt now() sub PT2H
-    IfMatch:
-      name: If-Match
-      in: header
-      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
-
-        the lost update problem. It can check if the modification of a resource that the user wants to upload
-
-        will not override another change that has been done since the original resource was fetched.
-
-        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
-
-        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
-
-        the resource ModTime property after which no lost update problem should occur.
-
-        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
-
-        The ModTime indicates the last time the resource was created or modified. The client then sends
-
-        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
-
-        in the GET request.'
-      required: false
-      schema:
-        type: string
-    filterParam:
-      name: $filter
-      in: query
-      description: 'Filter criteria for the resources to return.
-
-        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
-
-        only the Entries that satisfy the predicate expression specified by the $filter option.
-
-        The expression language that is used in $filter queries supports references to properties and
-
-        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
-
-        (true or false).'
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        property_createTime_gt:
-          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
-          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
-        property_createTime_gt_now:
-          summary: Return the resources that were created less than seventy-two hours ago.
-          value: $filter=CreateTime gt now() sub PT72H
-          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
-
-            The now() function is resolved to the current time in the Intersight service when the query is processed.
-
-            ''PT72H'' is a string value that represents 72 hours.
-
-            See https://intersight.com/apidocs for more details about how to construct a duration.
-
-            The "sub" operator is used to substract a duration from the current time.'
-        property_createTime_lt_now:
-          summary: Return the resources that were created at least 60 days ago.
-          value: $filter=CreateTime lt now() sub P60D
-        property_modTime_gt_now1:
-          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
-          value: $filter=ModTime gt now() sub PT3M20S
-        property_modTime_gt_now2:
-          summary: Return the resources that were modified less than 90 days ago.
-          value: $filter=ModTime gt now() sub P90D
-        property_modTime_gt_now3:
-          summary: Return the resources that were modified less than 1 day and 12 hours ago.
-          value: $filter=ModTime gt now() sub P1DT12H
-    moidParam:
-      name: Moid
-      in: path
-      required: true
-      description: The unique Moid identifier of a resource instance.
-      schema:
-        type: string
-    selectParam:
-      name: $select
-      in: query
-      description: Specifies a subset of properties to return.
-      required: false
-      schema:
-        type: string
-        default: ''
-      examples:
-        select:
-          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
-          value: $select=CreateTime,ModTime
-        select_filtered:
-          summary: Return a filtered, summary list of resources.
-          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
-          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
-
-            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
-
-            The results are filtered and only include the resources that were created less than two hours ago.'
-    countParam:
-      name: $count
-      in: query
-      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: boolean
-      examples:
-        total_count:
-          summary: Return the count of the resources.
-          value: $count=true
-        count_filtered:
-          summary: Return the count of resources that were created less than two hours ago.
-          value: $count=true&$filter=CreateTime gt now() sub PT2H
-    expandParam:
-      name: $expand
-      in: query
-      description: Specify additional attributes or related resources to return in addition to the primary resources.
-      required: false
-      schema:
-        type: string
-      examples:
-        expand_displaynames:
-          summary: Return the resources.
-          value: $expand=DisplayNames
-    skipParam:
-      name: $skip
-      in: query
-      description: Specifies the number of resources to skip in the response.
-      required: false
-      allowEmptyValue: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-      examples:
-        skip:
-          summary: Return the resources. Skip the first 100 resources.
-          value: $skip=100
-        skip_and_top:
-          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20
-        skip_with_filter:
-          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
-          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
-  responses:
-    http_status_400:
-      description: 'The request could not be understood by the server due to malformed syntax.
-
-        The client SHOULD NOT repeat the request without modifications.
-
-        For example, the request may contain an incorrect JSON syntax, or the request fails
-
-        validation checks.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_403:
-      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
-
-        The HTTP body may contain a document that provides more details about the error.
-
-        For example, the user may not have sufficient privileges to perform the request.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_401:
-      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
-
-        If the request already included Authorization credentials, then the 401 response indicates that authorization has
-
-        been refused for those credentials.
-
-        The HTTP body may contain a document that provides more details about the error.'
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    http_status_404:
-      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
-    default:
-      description: An unexpected error occurred.
-      headers:
-        x-starship-traceid:
-          $ref: '#/components/headers/x-starship-traceid'
-      content:
-        application/json:
-          schema:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
   schemas:
+    tam.SecurityAdvisory.Response:
+      description: "The response body of a HTTP GET request for the 'tam.SecurityAdvisory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.SecurityAdvisory' resources."
+      x-one-of-name: tam.SecurityAdvisory.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/tam.SecurityAdvisory.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    tam.AdvisoryCount.Response:
+      description: "The response body of a HTTP GET request for the 'tam.AdvisoryCount' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryCount' resources."
+      x-one-of-name: tam.AdvisoryCount.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/tam.AdvisoryCount.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
     tam.Identifiers:
       title: Tam:Identifiers
       description: Identifiers are used to identify an affected object in an alert defition. please refer to https://Intersight.com/apidocs/introduction/#get-requests-and-query-capabilities for more details.
@@ -1295,6 +961,244 @@ components:
             description: Value of the filter paramter.
             type: string
             x-omitempty: true
+    tam.AdvisoryInfo.Response:
+      description: "The response body of a HTTP GET request for the 'tam.AdvisoryInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryInfo' resources."
+      x-one-of-name: tam.AdvisoryInfo.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/tam.AdvisoryInfo.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    tam.AdvisoryInstance.List:
+      title: List of 'tam.AdvisoryInstance' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''tam.AdvisoryInstance'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'tam.AdvisoryInstance' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/tam.AdvisoryInstance'
+    tam.AdvisoryInstance.Response:
+      description: "The response body of a HTTP GET request for the 'tam.AdvisoryInstance' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryInstance' resources."
+      x-one-of-name: tam.AdvisoryInstance.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/tam.AdvisoryInstance.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    tam.SecurityAdvisory.List:
+      title: List of 'tam.SecurityAdvisory' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''tam.SecurityAdvisory'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'tam.SecurityAdvisory' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/tam.SecurityAdvisory'
+    tam.Severity:
+      title: Tam:Severity
+      description: < Severity associated with the advisory. Severity assignment and interpretation is specific to each type of advisory. Each advisory type (SecurityAdvisory etc.) is supposed to extend and implement Severity type based on the advisory type requirements.
+      x-allOf-name: tam.Severity
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+    tam.Action:
+      title: Tam:Action
+      description: An action is used to react when an object satifies the condition specified in alert query. For e.g. an action in case of an object matching a fieldNotice query would be to create an alert instance of type 'fieldNotice' for the affected object.
+      x-allOf-name: tam.Action
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
+      - type: object
+        description: Definition of the list of properties defined in 'tam.Action', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - tam.Action
+            default: tam.Action
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - tam.Action
+            default: tam.Action
+            x-enum-as-string: true
+          AffectedObjectType:
+            description: Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
+            type: string
+            x-omitempty: true
+          AlertType:
+            description: 'Alert type is used to denote the category of an Intersight alert (FieldNotice, equipment Fault etc.).
+
+              * `psirt` - Respresents the psirt alert type (https://tools.cisco.com/security/center/publicationListing.x).
+
+              * `fieldNotice` - Respresents the field notice alert type (https://www.cisco.com/c/en/us/support/web/tsd-products-field-notice-summary.html).
+
+              * `eolAdvisory` - Represents product End of Life (EOL) type (https://www.cisco.com/c/en/us/products/eos-eol-policy.html).'
+            type: string
+            enum:
+            - psirt
+            - fieldNotice
+            - eolAdvisory
+            default: psirt
+            x-omitempty: true
+          Identifiers:
+            type:
+            - array
+            - 'null'
+            items:
+              description: Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.
+              $ref: '#/components/schemas/tam.Identifiers'
+              x-omitempty: true
+          Name:
+            description: Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
+            type: string
+            x-omitempty: true
+          OperationType:
+            description: 'Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
+
+              * `create` - Create an instance of AdvisoryInstance.
+
+              * `remove` - Remove an instance of AdvisoryInstance.'
+            type: string
+            enum:
+            - create
+            - remove
+            default: create
+            x-omitempty: true
+          Queries:
+            type:
+            - array
+            - 'null'
+            items:
+              description: Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.
+              $ref: '#/components/schemas/tam.QueryEntry'
+              x-omitempty: true
+          Type:
+            description: 'Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type.
+
+              * `restApi` - Repesents the use of REST API for carrying out alert actions.'
+            type: string
+            enum:
+            - restApi
+            default: restApi
+            x-omitempty: true
+    tam.AdvisoryInstance:
+      title: Tam:Advisory Instance
+      description: "The account-scoped record of which advisories (PSIRT security advisories, Field Notices, End-of-Life) currently impact an account and its servers or components. Unlike tam.SecurityAdvisory and tam.AdvisoryDefinition, which are global advisory catalogs and do not reflect account impact, this object exists only where an advisory applies to a managed object in the account.\nEach record represents a single advisory applied to a single managed object, so the record count reflects the number of impacts rather than the number of distinct advisories; an advisory affecting several objects produces several records that reference the same Advisory. Distinct advisories are obtained by grouping on the Advisory reference.\nAcknowledging an advisory does not remove its impact, so acknowledged advisories continue to appear here; acknowledgement is tracked separately on tam.AdvisoryInfo. The unacknowledged set is the advisories here whose Advisory is not acknowledged in tam.AdvisoryInfo, while acknowledged advisories remain part of an object's impact and are distinguished by their acknowledgement status rather than excluded.\nThe AdvisoryInstance object represents instances of advisories applicable to Intersight managed objects,  \nmaintaining advisory applicability and state changes.\n#### Purpose\nAdvisoryInstance tracks the lifecycle and applicability of advisories for specific managed objects,  \nensuring users have visibility into which devices or components are impacted and require resolution.\n#### Key Concepts\n- **Lifecycle Tracking:** Maintains records of advisory applicability, including state changes over time.\n- **Managed Object Integration:** Directly links advisories to affected managed objects for precise applicability.\n- **Controlled Access:** Provides access and management capabilities based on administrative privileges."
+      x-allOf-name: tam.AdvisoryInstance
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'tam.AdvisoryInstance', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - tam.AdvisoryInstance
+            default: tam.AdvisoryInstance
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - tam.AdvisoryInstance
+            default: tam.AdvisoryInstance
+            x-enum-as-string: true
+          AffectedObjectMoid:
+            description: Moid of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
+            type: string
+            x-omitempty: true
+          AffectedObjectType:
+            description: Object type of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
+            type: string
+            x-omitempty: true
+          LastStateChangeTime:
+            description: Timestamp when a state change was observed on this advisory instnace.
+            type: string
+            format: date-time
+            readOnly: true
+            x-omitempty: true
+          LastVerifiedTime:
+            description: Timestamp when this advisory was last evaluated.
+            type: string
+            format: date-time
+            readOnly: true
+            x-omitempty: true
+          State:
+            description: 'Deprecated and retained only for backward compatibility. This field is effectively always ''unknown'' and does not reflect whether the advisory currently applies to the affected object. The existence of an AdvisoryInstance record is itself what denotes an applicable, current advisory impact, independent of this value.
+
+              * `unknown` - Intersight is unable to determine if the Advisory instance is applicable for the affected managed object.
+
+              * `active` - Advisory instance is currently active and applicable for the affected managed object.
+
+              * `cleared` - Advisory instance is no longer applicable for the affected managed object.'
+            deprecated: true
+            x-sunset: '2027-08-07'
+            type: string
+            enum:
+            - unknown
+            - active
+            - cleared
+            default: unknown
+            x-omitempty: true
+          Advisory:
+            $ref: '#/components/schemas/tam.BaseAdvisory.Relationship'
+            description: 'A reference to a tamBaseAdvisory resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+          AffectedObject:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
+            description: 'A reference to a moBaseMo resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+          DeviceRegistration:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
+            description: 'A reference to a assetDeviceRegistration resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
     tam.SecurityAdvisory:
       title: Tam:Security Advisory
       description: 'Global catalog of PSIRT advisories, NOT scoped to an account. To find which advisories impact an account or its servers, query tam.AdvisoryInstance instead; use this object only to look up a specific advisory''s details (CVEs, CVSS) by Moid or AdvisoryId.
@@ -1455,15 +1359,6 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             x-createOnly: true
-    tam.BaseAdvisory.Relationship:
-      description: A relationship to the 'tam.BaseAdvisory' resource, or the expanded 'tam.BaseAdvisory' resource, or the 'null' value.
-      x-one-of-name: tam.BaseAdvisory.Relationship
-      oneOf:
-      - type: 'null'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
-      - $ref: '#/components/schemas/tam.BaseAdvisory'
-      discriminator:
-        propertyName: ClassId
     tam.QueryEntry:
       title: Tam:Query Entry
       description: Contains a set of queries, each with an integer priority. the queries are executed in the order of specified priority. The result of each query is used as an input to the query next in priority order.
@@ -1507,56 +1402,6 @@ components:
             description: A SparkSQL query to be used on a given data source.
             type: string
             x-omitempty: true
-    tam.AdvisoryCount.List:
-      title: List of 'tam.AdvisoryCount' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''tam.AdvisoryCount'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'tam.AdvisoryCount' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/tam.AdvisoryCount'
-    tam.SecurityAdvisory.List:
-      title: List of 'tam.SecurityAdvisory' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''tam.SecurityAdvisory'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'tam.SecurityAdvisory' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/tam.SecurityAdvisory'
-    tam.AdvisoryCount.Response:
-      description: "The response body of a HTTP GET request for the 'tam.AdvisoryCount' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryCount' resources."
-      x-one-of-name: tam.AdvisoryCount.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/tam.AdvisoryCount.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
     tam.S3DataSource:
       title: Tam:S3 Data Source
       description: S3 based data source used for storing data regarding managed devices.
@@ -1599,64 +1444,23 @@ components:
             description: Path used to access file in s3 containing data.
             type: string
             x-omitempty: true
-    tam.SecurityAdvisory.Response:
-      description: "The response body of a HTTP GET request for the 'tam.SecurityAdvisory' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.SecurityAdvisory' resources."
-      x-one-of-name: tam.SecurityAdvisory.Response
+    tam.BaseAdvisory.Relationship:
+      description: A relationship to the 'tam.BaseAdvisory' resource, or the expanded 'tam.BaseAdvisory' resource, or the 'null' value.
+      x-one-of-name: tam.BaseAdvisory.Relationship
       oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/tam.SecurityAdvisory.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      - type: 'null'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.MoRef
+      - $ref: '#/components/schemas/tam.BaseAdvisory'
       discriminator:
-        propertyName: ObjectType
-    tam.AdvisoryInstance.List:
-      title: List of 'tam.AdvisoryInstance' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''tam.AdvisoryInstance'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'tam.AdvisoryInstance' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/tam.AdvisoryInstance'
-    tam.AdvisoryDefinition.List:
-      title: List of 'tam.AdvisoryDefinition' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''tam.AdvisoryDefinition'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'tam.AdvisoryDefinition' resources matching the request.
-            type:
-            - array
-            - 'null'
-            items:
-              $ref: '#/components/schemas/tam.AdvisoryDefinition'
-    tam.Action:
-      title: Tam:Action
-      description: An action is used to react when an object satifies the condition specified in alert query. For e.g. an action in case of an object matching a fieldNotice query would be to create an alert instance of type 'fieldNotice' for the affected object.
-      x-allOf-name: tam.Action
+        propertyName: ClassId
+    tam.BaseDataSource:
+      title: Tam:Base Data Source
+      description: Represents source for the data needed to analyze the alerts. this could one of several supported source types (textFsmTemplates/Intersight API/external API). TextFsmTemplates and Intersight API are the only ones supported currently.
+      x-allOf-name: tam.BaseDataSource
       allOf:
       - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
       - type: object
-        description: Definition of the list of properties defined in 'tam.Action', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'tam.BaseDataSource', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -1666,239 +1470,64 @@ components:
 
               This property is used as a discriminator to identify the type of the payload
 
-              when marshaling and unmarshaling data.'
+              when marshaling and unmarshaling data.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
             enum:
-            - tam.Action
-            default: tam.Action
+            - tam.ApiDataSource
+            - tam.S3DataSource
+            - tam.TextFsmTemplateDataSource
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
-              The value should be the same as the ''ClassId'' property.'
+              The value should be the same as the ''ClassId'' property.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
             enum:
-            - tam.Action
-            default: tam.Action
+            - tam.ApiDataSource
+            - tam.S3DataSource
+            - tam.TextFsmTemplateDataSource
             x-enum-as-string: true
-          AffectedObjectType:
-            description: Type of the managed object that should be marked with an instance of the Alert (when operation type is create) or that should have an alert instance removed (when operation type is remove).
-            type: string
-            x-omitempty: true
-          AlertType:
-            description: 'Alert type is used to denote the category of an Intersight alert (FieldNotice, equipment Fault etc.).
-
-              * `psirt` - Respresents the psirt alert type (https://tools.cisco.com/security/center/publicationListing.x).
-
-              * `fieldNotice` - Respresents the field notice alert type (https://www.cisco.com/c/en/us/support/web/tsd-products-field-notice-summary.html).
-
-              * `eolAdvisory` - Represents product End of Life (EOL) type (https://www.cisco.com/c/en/us/products/eos-eol-policy.html).'
-            type: string
-            enum:
-            - psirt
-            - fieldNotice
-            - eolAdvisory
-            default: psirt
-            x-omitempty: true
-          Identifiers:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Identifiers represents the filter criteria (property names and values) used to identify an Intersight managed object of type specified in affectedObjectType property. An instance of an alert is then create on (or removed from) the identified managed object.
-              $ref: '#/components/schemas/tam.Identifiers'
-              x-omitempty: true
           Name:
-            description: Uniquely identifies a given action among the set of actions corresponding to an advisory. Primarily used to store and compare results of subsequent iterations corresponding to the action queries.
+            description: Name is used to unique identify and refer a given data source in an alert definition.
             type: string
             x-omitempty: true
-          OperationType:
-            description: 'Operation type for the alert action. An action is used to carry out the process of "reacting" to an alert condition. For e.g.in case of a fieldNotice alert, the intention may be to create a new alert (if the condition matches and there is no existing alert) or to remove an existing alert when the alert condition has been remedied.
-
-              * `create` - Create an instance of AdvisoryInstance.
-
-              * `remove` - Remove an instance of AdvisoryInstance.'
-            type: string
-            enum:
-            - create
-            - remove
-            default: create
-            x-omitempty: true
-          Queries:
-            type:
-            - array
-            - 'null'
-            items:
-              description: Set of SparkSQL queries used determine if a given alert is applicable or not. Refer to https://spark.apache.org/sql/ for more details.
-              $ref: '#/components/schemas/tam.QueryEntry'
-              x-omitempty: true
           Type:
-            description: 'Type of Intersight alert. An alert in Intersight could be one of several kinds (FieldNotice, PSIRT etc.). Primarily used for filtering alerts based on the type.
+            description: 'Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
 
-              * `restApi` - Repesents the use of REST API for carrying out alert actions.'
+              * `intersightApi` - Collector type for this data collection is Intersight APIs.
+
+              * `nxos` - Collector type for this data collection is NXOS.
+
+              * `s3File` - Collector type for this data collection is a file in a cloud hosted object storage bucket.'
             type: string
             enum:
-            - restApi
-            default: restApi
+            - intersightApi
+            - nxos
+            - s3File
+            default: intersightApi
             x-omitempty: true
-    tam.Severity:
-      title: Tam:Severity
-      description: < Severity associated with the advisory. Severity assignment and interpretation is specific to each type of advisory. Each advisory type (SecurityAdvisory etc.) is supposed to extend and implement Severity type based on the advisory type requirements.
-      x-allOf-name: tam.Severity
+    tam.AdvisoryCount.List:
+      title: List of 'tam.AdvisoryCount' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-    tam.AdvisoryDefinition.Response:
-      description: "The response body of a HTTP GET request for the 'tam.AdvisoryDefinition' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryDefinition' resources."
-      x-one-of-name: tam.AdvisoryDefinition.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/tam.AdvisoryDefinition.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    tam.AdvisoryInstance.Response:
-      description: "The response body of a HTTP GET request for the 'tam.AdvisoryInstance' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryInstance' resources."
-      x-one-of-name: tam.AdvisoryInstance.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/tam.AdvisoryInstance.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    tam.AdvisoryInfo.Response:
-      description: "The response body of a HTTP GET request for the 'tam.AdvisoryInfo' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryInfo' resources."
-      x-one-of-name: tam.AdvisoryInfo.Response
-      oneOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
-      - $ref: '#/components/schemas/tam.AdvisoryInfo.List'
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
-      discriminator:
-        propertyName: ObjectType
-    tam.AdvisoryInstance:
-      title: Tam:Advisory Instance
-      description: "The account-scoped record of which advisories (PSIRT security advisories, Field Notices, End-of-Life) currently impact an account and its servers or components. Unlike tam.SecurityAdvisory and tam.AdvisoryDefinition, which are global advisory catalogs and do not reflect account impact, this object exists only where an advisory applies to a managed object in the account.\nEach record represents a single advisory applied to a single managed object, so the record count reflects the number of impacts rather than the number of distinct advisories; an advisory affecting several objects produces several records that reference the same Advisory. Distinct advisories are obtained by grouping on the Advisory reference.\nAcknowledging an advisory does not remove its impact, so acknowledged advisories continue to appear here; acknowledgement is tracked separately on tam.AdvisoryInfo. The unacknowledged set is the advisories here whose Advisory is not acknowledged in tam.AdvisoryInfo, while acknowledged advisories remain part of an object's impact and are distinguished by their acknowledgement status rather than excluded.\nThe AdvisoryInstance object represents instances of advisories applicable to Intersight managed objects,  \nmaintaining advisory applicability and state changes.\n#### Purpose\nAdvisoryInstance tracks the lifecycle and applicability of advisories for specific managed objects,  \nensuring users have visibility into which devices or components are impacted and require resolution.\n#### Key Concepts\n- **Lifecycle Tracking:** Maintains records of advisory applicability, including state changes over time.\n- **Managed Object Integration:** Directly links advisories to affected managed objects for precise applicability.\n- **Controlled Access:** Provides access and management capabilities based on administrative privileges."
-      x-allOf-name: tam.AdvisoryInstance
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
       - type: object
-        description: Definition of the list of properties defined in 'tam.AdvisoryInstance', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
         properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
+          Count:
+            description: 'The total number of ''tam.AdvisoryCount'' resources matching the request, accross all pages.
 
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - tam.AdvisoryInstance
-            default: tam.AdvisoryInstance
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - tam.AdvisoryInstance
-            default: tam.AdvisoryInstance
-            x-enum-as-string: true
-          AffectedObjectMoid:
-            description: Moid of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
-            type: string
-            x-omitempty: true
-          AffectedObjectType:
-            description: Object type of the Intersight MO affected by the alert. Deprecated now and will be removed in subsequent releases.
-            type: string
-            x-omitempty: true
-          LastStateChangeTime:
-            description: Timestamp when a state change was observed on this advisory instnace.
-            type: string
-            format: date-time
-            readOnly: true
-            x-omitempty: true
-          LastVerifiedTime:
-            description: Timestamp when this advisory was last evaluated.
-            type: string
-            format: date-time
-            readOnly: true
-            x-omitempty: true
-          State:
-            description: 'Deprecated and retained only for backward compatibility. This field is effectively always ''unknown'' and does not reflect whether the advisory currently applies to the affected object. The existence of an AdvisoryInstance record is itself what denotes an applicable, current advisory impact, independent of this value.
-
-              * `unknown` - Intersight is unable to determine if the Advisory instance is applicable for the affected managed object.
-
-              * `active` - Advisory instance is currently active and applicable for the affected managed object.
-
-              * `cleared` - Advisory instance is no longer applicable for the affected managed object.'
-            deprecated: true
-            x-sunset: '2027-08-07'
-            type: string
-            enum:
-            - unknown
-            - active
-            - cleared
-            default: unknown
-            x-omitempty: true
-          Advisory:
-            $ref: '#/components/schemas/tam.BaseAdvisory.Relationship'
-            description: 'A reference to a tamBaseAdvisory resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          AffectedObject:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo.Relationship
-            description: 'A reference to a moBaseMo resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-          DeviceRegistration:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/asset.DeviceRegistration.Relationship
-            description: 'A reference to a assetDeviceRegistration resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-    tam.ApiDataSource:
-      title: Tam:Api Data Source
-      description: Data source using Intersight API to collect data regarding managed devices.
-      x-allOf-name: tam.ApiDataSource
-      allOf:
-      - $ref: '#/components/schemas/tam.BaseDataSource'
-      - type: object
-        description: Definition of the list of properties defined in 'tam.ApiDataSource', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.'
-            enum:
-            - tam.ApiDataSource
-            default: tam.ApiDataSource
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.'
-            enum:
-            - tam.ApiDataSource
-            default: tam.ApiDataSource
-            x-enum-as-string: true
-          MoType:
-            description: Type of Intersight managed object used as data source.
-            type: string
-            x-omitempty: true
-          Queries:
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'tam.AdvisoryCount' resources matching the request.
             type:
             - array
             - 'null'
             items:
-              description: Optional set of Queries to filter the output for Api datasource. the queries are executed in the order specified.
-              $ref: '#/components/schemas/tam.QueryEntry'
-              x-omitempty: true
+              $ref: '#/components/schemas/tam.AdvisoryCount'
     tam.AdvisoryDefinition:
       title: Tam:Advisory Definition
       description: 'Global catalog of Field Notice / EOL / EOS advisories, NOT scoped to an account. To find which advisories impact an account or its servers, query tam.AdvisoryInstance instead; use this object only to look up a specific advisory''s details by Moid or AdvisoryId.
@@ -2044,28 +1673,24 @@ components:
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
             x-createOnly: true
-    tam.AdvisoryCount:
-      title: Tam:Advisory Count
-      description: 'The AdvisoryCount object provides a high-level summary of the total number of advisories currently affecting a specific Intersight account.
-
-        #### Purpose
-
-        This object serves as a quick-reference metric, allowing administrators to gauge the overall security and lifecycle posture of their infrastructure. By providing a consolidated count of active advisories—such as Field Notices, PSIRT, or EOL milestones—it enables organizations to prioritize their maintenance and remediation efforts effectively.
-
-        #### Key Concepts
-
-        - **Account-Level Aggregation:** Summarizes the total impact of all active advisories across the entire account, providing a single point of visibility for infrastructure health.
-
-        - **Operational Visibility:** Offers a high-level dashboard metric that helps administrators quickly identify if there is a significant number of advisories requiring attention.
-
-        - **License-Restricted Access:** Access to this object is governed by the ''Essentials'' license entitlement, ensuring that capacity planning and maintenance monitoring are available to licensed users.
-
-        - **Account Association:** Directly links the advisory count to a specific Intersight account, ensuring that the data is scoped correctly to the user''s organizational context.'
-      x-allOf-name: tam.AdvisoryCount
+    tam.AdvisoryDefinition.Response:
+      description: "The response body of a HTTP GET request for the 'tam.AdvisoryDefinition' resource.\nThe value may be one of the following types.\n1. When 'tag' is specified in the URL query, the response schema\n    is a summary of the tag usage.\n1. When '$apply' is specified in the URL query, the response schema\n    is dynamically-generated schema based on the $apply value.\n1. When '$count' is specified in the URL query, the response is\n    a simple object providing the count of the resources.\n1. In all other cases, the response is a list of 'tam.AdvisoryDefinition' resources."
+      x-one-of-name: tam.AdvisoryDefinition.Response
+      oneOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.DocumentCount
+      - $ref: '#/components/schemas/tam.AdvisoryDefinition.List'
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.AggregateTransform
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.TagSummary
+      discriminator:
+        propertyName: ObjectType
+    tam.ApiDataSource:
+      title: Tam:Api Data Source
+      description: Data source using Intersight API to collect data regarding managed devices.
+      x-allOf-name: tam.ApiDataSource
       allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - $ref: '#/components/schemas/tam.BaseDataSource'
       - type: object
-        description: Definition of the list of properties defined in 'tam.AdvisoryCount', excluding properties defined in parent classes.
+        description: Definition of the list of properties defined in 'tam.ApiDataSource', excluding properties defined in parent classes.
         required:
         - ClassId
         - ObjectType
@@ -2077,161 +1702,29 @@ components:
 
               when marshaling and unmarshaling data.'
             enum:
-            - tam.AdvisoryCount
-            default: tam.AdvisoryCount
+            - tam.ApiDataSource
+            default: tam.ApiDataSource
             x-enum-as-string: true
           ObjectType:
             description: 'The fully-qualified name of the instantiated, concrete type.
 
               The value should be the same as the ''ClassId'' property.'
             enum:
-            - tam.AdvisoryCount
-            default: tam.AdvisoryCount
-            x-enum-as-string: true
-          AdvisoryCount:
-            description: Total number of advisories affecting the account.
-            type: integer
-            format: int64
-            x-omitempty: true
-          Account:
-            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.Account.Relationship
-            description: 'A reference to a iamAccount resource.
-
-              When the $expand query parameter is specified, the referenced resource is returned inline.'
-            readOnly: true
-    tam.BaseDataSource:
-      title: Tam:Base Data Source
-      description: Represents source for the data needed to analyze the alerts. this could one of several supported source types (textFsmTemplates/Intersight API/external API). TextFsmTemplates and Intersight API are the only ones supported currently.
-      x-allOf-name: tam.BaseDataSource
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseComplexType
-      - type: object
-        description: Definition of the list of properties defined in 'tam.BaseDataSource', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
             - tam.ApiDataSource
-            - tam.S3DataSource
-            - tam.TextFsmTemplateDataSource
+            default: tam.ApiDataSource
             x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - tam.ApiDataSource
-            - tam.S3DataSource
-            - tam.TextFsmTemplateDataSource
-            x-enum-as-string: true
-          Name:
-            description: Name is used to unique identify and refer a given data source in an alert definition.
+          MoType:
+            description: Type of Intersight managed object used as data source.
             type: string
             x-omitempty: true
-          Type:
-            description: 'Type of data source (for e.g. TextFsmTempalate based, Intersight API based etc.).
-
-              * `intersightApi` - Collector type for this data collection is Intersight APIs.
-
-              * `nxos` - Collector type for this data collection is NXOS.
-
-              * `s3File` - Collector type for this data collection is a file in a cloud hosted object storage bucket.'
-            type: string
-            enum:
-            - intersightApi
-            - nxos
-            - s3File
-            default: intersightApi
-            x-omitempty: true
-    tam.BaseAdvisory:
-      title: Tam:Base Advisory
-      description: An Intersight Advisory. An advisory represents an identification of a potential issue and may also include  a recommendation for resolving the said issue. Advisories may be of different kind and severity. for e.g. It could be a security vulnerability or a performance issue or a hardware issue with different recommendations for resolving them.
-      x-allOf-name: tam.BaseAdvisory
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
-      - type: object
-        description: Definition of the list of properties defined in 'tam.BaseAdvisory', excluding properties defined in parent classes.
-        required:
-        - ClassId
-        - ObjectType
-        properties:
-          ClassId:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              This property is used as a discriminator to identify the type of the payload
-
-              when marshaling and unmarshaling data.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - tam.AdvisoryDefinition
-            - tam.SecurityAdvisory
-            x-enum-as-string: true
-          ObjectType:
-            description: 'The fully-qualified name of the instantiated, concrete type.
-
-              The value should be the same as the ''ClassId'' property.
-
-              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
-            enum:
-            - tam.AdvisoryDefinition
-            - tam.SecurityAdvisory
-            x-enum-as-string: true
-          Description:
-            description: Brief description of the advisory details.
-            type: string
-            x-omitempty: true
-          Name:
-            description: A user defined name for the Intersight Advisory.
-            type: string
-            x-omitempty: true
-          Severity:
-            description: Severity level of the Intersight Advisory.
-            $ref: '#/components/schemas/tam.Severity'
-            x-omitempty: true
-          State:
-            description: 'Current state of the advisory.
-
-              * `ready` - Advisory has been evaluated. The affected devices would be analyzed and corresponding advisory instances would be created.
-
-              * `evaluating` - Advisory is currently under evaluation. The affected devices would be analyzed but no advisory instances wouldbe created. The results of the analysis would be made available to Intersight engineering for evaluation and validation.'
-            type: string
-            enum:
-            - ready
-            - evaluating
-            default: ready
-            x-omitempty: true
-    tam.AdvisoryInfo.List:
-      title: List of 'tam.AdvisoryInfo' resources
-      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
-      allOf:
-      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
-      - type: object
-        properties:
-          Count:
-            description: 'The total number of ''tam.AdvisoryInfo'' resources matching the request, accross all pages.
-
-              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
-            type: integer
-            format: int32
-          Results:
-            description: The array of 'tam.AdvisoryInfo' resources matching the request.
+          Queries:
             type:
             - array
             - 'null'
             items:
-              $ref: '#/components/schemas/tam.AdvisoryInfo'
+              description: Optional set of Queries to filter the output for Api datasource. the queries are executed in the order specified.
+              $ref: '#/components/schemas/tam.QueryEntry'
+              x-omitempty: true
     tam.BaseAdvisoryDetails:
       title: Tam:Base Advisory Details
       description: Base type for specifying advisory type (Field notice, PSIRT) specific details.
@@ -2339,24 +1832,531 @@ components:
             description: 'A reference to a tamBaseAdvisory resource.
 
               When the $expand query parameter is specified, the referenced resource is returned inline.'
-  headers:
-    x-starship-traceid:
-      description: A value that uniquely identifies a HTTP request and its response.
+    tam.AdvisoryCount:
+      title: Tam:Advisory Count
+      description: 'The AdvisoryCount object provides a high-level summary of the total number of advisories currently affecting a specific Intersight account.
+
+        #### Purpose
+
+        This object serves as a quick-reference metric, allowing administrators to gauge the overall security and lifecycle posture of their infrastructure. By providing a consolidated count of active advisories—such as Field Notices, PSIRT, or EOL milestones—it enables organizations to prioritize their maintenance and remediation efforts effectively.
+
+        #### Key Concepts
+
+        - **Account-Level Aggregation:** Summarizes the total impact of all active advisories across the entire account, providing a single point of visibility for infrastructure health.
+
+        - **Operational Visibility:** Offers a high-level dashboard metric that helps administrators quickly identify if there is a significant number of advisories requiring attention.
+
+        - **License-Restricted Access:** Access to this object is governed by the ''Essentials'' license entitlement, ensuring that capacity planning and maintenance monitoring are available to licensed users.
+
+        - **Account Association:** Directly links the advisory count to a specific Intersight account, ensuring that the data is scoped correctly to the user''s organizational context.'
+      x-allOf-name: tam.AdvisoryCount
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'tam.AdvisoryCount', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.'
+            enum:
+            - tam.AdvisoryCount
+            default: tam.AdvisoryCount
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.'
+            enum:
+            - tam.AdvisoryCount
+            default: tam.AdvisoryCount
+            x-enum-as-string: true
+          AdvisoryCount:
+            description: Total number of advisories affecting the account.
+            type: integer
+            format: int64
+            x-omitempty: true
+          Account:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/iam.Account.Relationship
+            description: 'A reference to a iamAccount resource.
+
+              When the $expand query parameter is specified, the referenced resource is returned inline.'
+            readOnly: true
+    tam.AdvisoryInfo.List:
+      title: List of 'tam.AdvisoryInfo' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''tam.AdvisoryInfo'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'tam.AdvisoryInfo' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/tam.AdvisoryInfo'
+    tam.AdvisoryDefinition.List:
+      title: List of 'tam.AdvisoryDefinition' resources
+      description: This resource list is returned as a response to a HTTP GET request that does not include a specific resource identifier.
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseResponse
+      - type: object
+        properties:
+          Count:
+            description: 'The total number of ''tam.AdvisoryDefinition'' resources matching the request, accross all pages.
+
+              The ''Count'' attribute is included when the HTTP GET request includes the ''$inlinecount'' parameter.'
+            type: integer
+            format: int32
+          Results:
+            description: The array of 'tam.AdvisoryDefinition' resources matching the request.
+            type:
+            - array
+            - 'null'
+            items:
+              $ref: '#/components/schemas/tam.AdvisoryDefinition'
+    tam.BaseAdvisory:
+      title: Tam:Base Advisory
+      description: An Intersight Advisory. An advisory represents an identification of a potential issue and may also include  a recommendation for resolving the said issue. Advisories may be of different kind and severity. for e.g. It could be a security vulnerability or a performance issue or a hardware issue with different recommendations for resolving them.
+      x-allOf-name: tam.BaseAdvisory
+      allOf:
+      - $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/mo.BaseMo
+      - type: object
+        description: Definition of the list of properties defined in 'tam.BaseAdvisory', excluding properties defined in parent classes.
+        required:
+        - ClassId
+        - ObjectType
+        properties:
+          ClassId:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              This property is used as a discriminator to identify the type of the payload
+
+              when marshaling and unmarshaling data.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - tam.AdvisoryDefinition
+            - tam.SecurityAdvisory
+            x-enum-as-string: true
+          ObjectType:
+            description: 'The fully-qualified name of the instantiated, concrete type.
+
+              The value should be the same as the ''ClassId'' property.
+
+              The enum values provides the list of concrete types that can be instantiated from this abstract type.'
+            enum:
+            - tam.AdvisoryDefinition
+            - tam.SecurityAdvisory
+            x-enum-as-string: true
+          Description:
+            description: Brief description of the advisory details.
+            type: string
+            x-omitempty: true
+          Name:
+            description: A user defined name for the Intersight Advisory.
+            type: string
+            x-omitempty: true
+          Severity:
+            description: Severity level of the Intersight Advisory.
+            $ref: '#/components/schemas/tam.Severity'
+            x-omitempty: true
+          State:
+            description: 'Current state of the advisory.
+
+              * `ready` - Advisory has been evaluated. The affected devices would be analyzed and corresponding advisory instances would be created.
+
+              * `evaluating` - Advisory is currently under evaluation. The affected devices would be analyzed but no advisory instances wouldbe created. The results of the analysis would be made available to Intersight engineering for evaluation and validation.'
+            type: string
+            enum:
+            - ready
+            - evaluating
+            default: ready
+            x-omitempty: true
+  parameters:
+    atParam:
+      name: at
+      in: query
+      description: 'Similar to "$filter", but "at" is specifically used to filter versioning information properties for resources to return.
+
+        A URI with an "at" Query Option identifies a subset of the Entries from the Collection of Entries identified by the
+
+        Resource Path section of the URI. The subset is determined by selecting only the Entries that satisfy the predicate
+
+        expression specified by the query option.
+
+        The expression language that is used in at operators supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false) or any of the additional literal representations shown in the Abstract
+
+        Type System section.'
+      examples:
+        versiontype_equality:
+          summary: Return the resources where the 'VersionType' property of the VersionContext is equal to 'Configured'
+          value: at=VersionType eq 'Configured'
+        interestedmos_query:
+          summary: Return the resources where the 'InterestedMos' property of the VersionContext includes an MoRef with Moid equal to '5b5877e56c6730367acf46cd'
+          value: at=InterestedMos.Moid eq '5b5877e56c6730367acf46cd'
+      required: false
       schema:
         type: string
+    moidParam:
+      name: Moid
+      in: path
+      required: true
+      description: The unique Moid identifier of a resource instance.
+      schema:
+        type: string
+    skipParam:
+      name: $skip
+      in: query
+      description: Specifies the number of resources to skip in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      examples:
+        skip:
+          summary: Return the resources. Skip the first 100 resources.
+          value: $skip=100
+        skip_and_top:
+          summary: Return the resources. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20
+        skip_with_filter:
+          summary: Return the resources that were created less than two hours ago. Skip the first 100 resources and return up to 20 resources.
+          value: $skip=100&$top=20&$filter=CreateTime gt now() sub PT2H
+    orderbyParam:
+      name: $orderby
+      in: query
+      description: Determines what properties are used to sort the collection of resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        date_sort_ascending:
+          summary: Return the resources, sorted by creation time in ascending order, i.e., oldest resources first.
+          value: $orderby=CreationTime
+        date_sort_descending:
+          summary: Return the resources, sorted by creation time in descending order, i.e., most recently created resources first.
+          value: $orderby=-CreationTime
+        date_sort_filtered_descending:
+          summary: Return the resources that have been modified less than 80 minutes ago, sorted by modification time, most recently modified resources first.
+          value: $orderby=-ModTime&$filter=ModTime gt now() sub PT80M
+        sorted_results_with_paging:
+          summary: Return the first 20 resources sorted by modification time.
+          value: $top=20&$orderby=ModTime
+    selectParam:
+      name: $select
+      in: query
+      description: Specifies a subset of properties to return.
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        select:
+          summary: Return a summary list of resources. The response will include the Moid, which is always returned, and the 'CreateTime' and 'ModTime' properties.
+          value: $select=CreateTime,ModTime
+        select_filtered:
+          summary: Return a filtered, summary list of resources.
+          value: $select=CreateTime,ModTime&$filter=CreateTime gt now() sub PT2H
+          description: 'Return a summary list of resources. The response will include the Moid, which is always returned even if it is not specified in the $select query,
+
+            and the ''CreateTime'' and ''ModTime'' properties, which are explicitly specified in the $select query.
+
+            The results are filtered and only include the resources that were created less than two hours ago.'
+    tagsParam:
+      name: tags
+      in: query
+      description: The 'tags' parameter is used to request a summary of the Tag utilization for this resource. When the 'tags' parameter is specified, the response provides a list of tag keys, the number of times the key has been used across all documents, and the tag values that have been assigned to the tag key.
+      required: false
+      schema:
+        type: string
+    expandParam:
+      name: $expand
+      in: query
+      description: Specify additional attributes or related resources to return in addition to the primary resources.
+      required: false
+      schema:
+        type: string
+      examples:
+        expand_displaynames:
+          summary: Return the resources.
+          value: $expand=DisplayNames
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      description: 'For methods that apply server-side changes, If-None-Match used with the * value can be used to create
+
+        a resource not known to exist, guaranteeing that another resource creation didn''t happen before,
+
+        losing the data of the previous put. The request will be processed only if the eventually existing
+
+        resource''s ETag doesn''t match any of the values listed. Otherwise, the status code 412
+
+        (Precondition Failed) is used.
+
+        The asterisk is a special value representing any resource. It is only useful when creating a resource,
+
+        usually with PUT, to check if another resource with the identity has already been created before.
+
+        The comparison with the stored ETag uses the weak comparison algorithm, meaning two resources are
+
+        considered identical if the content is equivalent - they don''t have to be identical byte for byte.'
+      required: false
+      schema:
+        type: string
+    filterParam:
+      name: $filter
+      in: query
+      description: 'Filter criteria for the resources to return.
+
+        A URI with a $filter query option identifies a subset of the entries from the Collection of Entries. The subset is determined by selecting
+
+        only the Entries that satisfy the predicate expression specified by the $filter option.
+
+        The expression language that is used in $filter queries supports references to properties and
+
+        literals. The literal values can be strings enclosed in single quotes, numbers and boolean values
+
+        (true or false).'
+      required: false
+      schema:
+        type: string
+        default: ''
+      examples:
+        property_createTime_gt:
+          summary: Return the resources where the 'CreateTime' property is greater than the specified date.
+          value: $filter=CreateTime gt 2012-08-29T21:58:33Z
+        property_createTime_gt_now:
+          summary: Return the resources that were created less than seventy-two hours ago.
+          value: $filter=CreateTime gt now() sub PT72H
+          description: 'This example uses a filter expression to compare the ''CreateTime'' property of the resource against the current time.
+
+            The now() function is resolved to the current time in the Intersight service when the query is processed.
+
+            ''PT72H'' is a string value that represents 72 hours.
+
+            See https://intersight.com/apidocs for more details about how to construct a duration.
+
+            The "sub" operator is used to substract a duration from the current time.'
+        property_createTime_lt_now:
+          summary: Return the resources that were created at least 60 days ago.
+          value: $filter=CreateTime lt now() sub P60D
+        property_modTime_gt_now1:
+          summary: Return the resources that were modified less than three minutes and 20 seconds ago.
+          value: $filter=ModTime gt now() sub PT3M20S
+        property_modTime_gt_now2:
+          summary: Return the resources that were modified less than 90 days ago.
+          value: $filter=ModTime gt now() sub P90D
+        property_modTime_gt_now3:
+          summary: Return the resources that were modified less than 1 day and 12 hours ago.
+          value: $filter=ModTime gt now() sub P1DT12H
+    topParam:
+      name: $top
+      in: query
+      description: Specifies the maximum number of resources to return in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: integer
+        format: int32
+        default: 100
+      examples:
+        top:
+          summary: Return up to 10 resources.
+          value: $top=10
+        top_with_filter:
+          summary: Return up to 20 resources that were created less than two hours ago.
+          value: $top=20&$filter=CreateTime gt now() sub PT2H
+    applyParam:
+      name: $apply
+      in: query
+      description: 'Specify one or more transformation operations to perform aggregation on the resources. The transformations
+
+        are processed in order with the output from a transformation being used as input for the subsequent transformation.
+
+        The "$apply" query takes a sequence of set transformations, separated by forward slashes to express that they are
+
+        consecutively applied, i.e., the result of each transformation is the input to the next transformation.
+
+        Supported aggregation methods are "aggregate" and "groupby".
+
+        The **aggregate** transformation takes a comma-separated list of one or more aggregate expressions as parameters and returns
+
+        a result set with a single instance, representing the aggregated value for all instances in the input set.
+
+        The **groupby** transformation takes one or two parameters and
+
+        1. Splits the initial set into subsets where all instances in a subset have the same values for the grouping properties specified in the first parameter,
+
+        2. Applies set transformations to each subset according to the second parameter, resulting in a new set of potentially different structure and cardinality,
+
+        3. Ensures that the instances in the result set contain all grouping properties with the correct values for the group,
+
+        4. Concatenates the intermediate result sets into one result set.
+
+        A groupby transformation affects the structure of the result set.'
+      required: false
+      schema:
+        type: string
+    countParam:
+      name: $count
+      in: query
+      description: The $count query specifies the service should return the count of the matching resources, instead of returning the resources.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: boolean
+      examples:
+        total_count:
+          summary: Return the count of the resources.
+          value: $count=true
+        count_filtered:
+          summary: Return the count of resources that were created less than two hours ago.
+          value: $count=true&$filter=CreateTime gt now() sub PT2H
+    IfMatch:
+      name: If-Match
+      in: header
+      description: 'For methods that apply server-side changes, and in particular for PUT, If-Match can be used to prevent
+
+        the lost update problem. It can check if the modification of a resource that the user wants to upload
+
+        will not override another change that has been done since the original resource was fetched.
+
+        If the request cannot be fulfilled, the 412 (Precondition Failed) response is returned.
+
+        When modifying a resource using POST or PUT, the If-Match header must be set to the value of
+
+        the resource ModTime property after which no lost update problem should occur.
+
+        For example, a client send a GET request to obtain a resource, which includes the ModTime property.
+
+        The ModTime indicates the last time the resource was created or modified. The client then sends
+
+        a POST or PUT request with the If-Match header set to the ModTime property of the resource as obtained
+
+        in the GET request.'
+      required: false
+      schema:
+        type: string
+    inlinecountParam:
+      name: $inlinecount
+      in: query
+      description: The $inlinecount query option allows clients to request an inline count of the matching resources included with the resources in the response.
+      required: false
+      allowEmptyValue: false
+      schema:
+        type: string
+        enum:
+        - allpages
+        - none
+        default: allpages
+      examples:
+        inlinecount_output:
+          summary: Return the count of the resources, and an array containing the resources.
+          value: $inlinecount=true
+        inlinecount_filtered:
+          summary: Return the count of the resources that were created less than two hours ago, and an array containing the resources.
+          value: $inlinecount=true&$filter=CreateTime gt now() sub PT2H
+  responses:
+    http_status_403:
+      description: 'The request was properly authenticated, but the server is refusing to fulfill it.
+
+        The HTTP body may contain a document that provides more details about the error.
+
+        For example, the user may not have sufficient privileges to perform the request.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_404:
+      description: The specified resource was not found. The HTTP body contains a document that provides more details about the error.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_400:
+      description: 'The request could not be understood by the server due to malformed syntax.
+
+        The client SHOULD NOT repeat the request without modifications.
+
+        For example, the request may contain an incorrect JSON syntax, or the request fails
+
+        validation checks.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    default:
+      description: An unexpected error occurred.
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+    http_status_401:
+      description: 'The request requires user authentication. The client may repeat the request with a suitable Authorization header field.
+
+        If the request already included Authorization credentials, then the 401 response indicates that authorization has
+
+        been refused for those credentials.
+
+        The HTTP body may contain a document that provides more details about the error.'
+      headers:
+        x-starship-traceid:
+          $ref: '#/components/headers/x-starship-traceid'
+      content:
+        application/json:
+          schema:
+            $ref: intersight-system-v3-1.0.11-20260807064027971.json#/components/schemas/Error
+  headers:
     Content-Disposition:
       description: If not present, indicates the response content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page. If present, indicates the response content is expected to be an attachment, that is downloaded and saved locally.
       schema:
         type: string
+    x-starship-traceid:
+      description: A value that uniquely identifies a HTTP request and its response.
+      schema:
+        type: string
+    Content-Length:
+      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
+      schema:
+        type: integer
     Set-Cookie:
       description: Cookie authentication key for use with the `cookieAuth` apiKey authentication.
       schema:
         type: string
         example: X-Starship-Token=abcde12345; Path=/
-    Content-Length:
-      description: Indicates the size of the entity-body, in bytes, sent to the recipient.
-      schema:
-        type: integer
   links:
     GetIamDomainGroupByMoid:
       operationId: GetIamDomainGroupByMoid
