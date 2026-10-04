@@ -66,6 +66,7 @@ tags:
 - Orchestration
 - Telemetry
 - Firmware Management
+- Virtual Machines
 tags_raw:
 - Infrastructure
 - Cloud Operations
@@ -80,6 +81,7 @@ tags_raw:
 - Telemetry
 - Firmware Management
 - Data-Center
+- Virtual Machines
 apis:
 - aid: intersight:intersight-aaa-api
   name: Cisco Intersight Aaa API
@@ -6511,6 +6513,8 @@ apis:
     The certificate management API from Cisco Intersight — 4 operation(s) for certificate management.
   humanURL: https://intersight.com/apidocs/apirefs/
   tags:
+  - Certificate Management
+  tags_raw:
   - certificate management
   properties:
   - type: OpenAPI
@@ -6623,6 +6627,8 @@ apis:
   description: The On Prem API from Cisco Intersight — 8 operation(s) for on prem.
   humanURL: https://intersight.com/apidocs/apirefs/
   tags:
+  - On-Prem
+  tags_raw:
   - On Prem
   properties:
   - type: OpenAPI
@@ -6679,6 +6685,8 @@ apis:
   description: The Open API API from Cisco Intersight — 10 operation(s) for open api.
   humanURL: https://intersight.com/apidocs/apirefs/
   tags:
+  - OpenAPI
+  tags_raw:
   - Open API
   properties:
   - type: OpenAPI
