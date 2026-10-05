@@ -1,0 +1,12 @@
+{
+ "url": "https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-system-v3-1.0.11-20260807064027971.json",
+ "requested_url": "https://cdn.intersight.com/components/an-apidocs/1.0.11-20260807064027971/model/intersight-system-v3-1.0.11-20260807064027971.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 11377679,
+ "sha256": "c0d50df759efed24ccb965394dad02d051eb72671b8f308086a2208f2cfd94f2",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
