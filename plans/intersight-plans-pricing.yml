@@ -52,3 +52,23 @@ note: Cisco publishes the tier structure and the capability split in detail but 
   is bundled at no cost with Cisco UCS, HyperFlex and UCS Director. The licensing landing page returns HTTP 403
   to non-browser clients (Akamai bot control), so the tier detail here is read from the At-a-Glance document on
   the same domain, which serves 200.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Essentials
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - other
+  - name: Advantage
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - other
